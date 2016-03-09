@@ -1,12 +1,16 @@
 # Journal
-| Date       | Person 		  | Step / Info											|
-| :--------: |:--------------:| ----------------------------------------------------|
-| 2016-02-24 | eller1 		  | initial commit										|
-| 2016-02-24 | eller1 	 	  | file formatted in correct markdown					|
-| 2016-03-02 | all attendants | workshop: working on task01	in group				|
-| 2016-03-02 | thons1, eller1 | presented results in class							|
-| 2016-03-04 | all attendants | workshop: working on task02	in group				|
-| 2016-03-04 | dellj1, sidlm3 | presented results in class							|
+| Date       | Person 		  | Step / Info														|
+| :--------: |:--------------:| ----------------------------------------------------------------|
+| 2016-02-24 | eller1 		  | initial commit													|
+| 2016-02-24 | eller1 	 	  | file formatted in correct markdown								|
+| 2016-03-02 | all attendants | workshop: working on CS1 task01	in group						|
+| 2016-03-02 | thons1, eller1 | presented results in class										|
+| 2016-03-04 | all attendants | workshop: working on CS1 task02	in group						|
+| 2016-03-04 | dellj1, sidlm3 | presented results in class										|
+| 2016-03-09 | all attendants | meeting: decided which people we'll invite for interviews (CS1)	|
+| 2016-03-09 | all attendants | workshop: working on CS2 task01-task03 in group					|
+
+
 
 
 # Absence

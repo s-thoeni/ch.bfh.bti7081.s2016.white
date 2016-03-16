@@ -9,6 +9,10 @@
 | 2016-03-04 | dellj1, sidlm3 | presented results in class										|
 | 2016-03-09 | all attendants | meeting: decided which people we'll invite for interviews (CS1)	|
 | 2016-03-09 | all attendants | workshop: working on CS2 task01-task03 in group					|
+| 2016-03-16 | all attendants | Design Thinking: Stared with first Research for 15min			|
+| 2016-03-16 | all attendants | Design Thinking: Synthesize, created personaes 					|
+| 2016-03-16 | all attendants | Design Thinking: created story boards for 10min					|
+| 2016-03-16 | all attendants | Design Thinking: Doing research about current usability trends	|
 
 
 

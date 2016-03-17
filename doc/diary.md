@@ -13,6 +13,7 @@
 | 2016-03-16 | all attendants | Design Thinking: Synthesize, created personaes 					|
 | 2016-03-16 | all attendants | Design Thinking: created story boards for 10min					|
 | 2016-03-16 | all attendants | Design Thinking: Doing research about current usability trends	|
+| 2016-03-16 | eller1		  | appointed a date for Interview: 23th March 2016, 07:00			|
 
 
 
@@ -27,3 +28,5 @@
 | 2016-03-02 | shepd1   | gratuitous youth work, will be absent for whole day	|
 | 2016-03-04 | eller1   | SQL course, will be absent for the whole day			|
 | 2016-03-04 | shepd1   | gratuitous youth work, will be absent for whole day	|
+| 2016-04-06 | eller1   | SQL course, will be absent for the first two lessons	|
+| 2016-04-08 | eller1   | SQL course, will be absent for the whole day			|

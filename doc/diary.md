@@ -18,7 +18,8 @@
 | 2016-03-18 | all attendants | Design Thinking: Prototyping for 30min								|
 | 2016-03-18 | all attendants | Design Thinking: Discussion about what the project should look like	|
 | 2016-03-18 | all attendants | Defined next meetings during holidays								|
-
+| 2016-03-22 | dellj1, shepd1, thons1, eller1  | Interview preperation 								|
+1
 
 
 

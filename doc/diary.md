@@ -19,8 +19,8 @@
 | 2016-03-18 | all attendants | Design Thinking: Discussion about what the project should look like	|
 | 2016-03-18 | all attendants | Defined next meetings during holidays								|
 | 2016-03-22 | dellj1, shepd1, thons1, eller1 | Interview preperation 								|
-| 2016-03-22 | shepd1, eller1 | Interviewed people with background in mental healthcare	and ITC		|
-
+| 2016-03-23 | shepd1, eller1 | Interviewed people with background in mental healthcare	and ITC		|
+| 2016-03-24 | shepd1, eller1 | Interviewed person with background in stationary healthcare			|
 
 
 

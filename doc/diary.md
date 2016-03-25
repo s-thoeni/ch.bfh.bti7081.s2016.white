@@ -18,10 +18,12 @@
 | 2016-03-18 | all attendants | Design Thinking: Prototyping for 30min								|
 | 2016-03-18 | all attendants | Design Thinking: Discussion about what the project should look like	|
 | 2016-03-18 | all attendants | Defined next meetings during holidays								|
-| 2016-03-21 | shepd1         | appointed a date for Interview: 24rd March 2016, 09:00              |
+| 2016-03-21 | shepd1         | appointed a date for Interview: 24th March 2016, 09:00              |
 | 2016-03-22 | dellj1, shepd1, thons1, eller1 | Interview preperation 								|
 | 2016-03-23 | shepd1, eller1 | Interviewed people with background in mental healthcare	and ITC		|
 | 2016-03-24 | shepd1, eller1 | Interviewed person with background in stationary healthcare			|
+| 2016-03-25 | all attendants | Meeting in school: Talking about results of the Interviews			|
+| 2016-03-25 | all attendants | Meeting in school: Design Thinking: Iterative						|
 
 
 

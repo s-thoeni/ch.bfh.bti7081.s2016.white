@@ -19,11 +19,11 @@
 | 2016-03-24 | shepd1, eller1 | Interviewed person with background in stationary healthcare			|
 | 2016-03-25 | all attendants | Meeting in school: Talking about results of the Interviews			|
 | 2016-03-25 | all attendants | Meeting in school: Design Thinking: Iterative						|
-| 2016-03-30 | all attendants | Preparing the presentation of our results of task03					|
 | 2016-03-29 | eller1		  | Validation prototype eller1/sprim5									|
 | 2016-03-30 | eller1		  | Validation prototype eller1/sprim5									|
 | 2016-03-30 | sidlm3		  | Validation prototype sidlm3/thons1									|
 | 2016-03-30 | shepd1		  | Validation prototype dellj1/shepd1									|
+| 2016-03-30 | all attendants | Preparing the presentation of our results of task03					|
 | 2016-03-30 | thons1, eller1 | presented results in class											|
 
 

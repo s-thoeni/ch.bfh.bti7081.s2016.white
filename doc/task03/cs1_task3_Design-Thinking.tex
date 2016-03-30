@@ -31,7 +31,6 @@ Thöni Stefan
 \publishers{Version 1.0}
 
 \begin{document}
-
 \begin{titlepage}
 	\maketitle
 \end{titlepage}
@@ -197,6 +196,7 @@ und der Teamgrösse wird eine iterative modulare Entwicklung angestrebt.
 \end{itemize} 
 
 
+
 \section{Research}
 \paragraph{Recherche-Vorgehen:} 
 \begin{itemize}
@@ -205,7 +205,7 @@ und der Teamgrösse wird eine iterative modulare Entwicklung angestrebt.
 \end{itemize}
 
 
-\paragraph{Recherchethemen:} 
+\paragraph{Recherchethemen:}
 \begin{itemize}
 \item Benutzer-Rollen
 \item Grundlegende Probleme in Health-IT (Stichwörter: ACM CHI, Health IT (HIT), Useability in HIT)
@@ -213,60 +213,65 @@ und der Teamgrösse wird eine iterative modulare Entwicklung angestrebt.
 \item Rechtliche Grundlagen
 \end{itemize}
 
-\subsection{Infrastruktur}
-Die Umgebung in welcher die Software zum Einsatz käme, sprich in Unternehmen des Gesundheitswesens,
-herrscht einerseits eine starke Normierung andererseits ist, über die gesamte Branche gesehen, die
-Infrastruktur sehr heterogen.
+\subsection{Infrastruktur \& Umfeld}
+Die Umgebung in welcher die Software zum Einsatz käme, sprich in Unternehmen des Gesundheitswesens, herrscht einerseits eine starke Normierung andererseits ist, über die gesamte Branche gesehen, die Infrastruktur sehr heterogen.
 
-Die Normierung basiert auf verschiedenen Katalogen. Es existieren zum Beispiel der Diagnosekatalog,
-der Leistungskatalog und der Medikamentenkatalog. Zu diesen müssen zwingend Schnittstellen
-geschaffen werden.
+Die Normierung basiert auf verschiedenen Katalogen. Es existieren zum Beispiel der Diagnosekatalog, der Leistungskatalog und der Medikamentenkatalog. Zu diesen müssen zwingend Schnittstellen geschaffen werden.
 
-Andere Daten sind überhaupt nicht normiert und generieren viel administrativen Aufwand. Beispielsweise
-müssen Patientendaten bei jeder Überweisung in eine andere Institution neu erfasst werden. Dies rührt
-daher, dass jede Institution ihr PMS frei wählt und in den seltensten Fällen Schnittstellen
-zueinander existieren.\footnote{Informationen aus den Interviews vom 23./24.03.2016}
+Andere Daten sind überhaupt nicht normiert und generieren viel administrativen Aufwand. Beispielsweise müssen Patientendaten bei jeder Überweisung in eine andere Institution neu erfasst werden. Dies rührt daher, dass jede Institution ihr PMS frei wählt und in den seltensten Fällen Schnittstellen zueinander existieren. \footnote{Informationen aus den Interviews vom 23./24.03.2016}
+
+
+\subsection{Trends}
+Trend in \textit{Health-IT} geht klar in Richtung Digitalisierung. Es gibt bereits unterschiedliche Anbieter auf dem Markt. Anwendungsbereiche sind die digitale Impfkarte, digitale Patientenakten, eMedication (bei Patienten mit vielen unterschiedlichen Medikamenten: Überprüfen von Medikamenten auf gegenseitige Nebenwirkungen) und auch das Auswerten von Gesundheitsdaten in einem Data Warehouse.
+\footnote{Informationen aus den Interviews vom 23./24.03.2016}
+
+
 
 \subsection{Benutzer-Rollen}
-Die Anforderungen der Benutzer sind sehr unterschiedlich, je nach grösse der Klink. Daher ist die Benutzergruppe Manager, eher als Rolle zu verstehen, die von verschiedenen Benutzern ausgeübt werden. Die Applikation wird daher nicht immer gleich benutzt (bspw. sind für eine kleine Praxis andere Informationen von Bedeutung als für ein Spital).\footnote{Informationen aus Interview vom 23.03.2016}
+Die Anforderungen der Benutzer sind sehr unterschiedlich, je nach grösse der Klinik. Daher ist die Benutzergruppe Manager, eher als Rolle zu verstehen, die von verschiedenen Benutzern ausgeübt werden. Die Applikation wird daher nicht immer gleich benutzt (bspw. sind für eine kleine Praxis andere Informationen von Bedeutung als für ein Spital).\footnote{Informationen aus Interview vom 23.03.2016}
 
-\paragraph{Anforderungen der Benutzer}
+
+\subsection{Anforderungen der Benutzer}
+Benutzer wünschen folgende Funktionalitäten \footnote{Informationen aus Interview vom 23.03.2016}.
 \begin{itemize}
 \item Rollenkonzept für Benutzer
 \item Planungsfunktionalitäten
 \item Auswertungen / Reports zu Finanzen und Pflege
-\item Reports auf Ebene der Patienten (Export von Patientenakten)
+\item Reports auf Ebene der Patienten (Export von Patientenakten, bspw. für Krankenkassen)
 \item Prognosen und Vorhersagen (automatisiert)
+\begin{itemize}
+\item Vorhersage der Entwicklung eines Patienten
+\item Auswertungen von Behandlungsverfahren
+\item Verknüpfen verschiedener Ereignisse (Gründe für vermehrte Zwischenfälle automatisch suchen, könnte z.B. Personalmangel sein)
+\end{itemize}
 \end{itemize}
 
 
-\subsection{Probleme in Health-IT}
-\paragraph{Patientensicherheit} In Health-IT ist eines der grössten Probleme die Patientensicherheit. Viele Anbieter sind besorgt, dass ein Softwarefehler Leben kosten kann. Zudem ist es schwer eine Balance zwischen Benutzerfreundlicher Bedienung und Sicherheit zu finden.\footnote{http://interactions.acm.org/archive/view/july-august-2012/measuring-usability-in-healthcare-it}
+\subsection{Patientensicherheit}
+In Health-IT ist eines der grössten Probleme die Patientensicherheit. Viele Anbieter sind besorgt, dass ein Softwarefehler Leben kosten kann. Zudem ist es schwer eine Balance zwischen Benutzerfreundlicher Bedienung und Sicherheit zu finden.\footnote{http://interactions.acm.org/archive/view/july-august-2012/measuring-usability-in-healthcare-it}
 Für unsere Zielgruppe ist dieser Punkt aber weniger von Bedeutung.
 
-\paragraph{Heterogene IT Systeme} Health-IT ist ein sehr komplexes Themengebiet, da die zusammenarbeitenden Systeme sehr heterogen sind. \footnote{Informationen aus Interview vom 23.03.2016}
+
+\subsection{Rechtliche Grundlagen}
+Informationen zu den rechtlichen Anforderungen erhielten wir im Interview vom 23. März. Für uns ist von Bedeutung, dass der Datenschutz gewährleistet wird und gewisse Daten nur für gewisse Rollen oder sogar Personen sichtbar sind. So sollten Daten die dem Arztgeheimnissen unterliegen, fürs Management nicht einsehbar sein.
+Zudem muss die Software Revisions-tauglich sein, d.h. jeder Zugriff und jede Änderung an einem Datensatz muss protokolliert werden.
 
 
 
 \subsection{Konkurrenzprodukte}
-\paragraph{Insights} Eine Anforderung an die Software ist, durch gutes Reporting Einblicke zu erhalten, die vorher nicht so einfach oder gar nicht möglich waren. Das Oberthema dazu ist \textit{Analytics} und \textit{Business Intelligence}. Ein bekanntes Produkt in diesem Bereich ist Microsoft PowerBI\footnote{https://powerbi.microsoft.com/en-us/} .
+\paragraph{Insights} Eine Anforderung an die Software ist, durch gutes Reporting Einblicke zu erhalten, die vorher nicht so einfach oder gar nicht möglich waren. Das Oberthema dazu ist \textit{Analytics} und \textit{Business Intelligence}. Ein bekanntes Produkt in diesem Bereich ist Microsoft PowerBI\footnote{https://powerbi.microsoft.com/en-us/}.
 
-\includegraphics[width=0.6\textwidth]{img/research_ms-powerbi.png}
+\includegraphics[width=0.65\textwidth]{img/research_ms-powerbi.png}
 
 Microsoft bietet hier ein Werkzeug, mit dem sich bereits gesammelte Daten effektiv analysieren und visualisieren lassen. Die generierten Berichte lassen sich über einen Webbrowser oder ein Mobiles Endgerät einsehen. Der Dienst läuft in der Cloud und ist daher nicht geeignet für das direkte Verarbeiten von Patientendaten.
 
-\bigskip
+\pagebreak
 
 Das Schweizer Unternehmen \textit{Erne Consulting} bietet für ihre eHealth-Lösung \textit{Polypoint} für diesen Zweck eine Reporting-Erweiterung an \footnote{http://polypoint.ch/}.
 
-\includegraphics[width=0.75\textwidth]{img/research_polypoint_op-cockpit.jpg}
+\includegraphics[width=0.9\textwidth]{img/research_polypoint_op-cockpit.jpg}
 
 
-
-\subsection{Rechtliche Grundlagen}
-Informationen zu den rechtlichen Anforderungen erhielten wir im Interview vom 23. März. Aktuell ist dies keine Benutzeranforderung sondern ein Domain-Requirement.
-
-\pagebreak
 
 \section{Synthesis}
 Gerade in den Interviews wurde ersichtlich, dass die Zielgruppe Manager mehr eine Rolle ist, als eine konkrete Person. Je nach Grösse der Betreuungseinrichtung gibt es keinen expliziten Manager. In kleineren Einrichtungen hat auch ein Arzt die Rolle Manager inne.
@@ -321,7 +326,6 @@ Um die Verwaltung der Finanzen zu unterstützen soll eine Auswertung über die E
 
 \includegraphics[width=1\textwidth]{storyboards_personas_prototypes/iteration3/sidlm3_storyboard2+3.png}
 
-
 \pagebreak
 
 \paragraph{Storyboard 3} mit Fokus auf Analyse
@@ -330,7 +334,7 @@ Um die Verwaltung der Finanzen zu unterstützen soll eine Auswertung über die E
 
 \pagebreak
 \section{Prototype}
-Auf Basis der oben abgebildeten Storyboards haben wir folgende Prototypen erstellt:
+Auf Basis der oben abgebildeten Storyboards haben wir folgende Prototypen erstellt.
 
 \paragraph{Prototyp } zu Storyboard 1\\
 \includegraphics[width=0.85\textwidth]{storyboards_personas_prototypes/iteration3/sidlm3_storyboard2_prototype1_1.png}\\
@@ -338,18 +342,32 @@ Auf Basis der oben abgebildeten Storyboards haben wir folgende Prototypen erstel
 
 \paragraph{Prototyp } zu Storyboard 2\\
 
-\includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp2_1.png}
-\includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp2_2.png}
+
+Der Prototyp wurde nach der ersten Validierung noch verbessert. Die verbesserten Stellen sind grün markiert.
+
+\includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp3_1.png}
+\includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp3_2.png}
+
+\bigskip
+
+Und zudem wurden noch folgende Screens ergänzt.
+
+\includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp3_3.png}
+
 
 \pagebreak
 \paragraph{Prototyp } zu Storyboard 3\\
 
 \includegraphics[width=0.9\textwidth]{storyboards_personas_prototypes/iteration3/eller1_storyboard2_prototype.png}
 
+\bigskip
+
+Die Prototypen aus der zweiten Iteration sind abgelegt unter: /doc/task03/storyboards\_personas\_prototypes/iteration2.
+
 \section{Validate}
-Validierung über ein vorgefertigtes Protokoll. Die Protokolle sind im Verzeichnis der jeweilgen Iteration unter /doc/task03/storyboards\_personas\_prototypes/ abgelegt.
+Die Prototypen aus der Iteration 3 wurden über ein vorgefertigtes Protokoll validiert. Die Protokolle sind im Verzeichnis der jeweilgen Iteration unter /doc/task03/storyboards\_personas\_prototypes/ abgelegt.
 
-
+Erkenntnisse aus der Validierung sind - wo nötig - nochmals in die Prototypen eingeflossen.
 
 
 \end{document}

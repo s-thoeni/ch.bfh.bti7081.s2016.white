@@ -9,14 +9,9 @@
 | 2016-03-04 | dellj1, sidlm3 | presented results in class											|
 | 2016-03-09 | all attendants | meeting: decided which people we'll invite for interviews (CS1)		|
 | 2016-03-09 | all attendants | workshop: working on CS2 task01-task03 in group						|
-| 2016-03-16 | all attendants | Design Thinking: Stared with first Research for 15min				|
-| 2016-03-16 | all attendants | Design Thinking: Synthesize, created personaes 						|
-| 2016-03-16 | all attendants | Design Thinking: created story boards for 10min						|
-| 2016-03-16 | all attendants | Design Thinking: Doing research about current usability trends		|
+| 2016-03-16 | all attendants | Design Thinking: Iterate through process as described in process doc|
 | 2016-03-16 | eller1		  | appointed a date for Interview: 23rd March 2016, 07:00				|
-| 2016-03-18 | all attendants | Design Thinking: Defined questions for interview					|
-| 2016-03-18 | all attendants | Design Thinking: Prototyping for 30min								|
-| 2016-03-18 | all attendants | Design Thinking: Discussion about what the project should look like	|
+| 2016-03-18 | all attendants | Design Thinking: Iterate through process as described in process doc|
 | 2016-03-18 | all attendants | Defined next meetings during holidays								|
 | 2016-03-21 | shepd1         | appointed a date for Interview: 24th March 2016, 09:00              |
 | 2016-03-22 | dellj1, shepd1, thons1, eller1 | Interview preperation 								|

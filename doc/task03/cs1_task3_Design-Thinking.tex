@@ -153,7 +153,8 @@ Erneute Tests mit verbesserten Prototypen durchgeführt.
 \section{Scoping}
 
 \subsection{Projekt Scope}
-Die Hauptzielgruppe für die Software ist vorgegeben: Manager.
+Die Hauptzielgruppe für die Software ist vorgegeben: Manager. Aufgrund der zur Verfügung stehenden Zeit
+und der Teamgrösse wird eine iterative modulare Entwicklung angestrebt.
 
 \bigskip
 
@@ -196,8 +197,6 @@ Die Hauptzielgruppe für die Software ist vorgegeben: Manager.
 \end{itemize} 
 
 
-TODO: Erfolgsfaktoren, Restriktionen(timeline etc.)
-
 \section{Research}
 \paragraph{Recherche-Vorgehen:} 
 \begin{itemize}
@@ -209,10 +208,24 @@ TODO: Erfolgsfaktoren, Restriktionen(timeline etc.)
 \paragraph{Recherchethemen:} 
 \begin{itemize}
 \item Benutzer-Rollen
-\item Grundlegende Probleme in Healt-IT (Stichwörter: ACM CHI, Health IT (HIT), Useability in HIT)
+\item Grundlegende Probleme in Health-IT (Stichwörter: ACM CHI, Health IT (HIT), Useability in HIT)
 \item Lösungen von Konkurrenten
 \item Rechtliche Grundlagen
 \end{itemize}
+
+\subsection{Infrastruktur}
+Die Umgebung in welcher die Software zum Einsatz käme, sprich in Unternehmen des Gesundheitswesens,
+herrscht einerseits eine starke Normierung andererseits ist, über die gesamte Branche gesehen, die
+Infrastruktur sehr heterogen.
+
+Die Normierung basiert auf verschiedenen Katalogen. Es existieren zum Beispiel der Diagnosekatalog,
+der Leistungskatalog und der Medikamentenkatalog. Zu diesen müssen zwingend Schnittstellen
+geschaffen werden.
+
+Andere Daten sind überhaupt nicht normiert und generieren viel administrativen Aufwand. Beispielsweise
+müssen Patientendaten bei jeder Überweisung in eine andere Institution neu erfasst werden. Dies rührt
+daher, dass jede Institution ihr PMS frei wählt und in den seltensten Fällen Schnittstellen
+zueinander existieren.
 
 \subsection{Benutzer-Rollen}
 Zum einen haben wir hierzu Personen in Kaderpositionen in Gesundheitswesen gesucht (via xing, LinkedIn) 
@@ -259,10 +272,10 @@ Aus den gewonnen Erkenntnissen der Recherche-Phase haben wir uns auf zwei Person
 
 \paragraph{Ariane} leitet die Abteilung Pflege in einer grossen Betreuungseinrichtung für Personen mit psychischen Störungen. Damit übernimmt sie die Personalplanung und ist verantwortlich, dass die Prozesse in der Einrichtung funktionieren. Aufgrund ihrer grossen Führungsspanne arbeitet sie sehr strukturiert und sucht stets Möglichkeiten Zeit zu sparen.
 
-Sie will zudem stets informiert sein über aktuelle Notfälle oder sonderbare Ereignisse im Zusammenhang mit den Patienten. Sie will stets die Hintergründe kennen, warum etwas passiert und überlässt nichts dem Zufall.
+Sie will zudem stets informiert sein über aktuelle Notfälle oder sonderbare Ereignisse im Zusammenhang mit den Patienten. Sie will stets die Hintergründe kennen, warum etwas passiert und überlässt nichts dem Zufall. Ihre IT-Kenntnisse sind marginal.
 
 
-\paragraph{Bruno} ist leitender Arzt einer kleinen Betreuungseinrichtung für ambulante Behandlung von Personen mit psychischen Störungen. Er leitet die Praxis alleine. Unterstützend für die Behandlung, den Empfang und die Büroarbeit arbeiten zwei Assistentinnen unter seiner Führung. Er ist sehr interessiert an Finanzzahlen, um nicht aus Sicht der Krankenkassen einen zu hohen Umsatz zu generieren. Der Umgang untereinander ist sehr familiär und basiert auf erwähnenswert viel Vertrauen.
+\paragraph{Bruno} ist leitender Arzt einer kleinen Betreuungseinrichtung für ambulante Behandlung von Personen mit psychischen Störungen. Er leitet die Praxis alleine. Unterstützend für die Behandlung, den Empfang und die Büroarbeit arbeiten zwei Assistentinnen unter seiner Führung. Er ist sehr interessiert an Finanzzahlen, um nicht aus Sicht der Krankenkassen einen zu hohen Umsatz zu generieren. Der Umgang untereinander ist sehr familiär und basiert auf erwähnenswert viel Vertrauen. Bruno hat durchschnittliche User-Kenntnisse.
 
 
 \subsection{Main Features (User Requirements)}
@@ -297,11 +310,12 @@ Um die Verwaltung der Finanzen zu unterstützen soll eine Auswertung über die E
 
 \paragraph{Storyboard 1 und 2} beide mit Fokus aus Reporting
 
-
-
 \includegraphics[width=1\textwidth]{storyboards_personas_prototypes/iteration3/sidlm3_storyboard2+3.png}
 
-\paragraph{Storyboard 3}
+
+\pagebreak
+
+\paragraph{Storyboard 3} mit Fokus auf Analyse
 
 \includegraphics[width=1\textwidth]{storyboards_personas_prototypes/iteration3/eller1_storyboard2.png}
 
@@ -317,6 +331,11 @@ Auf Basis der oben abgebildeten Storyboards haben wir folgende Prototypen erstel
 
 \includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp2_1.png}
 \includegraphics[width=0.48\textwidth]{storyboards_personas_prototypes/iteration3/sprim5+eller1_prototyp2_2.png}
+
+\pagebreak
+\paragraph{Prototyp } zu Storyboard 3\\
+
+\includegraphics[width=0.9\textwidth]{storyboards_personas_prototypes/iteration3/eller1_storyboard2_prototype.png}
 
 \section{Validate}
 Validierung über ein vorgefertigtes Protokoll. Die Protokolle sind im Verzeichnis der jeweilgen Iteration unter /doc/task03/storyboards\_personas\_prototypes/ abgelegt.

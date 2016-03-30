@@ -1,0 +1,58 @@
+\contentsline {chapter}{\numberline {1}Prozess-Ablauf}{4}
+\contentsline {section}{\numberline {1.1}Iteration 1}{4}
+\contentsline {paragraph}{\nonumberline Research}{4}
+\contentsline {paragraph}{\nonumberline Scoping}{4}
+\contentsline {paragraph}{\nonumberline Research}{4}
+\contentsline {paragraph}{\nonumberline Scoping}{4}
+\contentsline {paragraph}{\nonumberline Syntesis}{4}
+\contentsline {paragraph}{\nonumberline Design}{4}
+\contentsline {section}{\numberline {1.2}Iteration 2}{4}
+\contentsline {paragraph}{\nonumberline Research}{5}
+\contentsline {paragraph}{\nonumberline Design}{5}
+\contentsline {paragraph}{\nonumberline Prototype}{5}
+\contentsline {paragraph}{\nonumberline Research}{5}
+\contentsline {paragraph}{\nonumberline Syntesis}{5}
+\contentsline {section}{\numberline {1.3}Iteration 3}{5}
+\contentsline {paragraph}{\nonumberline Research}{5}
+\contentsline {paragraph}{\nonumberline Research}{5}
+\contentsline {paragraph}{\nonumberline Research}{6}
+\contentsline {paragraph}{\nonumberline Research}{6}
+\contentsline {paragraph}{\nonumberline Syntesis}{6}
+\contentsline {paragraph}{\nonumberline Design}{6}
+\contentsline {paragraph}{\nonumberline Prototype}{6}
+\contentsline {paragraph}{\nonumberline Validation}{6}
+\contentsline {paragraph}{\nonumberline Prototype}{6}
+\contentsline {paragraph}{\nonumberline Validation}{6}
+\contentsline {chapter}{\numberline {2}Ergebnisse}{7}
+\contentsline {section}{\numberline {2.1}Scoping}{7}
+\contentsline {subsection}{\numberline {2.1.1}Projekt Scope}{7}
+\contentsline {subsection}{\numberline {2.1.2}Nicht im Projekt Scope}{7}
+\contentsline {subsection}{\numberline {2.1.3}Erfolgsfaktoren}{8}
+\contentsline {section}{\numberline {2.2}Research}{8}
+\contentsline {paragraph}{\nonumberline Recherche-Vorgehen:}{8}
+\contentsline {paragraph}{\nonumberline Recherchethemen:}{8}
+\contentsline {subsection}{\numberline {2.2.1}Benutzer-Rollen}{8}
+\contentsline {paragraph}{\nonumberline Anforderungen der Benutzer}{8}
+\contentsline {subsection}{\numberline {2.2.2}Probleme in Health-IT}{8}
+\contentsline {paragraph}{\nonumberline Patientensicherheit}{8}
+\contentsline {paragraph}{\nonumberline Heterogene IT Systeme}{9}
+\contentsline {subsection}{\numberline {2.2.3}Konkurrenzprodukte}{9}
+\contentsline {paragraph}{\nonumberline Insights}{9}
+\contentsline {subsection}{\numberline {2.2.4}Rechtliche Grundlagen}{10}
+\contentsline {section}{\numberline {2.3}Syntesis}{10}
+\contentsline {subsection}{\numberline {2.3.1}Personas}{10}
+\contentsline {paragraph}{\nonumberline Ariane}{10}
+\contentsline {paragraph}{\nonumberline Bruno}{10}
+\contentsline {subsection}{\numberline {2.3.2}Main Features (User Requirements)}{10}
+\contentsline {paragraph}{\nonumberline Dashboard}{10}
+\contentsline {paragraph}{\nonumberline Statistische Auswertung}{11}
+\contentsline {paragraph}{\nonumberline Daten export/import}{11}
+\contentsline {paragraph}{\nonumberline Pesonal Verwaltung}{11}
+\contentsline {paragraph}{\nonumberline Pflege und Therapie}{11}
+\contentsline {paragraph}{\nonumberline Finanzverwaltung}{11}
+\contentsline {section}{\numberline {2.4}Design}{12}
+\contentsline {paragraph}{\nonumberline Storyboard 1 und 2}{12}
+\contentsline {paragraph}{\nonumberline Storyboard 3}{12}
+\contentsline {section}{\numberline {2.5}Prototype}{12}
+\contentsline {paragraph}{\nonumberline Prototyp}{12}
+\contentsline {section}{\numberline {2.6}Validate}{13}

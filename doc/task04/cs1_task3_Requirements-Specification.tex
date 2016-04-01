@@ -57,9 +57,10 @@ Das Dokument richtet sich an den Endkunden, die Projektleitung, die Personalplan
 \label{tab_version-history}
 \begin{tabular}{llll}
 {\bf Version} & {\bf Beschreibung} 							& {\bf Autor} 	& {\bf Datum} \\
-0.1.0         & Dokument aus Vorlage erstellt 				& eller1 		& 01.04.2016  \\
-0.2.0         & Vorwort verfasst und Glossar erstellt		& eller1 		& 01.04.2016  \\
-0.3.0         & Einleitung verfasst			                & eller1 		& 01.04.2016  \\
+0.1         & Dokument aus Vorlage erstellt 				& Team White 		& April 1, 2016  \\
+1.0         & Finale Version des Dokuments					& Team White 		& \today  \\
+
+
 
 \end{tabular}
 \end{table}
@@ -69,7 +70,9 @@ Das Dokument richtet sich an den Endkunden, die Projektleitung, die Personalplan
 \chapter{Einleitung}
 % This should describe the need for the system. It should briefly describe the system’s functions and explain how it will work with other systems. It should also describe how the system fits into the overall business or strategic objectives of the organization commissioning the software
 
-Die Betreuung von Personen mit psychischen Störungen soll mit unserer Software vereinfacht werden. Die Zielkundschaft sind kleine bis grosse Einrichtungen für die Behandlung (ambulant und Hausbesuche) von Patienten mit psychischen Störungen. Wir fokussieren dabei auf Funktionen für das Management. Wir möchten Personen mit Führungsfunktion bei Planungsarbeiten, administrativen Tätigkeiten und Strategie-Entscheiden unterstützen. Die Verwaltung und Auswertung von Patientendaten (Behandlungshistorie und Verrechnung) steht dabei im Fokus. Zudem soll die Personalplanung mit der Patientenverwaltung verknüpf werden. Export von Berichten für Partnerorganisationen und Behörden soll möglichst unkompliziert gestaltet werden.
+Die Betreuung von Personen mit psychischen Störungen soll mit unserer Software vereinfacht werden. Die Zielkundschaft sind kleine bis grosse Einrichtungen für die Behandlung (ambulant und Hausbesuche) von Patienten mit psychischen Störungen.
+
+Wir fokussieren dabei auf Funktionen für das Management. Wir möchten Personen mit Führungsfunktion bei Planungsarbeiten, administrativen Tätigkeiten und Strategie-Entscheidungen unterstützen. Die Verwaltung und Auswertung von Patientendaten (Behandlungshistorie und Verrechnung) steht dabei im Fokus. Zudem soll die Personalplanung mit der Patientenverwaltung verknüpf werden. Export von Berichten für Partnerorganisationen und Behörden soll möglichst unkompliziert gestaltet werden.
 
 \bigskip
 
@@ -87,7 +90,7 @@ Dashboard			& Übersichtseite zu einem Themenbereich \\
 HIT 				& Health IT: Informatik-Sparte, die sich mit dem Gesundheitswesen auseinandersetzt \\
 
 MHC-PMS 			& Mental Health Care Patient Management System \\
-Report				& Bericht
+Report				& Bericht / Auswertung
 
 
 \end{tabular}
@@ -98,27 +101,68 @@ Report				& Bericht
 
 \chapter{User-Requirements Definition}
 % Here, you describe the services provided for the user. The nonfunctional system requirements should also be described in this section. This description may use natural language, diagrams, or other notations that are understandable to customers. Product and process standards that must be followed should be specified. (Use Case- and Activity Diagrams)
+Nachfolgender Abschnitt beschreibt die User-Requirements der Applikation.
 
 
 \section{User Requirements}
+Folgendes Diagramm zeigt die Use-Cases der Applikation.
+
+\includegraphics[width=1\textwidth]{img/use_case_diagram_20160401.png}
+
+\bigskip
+
+Es existieren sechs Use-Cases, wo der Benutzer mit dem System interagiert:
+\begin{enumerate}
+\item \textbf{Dashboard anschauen:} Daten werden aufbereitet und auf dem Dashboard angezeigt
+\item \textbf{Dashboard konfigurieren:} Manager personalisiert sein persönliches Dashboard je nach Anforderungen individuell
+\item \textbf{Reports einsehen:} Manager lässt Report zur Einsicht generieren
+\item \textbf{Reports exportieren:} Generierte Reports werden zum digitalen Versand, Ausdruck oder lokalen Abspeichern exportiert.
+\item \textbf{Aktuelle Personalplanung anschauen:} Manager sieht aktuelle Personalplanung an
+\item \textbf{Patientenakten lesen:} Manager sieht Patientenakten ein
+\end{enumerate}
+
+Es existieren zudem zwei Aktoren. Zum einen der Mail-Client, der auf den Endgerät vorausgesetzt wird, zum versenden von Reports und ein Datenbanksystem "DBS" (oder allenfalls mehrere Datenbanksysteme) als Datenquelle.
+
+\bigskip
+
+Nachfolgend sind Use-Case eins und drei noch genauer beschrieben.
+
+
+\pagebreak
+
+\section{Use-Case 1}
+\textbf{Aktivitätsdiagramm}
+
+\includegraphics[width=0.9\textwidth]{uc-1_Dashboard/uc1_activity.jpg}
+
+
+\pagebreak
+
+
+\textbf{Szenario}
+
+\includegraphics[width=1\textwidth]{uc-1_Dashboard/uc1_scenario.png}
 
 
 
-\section{Use-Cases}
 
+\section{Use-Case 3}
 
+\textbf{Aktivitätsdiagramm}
 
-\section{Aktivitätsdiagramm}
+\includegraphics[width=0.9\textwidth]{uc-3_Report_einsehen/uc3_activity_diagram.png}
 
+\pagebreak
 
-\section{Szenarien}
+\textbf{Szenario}
 
+\includegraphics[width=1\textwidth]{uc-3_Report_einsehen/uc3_scenario.png}
 
 
 
 
 \chapter{System Architektur}
-
+Bei der Applikation handelt es sich um eine Webanwendung, welche für mobile Endgeräte optimiert ist. Ein gutes Benutzererlebnis soll aber auch auf anderen Endgeräten wie PCs oder Notebooks gewährleistet sein.
 
 
 
@@ -128,32 +172,31 @@ Report				& Bericht
 \subsection{UC1: Dashboard}
 \paragraph{[1] Darstellung Dashboard}
 Das System soll beim starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen darstellen. (Siehe Requirement [4]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
-	
+ 	
 \paragraph{[2] Dashboard Konfiguration}
 Das System soll einen Menu-Punkt zur verfügung stellen der die Konfiguration des Dashboards erlaubt. 
 \paragraph{[3] Schnittstelle DBS}
 \paragraph{[4] Kennzahlen}
-
+ 
 \section{Non-Functional Requirements}
 \paragraph{Performance: Starten der Applikation}
 Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applikation das Dashboard anzuzeigen. (4 Sekunden sollten genügen um die relevanten Daten zu laden und anzuzeigen. Ausserdem ist es genügend kurz um den Benutzer nicht zu belasten)
 \footnote{http://www.hobo-web.co.uk/your-website-design-should-load-in-4-seconds/}
 
 
-
 \section{Domain Requirements}
 \subsection{Branchenspezifisch}
-\paragraph{Leistungsabrechnung} Implementieren der Standards für Leistungserfassung gemäss TARMED.
+\paragraph{Leistungsabrechnung} Implementieren der Standards für Leistungserfassung gemäss TARMED, damit die Verrechneten Leistungen überwacht werden können.
 
-\paragraph{Meldepflicht} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten.
+\paragraph{Meldepflicht} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten. Dies wird oft von Krankenkassen verlangt, wenn ihnen die vorhandenen Angaben nicht ausreichen.
 
-\paragraph{Arztgeheimnis} Gewährleisten vom Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene.
+\paragraph{Arztgeheimnis} Gewährleisten vom Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene. Ein Eintrag in der Patientenakte, welche ein Patient nur seinem Arzt vertraulich mitgeteilt hat, muss vor unerlaubten Zugriffen geschützt sein.
 
 
 \subsection{Rechtlich}
-\paragraph{Datenschutz} Einhalten der schweizerischen Datenschutzrichtlinien. 
+\paragraph{Datenschutz} Einhalten der schweizerischen Datenschutzrichtlinien für den Umgang mit den Patientendaten.
 
-\paragraph{Aufbewahrungspflicht} Einhalten der 10-Jährigen Datenaufbewahrungspflicht.
+\paragraph{Aufbewahrungspflicht} Einhalten der 10-Jährigen Datenaufbewahrungspflicht (je nach Gesellschaftsform nach Schweizer Recht vorgeschrieben \footnote{http://www.dieadvokatur.ch/fileadmin/user\_upload/Publikationen/Fachartikel/2013/Die\_rechtlichen \_Aspekte\_der\_elektronischen\_Archivierung.pdf}).
 
 
 
@@ -161,10 +204,23 @@ Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applik
 \chapter{System Models}
 % This might include graphical system models showing the relationships between the system components and the system and its environment. Examples of possible models are object models, data- flow , models or semantic data models.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gemäss Ausage des Dozenten leer lassen        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \chapter{System Evolution}
+% This should describe the fundamental assumptions on which the system is based, and any anticipated changes due to hardware evolution, changing user needs, and so on. This section is useful for system designers as it may help them avoid design decisions that would constrain likely future changes to the system.
 
+In zukünftigen Versionen könnten folgende erweiternde oder neue Funktionen implementiert werden:
+\begin{itemize}
+\item Weitere Reports\\
+Aufgrund von Rückmeldungen und Wünschen aus dem Daily Business können weitere Reports definiert werden.
+\item Eigene Reports definieren\\
+Der User kann direkt in der Applikation auf den vorhandenen Daten eigene Reports konfigurieren und abspeichern. Hierzu steht dem Benutzer ein Report-Designer zur Verfügung.
+\item Big Data Funktionalitäten \\
+Auswertungen werden um Big Data Funktionalitäten erweitert. So erhält der Benutzer noch bessere und tiefere Einblicke in seine Daten und deren Zusammenhänge.
+\end{itemize}
 
 
 \chapter{Testing}
@@ -172,6 +228,8 @@ Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applik
 
 
 \chapter{Appendix}
+
+\section{Quellen}
 
 
 

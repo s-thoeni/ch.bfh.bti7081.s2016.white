@@ -170,33 +170,36 @@ Bei der Applikation handelt es sich um eine Webanwendung, welche für mobile End
 
 \section{Functional Requirements}
 \subsection{UC1: Dashboard}
-\paragraph{[1] Darstellung Dashboard}
-Das System soll beim starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen darstellen. (Siehe Requirement [4]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
+\paragraph{[1.1] Darstellung Dashboard}
+Das System soll beim starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen darstellen. (Siehe Requirement [1.4]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
  	
-\paragraph{[2] Dashboard Konfiguration}
+\paragraph{[1.2] Dashboard Konfiguration}
 Das System soll einen Menu-Punkt zur verfügung stellen der die Konfiguration des Dashboards erlaubt. 
-\paragraph{[3] Schnittstelle DBS}
-\paragraph{[4] Kennzahlen}
+\paragraph{[1.3] Schnittstelle DBS}
+\paragraph{[1.4] Kennzahlen}
  
 \section{Non-Functional Requirements}
-\paragraph{Performance: Starten der Applikation}
+\paragraph{[2.1] Performance: Starten der Applikation}
 Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applikation das Dashboard anzuzeigen. (4 Sekunden sollten genügen um die relevanten Daten zu laden und anzuzeigen. Ausserdem ist es genügend kurz um den Benutzer nicht zu belasten)
 \footnote{http://www.hobo-web.co.uk/your-website-design-should-load-in-4-seconds/}
 
+\paragraph{[2.1] Stabilität: Ausführung der Applikation}
+Die Applikation soll im Betrieb möglichst nie abstürzen. Treten Fehler auf, dann maximal der maximal der Kategorie 4.
+\footnote{Ackermann, Urs. 2015. Skript Betriebswirtschaftslehre 2. S. 208}
 
 \section{Domain Requirements}
 \subsection{Branchenspezifisch}
-\paragraph{Leistungsabrechnung} Implementieren der Standards für Leistungserfassung gemäss TARMED, damit die Verrechneten Leistungen überwacht werden können.
+\paragraph{[3.1] Leistungsabrechnung} Implementieren der Standards für Leistungserfassung gemäss TARMED, damit die Verrechneten Leistungen überwacht werden können.
 
-\paragraph{Meldepflicht} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten. Dies wird oft von Krankenkassen verlangt, wenn ihnen die vorhandenen Angaben nicht ausreichen.
+\paragraph{[3.2] Meldepflicht} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten. Dies wird oft von Krankenkassen verlangt, wenn ihnen die vorhandenen Angaben nicht ausreichen.
 
-\paragraph{Arztgeheimnis} Gewährleisten vom Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene. Ein Eintrag in der Patientenakte, welche ein Patient nur seinem Arzt vertraulich mitgeteilt hat, muss vor unerlaubten Zugriffen geschützt sein.
+\paragraph{[3.3] Arztgeheimnis} Gewährleisten vom Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene. Ein Eintrag in der Patientenakte, welche ein Patient nur seinem Arzt vertraulich mitgeteilt hat, muss vor unerlaubten Zugriffen geschützt sein.
 
 
 \subsection{Rechtlich}
-\paragraph{Datenschutz} Einhalten der schweizerischen Datenschutzrichtlinien für den Umgang mit den Patientendaten.
+\paragraph{[3.4] Datenschutz} Einhalten der schweizerischen Datenschutzrichtlinien für den Umgang mit den Patientendaten.
 
-\paragraph{Aufbewahrungspflicht} Einhalten der 10-Jährigen Datenaufbewahrungspflicht (je nach Gesellschaftsform nach Schweizer Recht vorgeschrieben \footnote{http://www.dieadvokatur.ch/fileadmin/user\_upload/Publikationen/Fachartikel/2013/Die\_rechtlichen \_Aspekte\_der\_elektronischen\_Archivierung.pdf}).
+\paragraph{[3.5] Aufbewahrungspflicht} Einhalten der 10-Jährigen Datenaufbewahrungspflicht (je nach Gesellschaftsform nach Schweizer Recht vorgeschrieben \footnote{http://www.dieadvokatur.ch/fileadmin/user\_upload/Publikationen/Fachartikel/2013/Die\_rechtlichen \_Aspekte\_der\_elektronischen\_Archivierung.pdf}).
 
 
 
@@ -228,6 +231,14 @@ Auswertungen werden um Big Data Funktionalitäten erweitert. So erhält der Benu
 
 
 \chapter{Appendix}
+
+\section{Verwendete Spezifikationen}
+\subsection{FMEA}
+Failure Mode and Effects Analysis für die Software wird bewertet anhand untenstehender Tablelle.
+
+\includegraphics[width=1\textwidth]{img/fmea.png}
+
+
 
 \section{Quellen}
 

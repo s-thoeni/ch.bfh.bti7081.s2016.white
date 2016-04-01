@@ -25,7 +25,7 @@
 | 2016-03-30 | shepd1		  | Validation prototype dellj1/shepd1									|
 | 2016-03-30 | all attendants | Preparing the presentation of our results of task03					|
 | 2016-03-30 | thons1, eller1 | presented results in class											|
-| 2016-01-01 | all attendants | Writing Software Requirements Document								|
+| 2016-04-01 | all attendants | Writing Software Requirements Document								|
 
 
 

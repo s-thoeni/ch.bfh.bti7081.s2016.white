@@ -90,6 +90,7 @@ Dashboard			& Übersichtseite zu einem Themenbereich \\
 HIT 				& Health IT: Informatik-Sparte, die sich mit dem Gesundheitswesen auseinandersetzt \\
 
 MHC-PMS 			& Mental Health Care Patient Management System \\
+DBS 				& Database System \\
 Report				& Bericht / Auswertung
 
 
@@ -162,30 +163,51 @@ Nachfolgend sind Use-Case eins und drei noch genauer beschrieben.
 
 
 \chapter{System Architektur}
-Bei der Applikation handelt es sich um eine Webanwendung, welche für mobile Endgeräte optimiert ist. Ein gutes Benutzererlebnis soll aber auch auf anderen Endgeräten wie PCs oder Notebooks gewährleistet sein.
-
-
+Bei der Applikation handelt es sich um eine Webanwendung, welche für mobile Endgeräte optimiert ist. Ein gutes Benutzererlebnis soll aber auch auf anderen Endgeräten wie PCs oder Notebooks gewährleistet sein. Die Applikation befindet sich in einer isolierten Applikationslandschaft mit ledigilich einem DBS als Umsystem. Als Rahmenbedingung wird angenommen, dass dieses DBS alle Daten liefern kann welche von Requirements verlangt werden.
 
 \chapter{System-Requirements Spezifikation}
 
 \section{Functional Requirements}
 \subsection{UC1: Dashboard}
 \paragraph{[1.1] Darstellung Dashboard}
-Das System soll beim starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen darstellen. (Siehe Requirement [1.4]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
+Das System soll beim starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen und Statistiken darstellen. (Siehe Requirement [1.4]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
  	
 \paragraph{[1.2] Dashboard Konfiguration}
-Das System soll einen Menu-Punkt zur verfügung stellen der die Konfiguration des Dashboards erlaubt. 
+Das System soll einen Menu-Punkt zur Verfügung stellen der die Konfiguration des Dashboards erlaubt. Dies beinhaltet: 
+\begin{itemize}
+\item Wieviele Kacheln dargestellt werden (Bis zu einem Maximum von 6).\\
+\item Welche Kennzahlen/Statistiken in Kacheln dargestellt werden.\\
+\item In welcher Reihenfolge diese angezeigt werden\\
+\end{itemize}
+
 \paragraph{[1.3] Schnittstelle DBS}
+Die Applikation soll in der Lage sein, Daten von einem Dezentralen DBS zu laden und anzuzeigen. 
+
 \paragraph{[1.4] Kennzahlen}
- 
+Alle Kennzahlen sind jeweils auf Frei wählbare Zeitspannen zu berechnen. Als Beispiel soll es möglich sein die Personalausfälle von heute sowie auch Personalausfälle vom März letzten Jahres einsehen zu können. Folgende Kennzahlen werden von der Applikation unterstützt:
+\begin{itemize}
+\item Personelles: verfügbares Personal, nicht verfügbares Personal (Ferien etc.), unvorhergesehene Personalausfälle (Krankheit, Unfall o.ä.)\\
+\item Medizinisches: Besondere Vorkomnisse(Medikamentenverweigerungen, Gewalttaten, Suizidversuche), Eintritte, Austritte, Aktuelle Patientenzahl) \\
+\item Finanzielles: Aufwand, Ertrag, Cash Flow\\
+\end{itemize}
+
 \section{Non-Functional Requirements}
 \paragraph{[2.1] Performance: Starten der Applikation}
 Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applikation das Dashboard anzuzeigen. (4 Sekunden sollten genügen um die relevanten Daten zu laden und anzuzeigen. Ausserdem ist es genügend kurz um den Benutzer nicht zu belasten)
 \footnote{http://www.hobo-web.co.uk/your-website-design-should-load-in-4-seconds/}
 
 \paragraph{[2.1] Stabilität: Ausführung der Applikation}
-Die Applikation soll im Betrieb möglichst nie abstürzen. Treten Fehler auf, dann maximal der maximal der Kategorie 4.
+Die Applikation soll im Betrieb keine Fehler aufweisen, welche die Kategorie 4 der FMEA übersteigen. Falls doch solche Fehler auftrettem müssen diese gemäss Requirement 2.2 behoben werden. 
 \footnote{Ackermann, Urs. 2015. Skript Betriebswirtschaftslehre 2. S. 208}
+
+\paragraph{[2.2] Maintanance: Fehler behebung}
+Der Rollout und Delivery-Prozess muss ermöglichen Schwerwiegende Fehler (> FMEA Kat. 4) innerhalb nützlicher Frist (2 Arbeitstage) zu beheben.
+
+\paragraph{[2.3] Datensicherheit}
+Die Datensicherheit muss vom DBS gewährleistet werden. Die Applikation ist nicht verantwortlich für die Integrität und Sicherheit jeglicher daten.
+ 
+\paragraph{[2.4] Security}
+Dia Applikation soll die sensitiven Daten mittels HTTPS abhörsicher übertragen. 
 
 \section{Domain Requirements}
 \subsection{Branchenspezifisch}

@@ -211,20 +211,20 @@ Alle Kennzahlen sind jeweils auf frei wählbare Zeitspannen zu berechnen. Als Be
 Folgende Kennzahlen werden von der Applikation unterstützt:
 \begin{itemize}
 \item Personelles: verfügbares Personal, nicht verfügbares Personal (Ferien etc.), unvorhergesehene Personalausfälle (Krankheit, Unfall o.ä.)
-\item Medizinisches: Besondere Vorkomnisse (Medikamentenverweigerungen, Gewalttaten, Suizidversuche), Eintritte, Austritte, Aktuelle Patientenzahl)
+\item Medizinisches: Besondere Vorkommnisse (Medikamentenverweigerungen, Gewalttaten, Suizidversuche, Suizide), Eintritte, Austritte, Aktuelle Patientenzahl)
 \item Finanzielles: Aufwand, Ertrag, Cash Flow
 \end{itemize}
 
 \section{Non-Functional Requirements}
 \paragraph{[2.1] Performance: Starten der Applikation}
 Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applikation das Dashboard anzuzeigen. (4 Sekunden sollten genügen um die relevanten Daten zu laden und anzuzeigen. Ausserdem ist es genügend kurz um den Benutzer nicht zu belasten)
-\footnote{http://www.hobo-web.co.uk/your-website-design-should-load-in-4-seconds/}
+\footnote{Anderson, Shaun (2016). www.hobo-web.co.uk.}
 
 \paragraph{[2.1] Stabilität: Ausführung der Applikation}
 Die Applikation soll im Betrieb keine Fehler aufweisen, welche die Kategorie 4 der FMEA übersteigen. Falls doch solche Fehler auftreten, müssen diese gemäss Requirement 2.2 behoben werden. 
-\footnote{Ackermann, Urs. 2015. Skript Betriebswirtschaftslehre 2. S. 208}
+\footnote{Ackermann (2015). S.208.}
 
-\paragraph{[2.2] Maintanance: Fehler behebung}
+\paragraph{[2.2] Wartung: Fehlerbehebung}
 Der Rollout und Delivery-Prozess muss ermöglichen, schwerwiegende Fehler (\textgreater FMEA Kat. 4) innerhalb nützlicher Frist (2 Arbeitstage) zu beheben.
 
 \paragraph{[2.3] Datensicherheit}
@@ -245,7 +245,7 @@ Die Applikation soll die sensitiven Daten mittels HTTPS abhörsicher übertragen
 \subsection{Rechtlich}
 \paragraph{[3.4] Datenschutz} Einhalten der schweizerischen Datenschutzrichtlinien für den Umgang mit den Patientendaten.
 
-\paragraph{[3.5] Aufbewahrungspflicht} Einhalten der 10-Jährigen Datenaufbewahrungspflicht (je nach Gesellschaftsform nach Schweizer Recht vorgeschrieben \footnote{http://www.dieadvokatur.ch/fileadmin/user\_upload/Publikationen/Fachartikel/2013/Die\_rechtlichen \_Aspekte\_der\_elektronischen\_Archivierung.pdf}).
+\paragraph{[3.5] Aufbewahrungspflicht} Einhalten der 10-Jährigen Datenaufbewahrungspflicht (je nach Gesellschaftsform nach Schweizer Recht vorgeschrieben \footnote{RA Rigert, Christian und MLaw Seger, Alice (2013). www.dieadvokatur.ch.}).
 
 
 
@@ -280,20 +280,27 @@ Auswertungen werden um Big Data Funktionalitäten erweitert. So erhält der Benu
 
 \section{Verwendete Spezifikationen}
 \subsection{FMEA}
-Failure Mode and Effects Analysis für die Software wird bewertet anhand untenstehender Tablelle.
+Failure Mode and Effects Analysis für die Software wird bewertet anhand untenstehender Tablelle.\footnote{Ackermann (2015). S.208.}
 
 \includegraphics[width=1\textwidth]{img/fmea.png}
 
 
 
 \section{Quellen}
+\begin{table}[h]
+\label{tab_quellen}
+\begin{tabular}{llll}
+{\textbf{Referenz}} & {\textbf{Vollnachweis}} 							\\
+1         &  Anderson, Shaun (2016). How Fast Should A Website Load. http://www.hobo-web.co.uk/your-website-design-should-load-in-4-seconds/ (01.04.2016). \\
 
+2, 4      &  Ackermann, Urs. 2015. Betriebswirtschaftslehre 2. S.208.\\
 
+3         & RA Rigert, Christian und MLaw Seger, Alice (2013). R
+echtlichen Aspekte der elektronischen Datenaufbewahrung. http://www.dieadvokatur.ch/fileadmin/user\_upload/Publikationen/Fachartikel/2013/Die\_rechtlichen \_Aspekte\_der\_elektronischen\_Archivierung.pdf (01.04.2016).\\
 
 
 
 \chapter{Index}
-
 
 
 

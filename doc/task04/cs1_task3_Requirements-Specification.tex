@@ -122,7 +122,7 @@ Es existieren sechs Use-Cases, wo der Benutzer mit dem System interagiert:
 \item \textbf{Patientenakten lesen:} Manager sieht Patientenakten ein
 \end{enumerate}
 
-Es existieren zudem zwei Aktoren. Zum einen der Mail-Client, der auf den Endgerät vorausgesetzt wird, zum versenden von Reports und ein Datenbanksystem "DBS" (oder allenfalls mehrere Datenbanksysteme) als Datenquelle.
+Es existieren zudem zwei weitere Aktoren. Zum einen der zum Versenden der Reports benutzte Mail-Client, der auf den Endgerät vorausgesetzt wird, und ein Datenbanksystem "DBS" (oder allenfalls mehrere Datenbanksysteme) als Datenquelle.
 
 \bigskip
 
@@ -163,34 +163,57 @@ Nachfolgend sind Use-Case eins und drei noch genauer beschrieben.
 
 
 \chapter{System Architektur}
-Bei der Applikation handelt es sich um eine Webanwendung, welche für mobile Endgeräte optimiert ist. Ein gutes Benutzererlebnis soll aber auch auf anderen Endgeräten wie PCs oder Notebooks gewährleistet sein. Die Applikation befindet sich in einer isolierten Applikationslandschaft mit ledigilich einem DBS als Umsystem. Als Rahmenbedingung wird angenommen, dass dieses DBS alle Daten liefern kann welche von Requirements verlangt werden.
+Bei der Applikation handelt es sich um eine Webanwendung, welche für mobile Endgeräte optimiert ist. Ein gutes Benutzererlebnis soll aber auch auf anderen Endgeräten wie PCs oder Notebooks gewährleistet sein. Die Applikation befindet sich in einer isolierten Applikationslandschaft mit ledigilich einem DBS als Umsystem. Als Rahmenbedingung wird angenommen, dass dieses DBS alle Daten liefern kann, welche von Requirements verlangt werden.
 
 \chapter{System-Requirements Spezifikation}
 
 \section{Functional Requirements}
 \subsection{UC1: Dashboard}
 \paragraph{[1.1] Darstellung Dashboard}
-Das System soll beim starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen und Statistiken darstellen. (Siehe Requirement [1.4]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
+Das System soll beim Starten oder alternativ per Klick auf ein Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen und Statistiken darstellen. (Siehe Requirement [1.6]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
  	
 \paragraph{[1.2] Dashboard Konfiguration}
-Das System soll einen Menu-Punkt zur Verfügung stellen der die Konfiguration des Dashboards erlaubt. Dies beinhaltet: 
+Das System soll einen Menu-Punkt zur Verfügung stellen, der die Konfiguration des Dashboards erlaubt. Dies beinhaltet: 
 \begin{itemize}
-\item Wieviele Kacheln dargestellt werden (Bis zu einem Maximum von 6).\\
-\item Welche Kennzahlen/Statistiken in Kacheln dargestellt werden.\\
-\item In welcher Reihenfolge diese angezeigt werden\\
+\item Wieviele Kacheln dargestellt werden (Bis zu einem Maximum von 6).
+\item Welche Kennzahlen/Statistiken in Kacheln dargestellt werden.
+\item In welcher Reihenfolge diese angezeigt werden
 \end{itemize}
 
-\paragraph{[1.3] Schnittstelle DBS}
-Die Applikation soll in der Lage sein, Daten von einem Dezentralen DBS zu laden und anzuzeigen. 
-
-\paragraph{[1.4] Kennzahlen}
-Alle Kennzahlen sind jeweils auf Frei wählbare Zeitspannen zu berechnen. Als Beispiel soll es möglich sein die Personalausfälle von heute sowie auch Personalausfälle vom März letzten Jahres einsehen zu können. Folgende Kennzahlen werden von der Applikation unterstützt:
-\begin{itemize}
-\item Personelles: verfügbares Personal, nicht verfügbares Personal (Ferien etc.), unvorhergesehene Personalausfälle (Krankheit, Unfall o.ä.)\\
-\item Medizinisches: Besondere Vorkomnisse(Medikamentenverweigerungen, Gewalttaten, Suizidversuche), Eintritte, Austritte, Aktuelle Patientenzahl) \\
-\item Finanzielles: Aufwand, Ertrag, Cash Flow\\
-\end{itemize}
 \subsection{UC3: Reporting}
+\paragraph{[1.3] Reporting anzeigen}
+Das System soll via Menu-Punkt eine Reporting Funktionalität anbieten. Dazu wird eine Art Wizard gestartet, der in folgenden Schritten zum Report führt:
+\begin{enumerate}
+\item \textbf{Reporttyp wählen:} Gemäss den Kennzahlen kann jeweils ein Report erstellt werden (Siehe Requirement [1.6])
+\item \textbf{Zeitraum wählen:} Der Zeitraum kann frei gewählt werden. Insbesondere soll es möglich sein, individuelle Perioden (beispielsweise Quartal oder halbjährlich) zu definieren.
+\item (Optional) \textbf{Weiteren Zeitraum hinzufügen:} Falls Zeiträume verglichen werden sollen, besteht hier noch die Option, eine weitere Periode hinzuzufügen.
+\end{enumerate}
+Danach wird die Grafik angezeigt und in einer zweiten View die Primärdaten tabelarisch aufgelistet. Zwischen diesen Views kann zum Beispiel mit einer Swipe Geste oder Menu Buttons gewechselt werden. Falls einen weiteren Zeitraum ausgewählt wurde, werden die Grafiken und Daten einander gegenübergestellt.\\
+Desweitern soll beim generierten Report die Möglichkeiten bestehen, einen Shortcut für das Dashboard zu erstellen (Siehe Requirement [1.2]) oder den Report zu exportieren (Siehe Requirement [1.4]).
+
+\pagebreak
+
+\paragraph{[1.4] Report Export}
+Alle Reports sollen zum digitalen Versand, Ausdruck oder lokalen Abspeichern exportiert werden können. Dies beinhaltet folgende Formate
+\begin{itemize}
+\item \textbf{PDF:} Report als PDF
+\item \textbf{CSV:} Report als CSV
+\item \textbf{Mail:} Report kann mit vorausgesetzem Mail-Client direkt als PDF versandt werden
+\end{itemize}
+Zusätzlich kann gewählt werden, ob der Export Grafik, Primärdaten oder beides enthalten soll.
+
+\subsection{Allgemein}
+\paragraph{[1.5] Schnittstelle DBS}
+Die Applikation soll in der Lage sein, Daten von einem dezentralen DBS zu laden und anzuzeigen. 
+
+\paragraph{[1.6] Kennzahlen}
+Alle Kennzahlen sind jeweils auf frei wählbare Zeitspannen zu berechnen. Als Beispiel soll es möglich sein, die Personalausfälle von heute sowie auch Personalausfälle vom März letzten Jahres einsehen zu können. \\
+Folgende Kennzahlen werden von der Applikation unterstützt:
+\begin{itemize}
+\item Personelles: verfügbares Personal, nicht verfügbares Personal (Ferien etc.), unvorhergesehene Personalausfälle (Krankheit, Unfall o.ä.)
+\item Medizinisches: Besondere Vorkomnisse (Medikamentenverweigerungen, Gewalttaten, Suizidversuche), Eintritte, Austritte, Aktuelle Patientenzahl)
+\item Finanzielles: Aufwand, Ertrag, Cash Flow
+\end{itemize}
 
 \section{Non-Functional Requirements}
 \paragraph{[2.1] Performance: Starten der Applikation}
@@ -198,25 +221,25 @@ Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applik
 \footnote{http://www.hobo-web.co.uk/your-website-design-should-load-in-4-seconds/}
 
 \paragraph{[2.1] Stabilität: Ausführung der Applikation}
-Die Applikation soll im Betrieb keine Fehler aufweisen, welche die Kategorie 4 der FMEA übersteigen. Falls doch solche Fehler auftrettem müssen diese gemäss Requirement 2.2 behoben werden. 
+Die Applikation soll im Betrieb keine Fehler aufweisen, welche die Kategorie 4 der FMEA übersteigen. Falls doch solche Fehler auftreten, müssen diese gemäss Requirement 2.2 behoben werden. 
 \footnote{Ackermann, Urs. 2015. Skript Betriebswirtschaftslehre 2. S. 208}
 
 \paragraph{[2.2] Maintanance: Fehler behebung}
-Der Rollout und Delivery-Prozess muss ermöglichen Schwerwiegende Fehler (> FMEA Kat. 4) innerhalb nützlicher Frist (2 Arbeitstage) zu beheben.
+Der Rollout und Delivery-Prozess muss ermöglichen, schwerwiegende Fehler (\textgreater FMEA Kat. 4) innerhalb nützlicher Frist (2 Arbeitstage) zu beheben.
 
 \paragraph{[2.3] Datensicherheit}
-Die Datensicherheit muss vom DBS gewährleistet werden. Die Applikation ist nicht verantwortlich für die Integrität und Sicherheit jeglicher daten.
+Die Datensicherheit muss vom DBS gewährleistet werden. Die Applikation ist nicht verantwortlich für die Integrität und Sicherheit jeglicher Daten.
  
 \paragraph{[2.4] Security}
-Dia Applikation soll die sensitiven Daten mittels HTTPS abhörsicher übertragen. 
+Die Applikation soll die sensitiven Daten mittels HTTPS abhörsicher übertragen. 
 
 \section{Domain Requirements}
 \subsection{Branchenspezifisch}
-\paragraph{[3.1] Leistungsabrechnung} Implementieren der Standards für Leistungserfassung gemäss TARMED, damit die Verrechneten Leistungen überwacht werden können.
+\paragraph{[3.1] Leistungsabrechnung} Implementieren der Standards für Leistungserfassung gemäss TARMED, damit die verrechneten Leistungen überwacht werden können.
 
 \paragraph{[3.2] Meldepflicht} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten. Dies wird oft von Krankenkassen verlangt, wenn ihnen die vorhandenen Angaben nicht ausreichen.
 
-\paragraph{[3.3] Arztgeheimnis} Gewährleisten vom Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene. Ein Eintrag in der Patientenakte, welche ein Patient nur seinem Arzt vertraulich mitgeteilt hat, muss vor unerlaubten Zugriffen geschützt sein.
+\paragraph{[3.3] Arztgeheimnis} Gewährleisten des Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene. Ein Eintrag in der Patientenakte, welche ein Patient nur seinem Arzt vertraulich mitgeteilt hat, muss vor unerlaubten Zugriffen geschützt sein.
 
 
 \subsection{Rechtlich}

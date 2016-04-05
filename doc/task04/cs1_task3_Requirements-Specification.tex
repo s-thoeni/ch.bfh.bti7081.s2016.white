@@ -95,11 +95,11 @@ Der Änderungsverlauf der finalen Versionen dieses Dokuments ist hier aufgeliste
 
 Die Betreuung von Personen mit psychischen Störungen soll mit unserer Software vereinfacht werden. Die Zielkundschaft sind kleine bis grosse Einrichtungen für die Behandlung (ambulant und Hausbesuche) von Patienten mit psychischen Störungen.
 
-Wir fokussieren dabei auf Funktionen für das Management. Wir möchten Personen mit Führungsfunktion bei Planungsarbeiten, administrativen Tätigkeiten und Strategie-Entscheidungen unterstützen. Die Verwaltung und Auswertung von Patientendaten\index{Reporting!Auswertung von Patientendaten} (Behandlungshistorie und Verrechnung) steht dabei im Fokus. Zudem soll die Personalplanung\index{Personalplanung} mit der Patientenverwaltung verknüpf werden. Export\index{Patientenakten!Export} von Berichten für Partnerorganisationen und Behörden soll möglichst unkompliziert gestaltet werden.
+Der Fokus liegt dabei auf Funktionen für das Management. Wir möchten Personen mit Führungsfunktion bei Planungsarbeiten, administrativen Tätigkeiten und Strategie-Entscheidungen unterstützen. Die Verwaltung und Auswertung von Patientendaten\index{Reporting!Auswertung von Patientendaten} (Behandlungshistorie und Verrechnung) steht dabei im Fokus. Zudem soll die Personalplanung\index{Personalplanung} mit der Patientenverwaltung verknüpft werden. Export\index{Patientenakten!Export} von Berichten für Partnerorganisationen und Behörden soll möglichst unkompliziert gestaltet werden.
 
 \bigskip
 
-Unser Produkt ist rein für die Datenauswertung gedacht. Als Datenquellen\index{Datenquelle} nutzen wir eine bestehende Patientenverwaltung (mit Personalplanung und Verrechnung). Durch die gewonnen Erkenntnisse soll das Management ihre Strategie mit Fakten\index{Kennzahlen!Fakten} fundiert steuern können und im Alltag weniger administrativen Aufwand vorfinden. In er Gesundheitsbranche sollen damit Kosteneinsparungen erreicht werden. Ineffiziente Behandlungsarten können schneller erkannt und Patienten mit schlechten Behandlungserfolg besser überwacht werden.
+Unser Produkt ist rein für die Datenauswertung gedacht. Als Datenquellen\index{Datenquelle} nutzen wir eine bestehende Patientenverwaltung (mit Personalplanung und Verrechnung). Durch die gewonnenen Erkenntnisse soll das Management ihre Strategie mit Fakten\index{Kennzahlen!Fakten} fundiert steuern können und im Alltag weniger administrativen Aufwand vorfinden. In der Gesundheitsbranche sollen damit Kosteneinsparungen erreicht werden. Ineffiziente Behandlungsarten können schneller erkannt und Patienten mit schlechtem Behandlungserfolg besser überwacht werden.
 
 
 
@@ -110,11 +110,18 @@ Unser Produkt ist rein für die Datenauswertung gedacht. Als Datenquellen\index{
 {\textbf{Begriff}} 	& {\textbf{Beschreibung}} \\
 
 Dashboard			& Übersichtseite zu einem Themenbereich \\
-HIT 				& Health IT: Informatik-Sparte, die sich mit dem Gesundheitswesen auseinandersetzt \\
-MHC-PMS 			& Mental Health Care Patient Management System \\
 DBS 				& Database System \\
+FMEA 				& Failure Mode and Effects Analysis: Bewertung auftretender Fehler \\
+HIT 				& Health IT: Informatik-Sparte, die sich mit dem Gesundheitswesen auseinandersetzt \\
+HTTPS 				& Hypertext Transfer Protocol Secure: Abhörsichere Übertragung von Daten im Internet \\
+MHC-PMS 			& Mental Health Care Patient Management System \\
+Primärdaten			& Erfasste Daten in ihrer rohen Form \\
 Report				& Bericht / Auswertung \\
-Umsystem			&  	%auf letzter Zeile keine \\
+Rollout				& Einführung einer neuen Version \\
+TARMED				& Tarif Médical: Tarif für ärztliche Behandlung in der Schweiz \\
+Umsystem			& Bereich ausserhalb der Software, welche jedoch mit dieser in Verbindung stehen \\
+View				& Darstellung spezifischer Daten \\
+Wizard				& Assistenzprogramm \\
 
 
 \end{tabular}
@@ -149,7 +156,7 @@ Es existieren sechs Use-Cases, wo der Benutzer mit dem System interagiert:
 \item \textbf{Patientenakten\index{Patientenakten!Lesen} lesen:} Manager sieht Patientenakten ein
 \end{enumerate}
 
-Es existieren zudem zwei weitere Aktoren. Zum einen der zum Versenden der Reports benutzte Mail-Client, der auf den Endgerät vorausgesetzt wird, und ein Datenbanksystem "DBS" (oder allenfalls mehrere Datenbanksysteme) als Datenquelle.
+Es existieren zudem zwei weitere Aktoren. Zum einen der zum Versenden der Reports benutzte Mail-Client, der auf dem Endgerät vorausgesetzt wird, und ein Datenbanksystem "DBS" (oder allenfalls mehrere Datenbanksysteme) als Datenquelle.
 
 \bigskip
 
@@ -206,7 +213,7 @@ Bei der Applikation handelt es sich um eine Webanwendung\index{Webanwendung}, we
 \section{Functional Requirements}
 \subsection{UC1: Dashboard\index{Dashboard!Use-Case 1}}
 \paragraph{[1.1] Darstellung Dashboard\index{Dashboard!Anschauen}}
-Das System soll beim Starten oder alternativ per Klick auf ein Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen und Statistiken darstellen. (Siehe Requirement [1.6]) Desweiteren soll per Klick auf einen solchen Kachel der entsprechende Report angezeigt werden. 
+Das System soll beim Starten oder alternativ per Klick auf einen Menu-Punkt ein Dashboard anzeigen. Dieses Dashboard soll, in Kacheln dargestellt, konfigurierte Kennzahlen und Statistiken darstellen. (Siehe Requirement [1.6]) Desweiteren soll per Klick auf eine solche Kachel der entsprechende Report angezeigt werden. 
  	
 \paragraph{[1.2] Dashboard Konfiguration\index{Dashboard!Konfiguration}}
 Das System soll einen Menu-Punkt zur Verfügung stellen, der die Konfiguration des Dashboards erlaubt. Dies beinhaltet: 
@@ -224,8 +231,8 @@ Das System soll via Menu-Punkt eine Reporting Funktionalität anbieten. Dazu wir
 \item \textbf{Zeitraum wählen:} Der Zeitraum kann frei gewählt werden. Insbesondere soll es möglich sein, individuelle Perioden (beispielsweise Quartal oder halbjährlich) zu definieren.
 \item (Optional) \textbf{Weiteren Zeitraum hinzufügen:} Falls Zeiträume verglichen werden sollen, besteht hier noch die Option, eine weitere Periode hinzuzufügen.
 \end{enumerate}
-Danach wird die Grafik angezeigt und in einer zweiten View die Primärdaten tabelarisch aufgelistet. Zwischen diesen Views kann zum Beispiel mit einer Swipe Geste oder Menu Buttons gewechselt werden. Falls einen weiteren Zeitraum ausgewählt wurde, werden die Grafiken und Daten einander gegenübergestellt.\\
-Desweitern soll beim generierten Report die Möglichkeiten bestehen, einen Shortcut für das Dashboard zu erstellen (Siehe Requirement [1.2]) oder den Report zu exportieren (Siehe Requirement [1.4]).
+Danach wird die Grafik angezeigt und in einer zweiten View die Primärdaten tabellarisch aufgelistet. Zwischen diesen Views kann zum Beispiel mit einer Swipe Geste oder Menu Buttons gewechselt werden. Falls ein weiterer Zeitraum ausgewählt wurde, werden die Grafiken und Daten einander gegenübergestellt.\\
+Desweitern soll beim generierten Report die Möglichkeit bestehen, direkt eine Kachel auf dem Dashboard zu erstellen (Siehe Requirement [1.2]) oder den Report zu exportieren (Siehe Requirement [1.4]).
 
 \pagebreak
 
@@ -234,7 +241,7 @@ Alle Reports sollen zum digitalen Versand, Ausdruck oder lokalen Abspeichern exp
 \begin{itemize}
 \item \textbf{PDF:} Report als PDF
 \item \textbf{CSV:} Report als CSV
-\item \textbf{Mail:} Report kann mit vorausgesetzem Mail-Client direkt als PDF versandt werden
+\item \textbf{Mail:} Report kann mit vorausgesetztem Mail-Client direkt als PDF versandt werden
 \end{itemize}
 Zusätzlich kann gewählt werden, ob der Export Grafik, Primärdaten oder beides enthalten soll.
 
@@ -247,7 +254,7 @@ Alle Kennzahlen können jeweils auf frei wählbare Zeitspannen berechnet werden,
 Folgende Kennzahlen werden von der Applikation unterstützt:
 \begin{itemize}
 \item Personelles: verfügbares Personal, nicht verfügbares Personal (Ferien etc.), unvorhergesehene Personalausfälle (Krankheit, Unfall o.ä.)
-\item Medizinisches: Besondere Vorkommnisse (Medikamentenverweigerungen, Gewalttaten, Suizidversuche, Suizide), Eintritte, Austritte, Aktuelle Patientenzahl)
+\item Medizinisches: Besondere Vorkommnisse (Medikamentenverweigerungen, Gewalttaten, Suizidversuche, Suizide), Eintritte, Austritte, Aktuelle Patientenzahl
 \item Finanzielles: Aufwand, Ertrag, Cash Flow
 \end{itemize}
 
@@ -303,7 +310,7 @@ In zukünftigen Versionen könnten folgende erweiternde oder neue Funktionen imp
 \item Weitere Reports\index{Reporting!Neue Reports}\\
 Aufgrund von Rückmeldungen und Wünschen aus dem Daily Business können weitere Reports definiert werden.
 \item Eigene Reports definieren\index{Reporting!Report definieren}\\
-Der User kann direkt in der Applikation auf den vorhandenen Daten eigene Reports konfigurieren und abspeichern. Hierzu steht dem Benutzer ein Report-Designer zur Verfügung.
+Der User kann direkt in der Applikation aus den vorhandenen Daten eigene Reports konfigurieren und abspeichern. Hierzu steht dem Benutzer ein Report-Designer zur Verfügung.
 \item Big Data Funktionalitäten\index{Big Data} \\
 Auswertungen werden um Big Data Funktionalitäten erweitert. So erhält der Benutzer noch bessere und tiefere Einblicke in seine Daten und deren Zusammenhänge.
 \end{itemize}
@@ -317,7 +324,7 @@ Auswertungen werden um Big Data Funktionalitäten erweitert. So erhält der Benu
 
 \section{Verwendete Spezifikationen}
 \subsection{FMEA\index{FMEA}}
-Failure Mode and Effects Analysis für die Software wird bewertet anhand untenstehender Tablelle.\footnote{Ackermann (2015). S.208.}
+Failure Mode and Effects Analysis für die Software wird bewertet anhand untenstehender Tabelle.\footnote{Ackermann (2015). S.208.}
 
 
 \begin{figure}[htbp]

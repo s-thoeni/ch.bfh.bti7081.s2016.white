@@ -16,3 +16,8 @@ hs_err_pid*
 *.gz
 *.bak
 *.toc
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot

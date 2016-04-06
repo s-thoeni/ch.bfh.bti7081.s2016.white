@@ -149,7 +149,7 @@ Folgendes Diagramm zeigt die Use-Cases der Applikation.
 Es existieren sechs Use-Cases, wo der Benutzer mit dem System interagiert:
 \begin{enumerate}
 \item \textbf{Dashboard\index{Dashboard!Anschauen} anschauen:} Daten werden aufbereitet und auf dem Dashboard angezeigt
-\item \textbf{Dashboard\index{Dashboard!Konfiguration} konfigurieren:} Manager personalisiert sein persönliches Dashboard je nach Anforderungen individuell
+\item \textbf{Dashboard\index{Dashboard!Konfiguration} konfigurieren:} Manager personalisiert sein Dashboard je nach Anforderungen individuell
 \item \textbf{Reports\index{Reporting!Reporsts einsehen} einsehen:} Manager lässt Report zur Einsicht generieren
 \item \textbf{Reports\index{Reporting!Reports exportieren} exportieren:} Generierte Reports werden zum digitalen Versand, Ausdruck oder lokalen Abspeichern exportiert.
 \item \textbf{Aktuelle Personalplanung\index{Personalplanung!Anschauen} anschauen:} Manager sieht aktuelle Personalplanung an
@@ -263,24 +263,24 @@ Folgende Kennzahlen werden von der Applikation unterstützt:
 Das System soll nicht länger als 4 Sekunden benötigen um nach Start der Applikation das Dashboard anzuzeigen. (4 Sekunden sollten genügen um die relevanten Daten zu laden und anzuzeigen. Ausserdem ist es genügend kurz um den Benutzer nicht zu belasten)
 \footnote{Anderson, Shaun (2016). www.hobo-web.co.uk.}
 
-\paragraph{[2.1] Stabilität: Ausführung der Applikation}
-Die Applikation soll im Betrieb keine Fehler aufweisen, welche die Kategorie 4 der FMEA\index{FMEA} übersteigen. Falls doch solche Fehler auftreten, müssen diese gemäss Requirement 2.2 behoben werden. 
+\paragraph{[2.2] Stabilität: Ausführung der Applikation}
+Die Applikation soll im Betrieb keine Fehler aufweisen, welche die Kategorie 4 der FMEA\index{FMEA} übersteigen. Falls doch solche Fehler auftreten, müssen diese gemäss Requirement 2.3 behoben werden. 
 \footnote{Ackermann (2015). S.208.}
 
-\paragraph{[2.2] Wartung: Fehlerbehebung}
+\paragraph{[2.3] Wartung: Fehlerbehebung}
 Der Rollout und Delivery-Prozess muss ermöglichen, schwerwiegende Fehler (\textgreater FMEA Kat. 4) innerhalb nützlicher Frist (2 Arbeitstage) zu beheben.
 
-\paragraph{[2.3] Datensicherheit\index{Sicherheit!Datensicherheit}}
+\paragraph{[2.4] Datensicherheit\index{Sicherheit!Datensicherheit}}
 Die Datensicherheit muss vom DBS gewährleistet werden. Die Applikation ist nicht verantwortlich für die Integrität und Sicherheit jeglicher Daten.
  
-\paragraph{[2.4] Übertragungssicherheit\index{Sicherheit!Übertragsungssicherheit}}
-Die Applikation soll die sensitiven Daten mittels HTTPS abhörsicher übertragen. 
+\paragraph{[2.5] Übertragungssicherheit\index{Sicherheit!Übertragsungssicherheit}}
+Die Applikation soll Daten mittels HTTPS verschlüsselt übertragen. 
 
 \section{Domain Requirements}
 \subsection{Branchenspezifisch}
 \paragraph{[3.1] Leistungsabrechnung\index{Leistungsverrechnung}} Implementieren der Standards für Leistungserfassung gemäss TARMED, damit die verrechneten Leistungen überwacht werden können.
 
-\paragraph{[3.2] Meldepflicht\index{Reporting!Reports exportieren!Meldepflicht}} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten. Dies wird oft von Krankenkassen verlangt, wenn ihnen die vorhandenen Angaben nicht ausreichen.
+\paragraph{[3.2] Meldepflicht\index{Reporting!Reports exportieren!Meldepflicht}} Ermöglichen von Exports der Behandlungshistorie aus den Patientendaten. Dies wird von Krankenkassen verlangt, wenn ihnen die vorhandenen Angaben nicht ausreichen.
 
 \paragraph{[3.3] Arztgeheimnis\index{Arztgeheimnis}} Gewährleisten des Arztgeheimnis durch Implementation von Berechtigungsstrukturen auf Benutzerebene. Ein Eintrag in der Patientenakte, welche ein Patient nur seinem Arzt vertraulich mitgeteilt hat, muss vor unerlaubten Zugriffen geschützt sein.
 

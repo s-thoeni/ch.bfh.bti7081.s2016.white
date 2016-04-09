@@ -26,7 +26,8 @@
 | 2016-03-30 | all attendants | Preparing the presentation of our results of task03					|
 | 2016-03-30 | thons1, eller1 | presented results in class											|
 | 2016-04-01 | all attendants | Writing Software Requirements Document								|
-| 2016-04-06 | shepd1, sprim5 | Preparing presentation & presented results in class
+| 2016-04-06 | shepd1, sprim5 | Preparing presentation & presented results in class					|
+| 2016-04-06 | all attendants | Review Requirements Specification Team orange						|
 | 2016-04-08 | all attendants | Preparing task06													|
 | 2016-04-08 | sidlm3		  | Presented task06													|
 

@@ -30,6 +30,7 @@
 | 2016-04-06 | all attendants | Review Requirements Specification Team orange						|
 | 2016-04-08 | all attendants | Preparing task06													|
 | 2016-04-08 | sidlm3		  | Presented task06													|
+| 2016-04-15 | all attendants | workshop: working on CS1 task07	in group							|
 
 
 

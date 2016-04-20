@@ -14,7 +14,7 @@
 
 \titlehead{\includegraphics[scale=2]{../templates/logo_en}}
 \subject{Software Engineering and Design}
-\title{Document Title}
+\title{System Model}
 \subtitle{Mental Health Care Patient Management System (MHC-PMS)}
 \author{
 \begin{tabular}{l}
@@ -44,7 +44,7 @@ Thöni Stefan
 
 \paragraph{Configuration} als Klasse beinhaltet die benutzerspezifische Konfiguration der Applikation. Dies sind hauptsächlich Dashboard-Konfigurationen. Diese Daten werden serverseitig gespeichert, damit diese Geräte-Unabhägig überall gleich sind - egal ob der Benutzer mit seinem Tablet, seinem Smartphone oder seiner Workstation auf die Applikation zugreift.
 
-\paragraph{Dashboard} bildet die logische Komponente des Dashboards ab, welches auch ein zentraler Bestandteil des GUI's ist. Das Dashboard ist an sich unabhängig vom Dashboard. Lediglich über die Grafische Oberfläche haben sich die beiden Klassen eine gewisse Abhängigkeit. Die ist aber in der Programm-Logik nicht nötig.
+\paragraph{Dashboard} bildet die logische Komponente des Dashboards ab, welches auch ein zentraler Bestandteil des GUI's ist. Das Dashboard ist an sich unabhängig von den Reports. Lediglich über die Grafische Oberfläche haben sich die beiden Klassen eine gewisse Abhängigkeit. Die ist aber in der Programm-Logik nicht implementiert.
 
 \paragraph{Report} ist die Klasse, welche die Auswertungen der Daten ausführt. Daher besteht eine Abhängigkeit zur Klasse Record. Ein Report kann auf mehrere Datenrecords zugreifen um seine Auswertungen bereitzustellen.
 

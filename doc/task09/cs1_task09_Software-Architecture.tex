@@ -12,7 +12,7 @@
 \addtokomafont{date}{\flushleft}
 \addtokomafont{publishers}{\flushleft}
 
-%\titlehead{\includegraphics[scale=2]{../templates/logo_en}}
+\titlehead{\includegraphics[scale=2]{../templates/logo_en}}
 \subject{Software Engineering and Design}
 \title{Software Architecture}
 \subtitle{Mental Health Care Patient Management System (MHC-PMS)}
@@ -40,22 +40,23 @@ Thöni Stefan
 
 \chapter{Übersicht}
 
-\section{Systemanforderungen}
+\section{Systemrequirements}
+Dieser Abschnitt beschreibt, welche Requirements im Projekt umgesetzt werden und wie die Umsetzung aussieht (siehe Dokument Requirements-Specification aus Task 4). Wir konzentrieren uns auf die Functional Requirements.
 
-\subsection{Datenpersisenz}
-Damit die Daten dauerhaft gespeichert werden, wird ein Container benötigt, welcher die Daten der Applikation beinhaltet. 
+\subsection{Darstellung Dashboard}
+Die Darstellung des Dashboards wird im Presentation Layer realisiert.
 
-Dazu gehören sämtliche Benutzerdaten (inkl. Dashboard-Konfiguration), Patientendaten, Mitarbeiterdaten und Finanzdaten.
+\subsection{Konfiguration Dashboard}
+Der veränderbare Teil der Daten beschränkt sich auf die benutzerspezifischen Konfigurationen des Dashboards. Damit die \textbf{Datenpersistenz} gewährleistet wird, wird ein Container benötigt, welcher diese Daten abspeichert. Die Benutzerkonfiguration legen wir daher in einer Datenbank ab. Es ist angedacht, die Datenbank auf dem gleichen Server zu betreiben, der auch die Datenquelle fürs Reporting enthält.
 
+\subsection{Reporting anzeigen}
+Die Anzeige der Reports wird im Presentation Layer realisiert.
 
-Die Aufbewahrungspflicht wird im Datenbank-Backend realisiert.
+\subsection{Schnittstelle DBS} 
+Die Daten, welche fürs Reporting verwendet werden, sind nicht in Verantwortung der Applikation und es wird bloss lesend darauf zugegriffen. Die Anbindung wird im Data Access Layer umgesetzt.
 
-
-
-DB Daten sind nicht in Verantwortung der Applikation. zweite DB für User-Konfig.	
-
-
-\section{•}
+\subsection{Kennzahlen}
+Die Quelldaten fürs die Berechnung der Kennzahlen, werden aus einer externen Datenquelle geholt (Siehe Schnittstelle DBS).
 
 
 
@@ -80,13 +81,17 @@ Die Applikation basiert zudem auf dem Client-Server Pattern. Clientseitige Zugri
 
 
 \section{Presentation Layer}
+Für die Bereitstellung der grafische Oberfläche nutzen wir Vaadin. 
 
 
 
 \section{Business Logic Layer}
 
 
+
 \section{Data Access Layer}
+Dieser Layer realisiert die Anbindung an das Datenbank-Backend. Wir verwenden JDBC um die Verbindung auf das Datenbanksystem (DBS) herzustellen. Als DBS verwenden wir einen MySQL-Server (bzw. den kompatiblen MariaDB-Server).
+
 
 
 

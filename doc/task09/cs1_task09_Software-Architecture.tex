@@ -69,7 +69,7 @@ Für die Gesamtarchitektur verwenden wir das Layering Pattern. Die Applikation w
 
 
 \paragraph{MVP Pattern}
-Die Grafischen Komponenten strukturieren wir nach dem MVP-Pattern.
+Die Grafischen Komponenten strukturieren wir nach dem MVP-Pattern. 
 
 
 \paragraph{Client Server Pattern}
@@ -88,21 +88,23 @@ Für die Bereitstellung der grafische Oberfläche nutzen wir Vaadin. In diesem L
 
 
 \section{Business Logic Layer}
-Im Business Logic Layer werden die Daten aufbereitet und fürs Reporting.
+Im Business Logic Layer werden die Daten aggregiert und fürs Reporting aufbereitet.
 
 
 \section{Data Access Layer}
 Dieser Layer realisiert die Anbindung an das Datenbank-Backend. Die Daten aus der Datenbank werden in entsprechenden Klassen abgebildet.
-Wir verwenden JDBC um die Verbindung auf das Datenbanksystem (DBS) herzustellen. Als DBS verwenden wir einen MySQL-Server (bzw. den kompatiblen MariaDB-Server).
+Wir verwenden JDBC um die Verbindung auf das Datenbanksystem (DBS) herzustellen. Als DBS verwenden wir einen MySQL-Server (bzw. den kompatiblen MariaDB-Server). Das System kann aufgrund der Layering-Architektur auch mit relativ wenig Aufwand ausgetauscht werden.
 
 
 
 \pagebreak
 
-\includegraphics[width=1\textwidth]{img/architecture_overview_1.png}
-\includegraphics[width=1\textwidth]{img/architecture_overview_2.png}
-\includegraphics[width=1\textwidth]{img/architecture_overview_3.png}
+\includegraphics[width=1\textwidth]{img/architecture_overview.png}
 
+\bigskip
+
+Die Architektur ist durch das Layering sehr flexibel aufgebaut. Die Komponenten können mit relativ wenig Aufwand ausgetausch werden. Zudem erlaubt es die Implementationsarbeiten unter den Teammitgliedern aufzuteilen, ohne dass die einzelnen Arbeiten in Konflikt geraten.
+Das Erweitern der Funktionalitäten für zukünftige Versionen wird ebenfalls vereinfacht durch das Layering-Modell.
 
 
 \end{document}

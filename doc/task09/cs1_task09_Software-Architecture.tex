@@ -68,39 +68,40 @@ Die Quelldaten fürs die Berechnung der Kennzahlen, werden aus einer externen Da
 Für die Gesamtarchitektur verwenden wir das Layering Pattern. Die Applikation wird aufgeteilt in die Layer \textit{Presentation}, \textit{Business Logic} und \textit{Data Access}. Zudem existiert der Layer \textit{Model}. Dieser zieht sich über alle Layers hinweg und enthält die Model-Logik aus dem MVC-Pattern.
 
 
-\paragraph{MVC Pattern}
-Die Grundstruktur des MVC-Pattern wird durch Vaadin implementiert. Die Klassen von Model, View und Controller werden für diese Applikation erstellt. Vaadin gibt hierzu aber die Vorgaben, wie das gemacht werden muss.
+\paragraph{MVP Pattern}
+Die Grafischen Komponenten strukturieren wir nach dem MVP-Pattern.
 
 
 \paragraph{Client Server Pattern}
 Die Applikation basiert zudem auf dem Client-Server Pattern. Clientseitige Zugriff geschieht via Web-Browser. Die dazu benötigte Logik stellt das Framework Vaadin bereit.
 
 \bigskip
+Als DBS verwenden wir einen MySQL-Server (bzw. den kompatiblen MariaDB-Server).
 
-\includegraphics[width=0.7\textwidth]{img/vaadin-arch.png}
+
+\includegraphics[width=0.7\textwidth]{img/vaadin-arch.png} \footnote{https://vaadin.com}
 
 
 \section{Presentation Layer}
-Für die Bereitstellung der grafische Oberfläche nutzen wir Vaadin. 
+Für die Bereitstellung der grafische Oberfläche nutzen wir Vaadin. In diesem Layer verwenden wir das MVP-Pattern zur Umsetzung der Grafischen Oberfläche.
 
 
 
 \section{Business Logic Layer}
-
+Im Business Logic Layer werden die Daten aufbereitet und fürs Reporting.
 
 
 \section{Data Access Layer}
-Dieser Layer realisiert die Anbindung an das Datenbank-Backend. Wir verwenden JDBC um die Verbindung auf das Datenbanksystem (DBS) herzustellen. Als DBS verwenden wir einen MySQL-Server (bzw. den kompatiblen MariaDB-Server).
+Dieser Layer realisiert die Anbindung an das Datenbank-Backend. Die Daten aus der Datenbank werden in entsprechenden Klassen abgebildet.
+Wir verwenden JDBC um die Verbindung auf das Datenbanksystem (DBS) herzustellen. Als DBS verwenden wir einen MySQL-Server (bzw. den kompatiblen MariaDB-Server).
 
 
 
+\pagebreak
 
-\section{Model Layer}
-
-
-
-
-
+\includegraphics[width=1\textwidth]{img/architecture_overview_1.png}
+\includegraphics[width=1\textwidth]{img/architecture_overview_2.png}
+\includegraphics[width=1\textwidth]{img/architecture_overview_3.png}
 
 
 

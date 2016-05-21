@@ -8,8 +8,8 @@ import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.comp.TileComponent;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.comp.TileComponentImpl;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
+
 
 public class DashboardPresenter implements DashboardView.DashboardViewListener {
 

@@ -30,4 +30,17 @@ public class DashboardProvider {
 		facade = new ReportFacadeImpl();
 		this.reports = facade.getReports(types, ReportTimeframe.YESTERDAY, true);	
 	}
+	
+	/**
+	 * returns the report corresponding to the given name. 
+	 * @param name
+	 * @return Report or null if not found
+	 */
+	public Report getReportByName(String name){
+		for(Report report: reports){
+			if(report.getName().equals(name))
+				return report;
+		}
+		return null;
+	}
 }

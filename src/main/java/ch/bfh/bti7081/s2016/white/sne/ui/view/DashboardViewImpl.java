@@ -11,8 +11,8 @@ import com.vaadin.ui.UI;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.comp.TileComponent;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.comp.TileComponentImpl;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
 
 public class DashboardViewImpl extends CustomComponent implements DashboardView{

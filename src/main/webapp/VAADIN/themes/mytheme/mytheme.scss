@@ -34,5 +34,12 @@
 @mixin mytheme {
   @include valo;
 
-  // Insert your own theme rules here
+  .dashboard .v-absolutelayout {
+    border-style: solid;
+    border-color: black;
+    border-radius: 3px;
+    border-width: 1px;
+    padding: 5px;
+    margin: 3px;
+   }
 }

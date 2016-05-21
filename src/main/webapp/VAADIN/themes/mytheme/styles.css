@@ -12932,3 +12932,12 @@ div.v-layout.v-horizontal.v-widget {
 	width: 19px;
 	overflow: hidden;
 }
+
+.mytheme .dashboard .v-absolutelayout {
+	border-style: solid;
+	border-color: black;
+	border-radius: 3px;
+	border-width: 1px;
+	padding: 5px;
+	margin: 3px;
+}

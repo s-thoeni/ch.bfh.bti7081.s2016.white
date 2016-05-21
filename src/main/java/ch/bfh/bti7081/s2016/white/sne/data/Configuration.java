@@ -2,12 +2,22 @@ package ch.bfh.bti7081.s2016.white.sne.data;
 
 import java.util.List;
 
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+
 public class Configuration {
 
-	private List<Report> dashboardReports;
+	private ReportType[] dashboardReports;
 	private List<Alarm> alarms;
 
-	public Configuration(List<Report> dashboardReports, List<Alarm> alarms) {
+	/**
+	 * Instantiate a empty configuration
+	 */
+	public Configuration(){
+		this.dashboardReports = null;
+		this.alarms = null;
+	}
+	
+	public Configuration(ReportType[] dashboardReports, List<Alarm> alarms) {
 		this.dashboardReports = dashboardReports;
 		this.alarms = alarms;
 	}
@@ -16,20 +26,20 @@ public class Configuration {
 
 	}
 
-	public List<Report> getDashboardReports() {
-		return this.dashboardReports;
-	}
-
-	public void setDashboardReports(List<Report> dashboardReports) {
-		this.dashboardReports = dashboardReports;
-	}
-
 	public List<Alarm> getAlarms() {
 		return this.alarms;
 	}
 
 	public void setAlarms(List<Alarm> alarms) {
 		this.alarms = alarms;
+	}
+
+	public ReportType[] getDashboardReportTypes() {
+		return dashboardReports;		
+	}
+	
+	public void setReportTypes(ReportType[] types){
+		this.dashboardReports = types;
 	}
 
 }

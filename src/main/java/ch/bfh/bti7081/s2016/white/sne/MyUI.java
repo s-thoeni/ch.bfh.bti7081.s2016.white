@@ -7,11 +7,19 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
+import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -27,19 +35,23 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
+        Label lbl = new Label("Menu");
+        lbl.setWidth("100%");
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-
-        Button button = new Button("Click Me");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
-        });
+        // is 100% default
+        lbl.setWidth(null);
+        layout.addComponent(lbl);
+        layout.setComponentAlignment(lbl,Alignment.TOP_CENTER);
         
-        layout.addComponents(name, button);
-        layout.setMargin(true);
-        layout.setSpacing(true);
+        
+        //FIXME: DUMMY CONFIGURATION
+        Configuration config = new Configuration();
+        config.setReportTypes(new ReportType[]{ReportType.AVAILABLE_EMPLOYEES, ReportType.CASHFLOW, ReportType.EFFORT, ReportType.ENTRIES_EXITS, ReportType.INCIDENTS, ReportType.PATIENS});
+        
+        DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl());
+        
+        layout.addComponent(db.getView());                
+        layout.setComponentAlignment(db.getView(), Alignment.MIDDLE_CENTER);
         
         setContent(layout);
     }

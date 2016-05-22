@@ -6,8 +6,8 @@ import java.util.Date;
 public class Report {
 
 	private List<Record> records;
-	private Record summary;
-	private String reportName;
+	private String summary;
+	private String name;
 	private Date from;
 	private Date to;
 
@@ -19,20 +19,20 @@ public class Report {
 		this.records = reports;
 	}
 
-	public Record getSummary() {
+	public String getSummary() {
 		return this.summary;
 	}
 
-	public void setSummary(Record summary) {
+	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-
-	public String getReportName() {
-		return this.reportName;
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setReportName(String reportName) {
-		this.reportName = reportName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getFrom() {
@@ -52,3 +52,4 @@ public class Report {
 	}
 
 }
+

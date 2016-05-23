@@ -7,6 +7,7 @@ import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.Configuration.DashboardReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
@@ -25,8 +26,12 @@ public class DashboardProvider {
 		return reports;
 	}
 
-	public DashboardProvider(Configuration config) {		
-		ReportType[] types = config.getDashboardReportTypes();
+	public DashboardProvider(Configuration config) {
+		
+		List<DashboardReportConfig> reportConfigurations = config.getReports();
+				
+		//ToDo: Shit with List<DashboardReportConfig> for DashboardProvider -> Presenter and so on...
+		
 		facade = new ReportFacadeImpl();
 		this.reports = facade.getReports(types, ReportTimeframe.YESTERDAY, true);	
 	}

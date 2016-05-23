@@ -2,23 +2,51 @@ package ch.bfh.bti7081.s2016.white.sne.data;
 
 import java.util.List;
 
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
 public class Configuration {
+	
+	public class DashboardReportConfig {
+		private ReportType dashboardReport;
+		private ReportTimeframe dashboardReportsspan;
+	
+		public DashboardReportConfig(ReportType dashboardReports,ReportTimeframe dashboardReportsspan) {
+			this.dashboardReport = dashboardReports;
+			this.dashboardReportsspan = dashboardReportsspan;
+		}
+		
+		public ReportType getDashboardReportType() {
+			return dashboardReport;		
+		}
+		
+		public void setReportType(ReportType type){
+			this.dashboardReport = type;
+		}
+		
+		public ReportTimeframe getDashboardReportTime() {
+			return dashboardReportsspan;
+		}
+		
+		public void setReportTime(ReportTimeframe span) {
+			this.dashboardReportsspan = span;
+		}
+		
+	}
 
-	private ReportType[] dashboardReports;
+	private List<DashboardReportConfig> reports;
 	private List<Alarm> alarms;
 
 	/**
 	 * Instantiate a empty configuration
 	 */
 	public Configuration(){
-		this.dashboardReports = null;
+		this.reports = null;
 		this.alarms = null;
 	}
 	
-	public Configuration(ReportType[] dashboardReports, List<Alarm> alarms) {
-		this.dashboardReports = dashboardReports;
+	public Configuration(List<DashboardReportConfig> reports, List<Alarm> alarms) {
+		this.reports = reports;
 		this.alarms = alarms;
 	}
 
@@ -33,13 +61,13 @@ public class Configuration {
 	public void setAlarms(List<Alarm> alarms) {
 		this.alarms = alarms;
 	}
-
-	public ReportType[] getDashboardReportTypes() {
-		return dashboardReports;		
+	
+	public List<DashboardReportConfig> getReports() {
+		return this.reports;
 	}
 	
-	public void setReportTypes(ReportType[] types){
-		this.dashboardReports = types;
+	public void setReports(List<DashboardReportConfig> reports) {
+		this.reports = reports;
 	}
 
 }

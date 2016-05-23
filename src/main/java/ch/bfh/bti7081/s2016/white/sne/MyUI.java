@@ -48,7 +48,7 @@ public class MyUI extends UI {
         Configuration config = new Configuration();
         config.setReportTypes(new ReportType[]{ReportType.AVAILABLE_EMPLOYEES, ReportType.CASHFLOW, ReportType.EFFORT, ReportType.ENTRIES_EXITS, ReportType.INCIDENTS, ReportType.PATIENS});
         
-        DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl());
+        DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(), layout);
         
         layout.addComponent(db.getView());                
         layout.setComponentAlignment(db.getView(), Alignment.MIDDLE_CENTER);

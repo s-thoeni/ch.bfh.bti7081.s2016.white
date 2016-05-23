@@ -10,6 +10,10 @@ public class Report {
 	private String name;
 	private Date from;
 	private Date to;
+	
+	public Report(String name) {
+		this.name = name;
+	}
 
 	public List<Record> getRecords() {
 		return this.records;

@@ -1,28 +1,25 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
-import java.util.Date;
+import com.vaadin.ui.Component;
 
-import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportView;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportViewListener;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportViewImpl;
 
-public class ReportPresenter implements ReportViewListener {
+public class ReportPresenter implements ReportView.ReportViewListener {
 
-	private ReportProvider provider;
+	private ReportProvider model;
 	private ReportView view;
 
-	public ReportPresenter(ReportProvider provider, ReportView view) {
-		this.provider = provider;
+	public ReportPresenter(ReportProvider model, ReportView view) {
+		this.model = model;
 		this.view = view;
 		
 		this.view.addListener(this);
 	}
-
-	public void filterClicked() {
-		// TODO(jan): implement this method
-		Report report = this.provider.getIncidents(new Date(), new Date());
-		this.view.setReport(report);
+	
+	public Component getView() {
+		return (ReportViewImpl)this.view;
 	}
 
 }

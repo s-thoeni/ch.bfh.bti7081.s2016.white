@@ -1,43 +1,21 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.model;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
-import java.util.Date;
+import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 
 public class ReportProvider {
 
 	private ReportFacade facade;
 	
-	public ReportProvider(ReportFacade facade) {
-		this.facade = facade;
+	public ReportProvider() {
+		this.facade = new ReportFacadeImpl();
 	}
 	
-	public Report getAvailableEmployees(Date from, Date to) {
-		return this.facade.getAvailableEmployees(from, to);
-	}
-
-	public Report getSickLeaves(Date from, Date to) {
-		return this.facade.getSickLeaves(from, to);
-	}
-
-	public Report getIncidents(Date from, Date to) {
-		return this.facade.getIncidents(from, to);
-	}
-
-	public Report getEntriesExits(Date from, Date to) {
-		return this.facade.getEntriesExits(from, to);
-	}
-
-	public Report getPatientCount(Date from, Date to) {
-		return this.facade.getPatientCount(from, to);
-	}
-
-	public Report getEffort(Date from, Date to) {
-		return this.facade.getEffort(from, to);
-	}
-
-	public Report getCashFlow(Date from, Date to) {
-		return this.facade.getCashFlow(from, to);
+	public Report getReportByTypeAndTimeFrame(ReportType type, ReportTimeframe timeFrame) {
+		return this.facade.getReport(type, timeFrame);
 	}
 
 }

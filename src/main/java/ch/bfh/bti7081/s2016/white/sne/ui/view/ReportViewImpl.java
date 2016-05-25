@@ -13,6 +13,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 
+import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
 public class ReportViewImpl extends CustomComponent implements ReportView {
@@ -34,16 +35,24 @@ public class ReportViewImpl extends CustomComponent implements ReportView {
 		Configuration conf = chart.getConfiguration();
 		conf.setTitle("Incidents");
 		
+		List<Number> values = new ArrayList<Number>();
+		List<String> categories = new ArrayList<String>();
+		for (Record record : report.getRecords()) {
+			int value = values.get(record.getDate().getDate()).intValue();
+			++value;
+			values.add(record.getDate().getDate(), value);
+			categories.add(record.getDate().getDate(), record.getDate().toString());
+		}
+		
 		ListSeries series = new ListSeries("Incidents");
-		series.setData(2700, 3400, 12000, 4000, 2, 891, 25, 6798, 1337, 7331, 7, 11);
+		series.setData(values);
 		conf.addSeries(series);
 		
 		XAxis xAxis = new XAxis();
-		xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+		for (String category : categories) {
+			xAxis.addCategory(category);
+		}
 		conf.addxAxis(xAxis);
-		
-		YAxis yAxis = new YAxis();
-		conf.addyAxis(yAxis);
 		
 		GridLayout layout = new GridLayout(4, 5);
 		layout.addComponent(titleLabel, 0, 0, 3, 0);

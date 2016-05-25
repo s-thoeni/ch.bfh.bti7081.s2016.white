@@ -4,26 +4,17 @@ import java.util.Date;
 
 public abstract class Record {
 
-	private Date from;
-	private Date to;
+	private Date date;
 	private int summary;
 
-	public Date getFrom() {
-		return this.from;
+	public Date getDate() {
+		return this.date;
 	}
 
-	public void setFrom(Date from) {
-		this.from = from;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
-	public Date getTo() {
-		return this.to;
-	}
-	
-	public void setTo(Date to) {
-		this.to = to;
-	}
-
 	public int getSummary() {
 		return this.summary;
 	}

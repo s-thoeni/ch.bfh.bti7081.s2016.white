@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
@@ -27,21 +28,13 @@ public class DashboardProvider {
 
 	public DashboardProvider(Configuration config) {
 		List<DashboardReportConfig> reportConfigurations = config.getReports();
-				
-		//ToDo: Shit with List<DashboardReportConfig> for DashboardProvider -> Presenter and so on...
-		
-		ReportType[] types = new ReportType[reportConfigurations.size()];
-		ReportTimeframe[] spans = new ReportTimeframe[reportConfigurations.size()];
-		
-		for(int i = 0; i < reportConfigurations.size(); i++) {
-			types[i] = reportConfigurations.get(i).getDashboardReportType();
-			spans[i] = reportConfigurations.get(i).getDashboardReportTime();
-		}
 		
 		facade = new ReportFacadeImpl();
 		
-		//FIXME
-		this.reports = facade.getReports(types, ReportTimeframe.YESTERDAY, true);
+		this.reports = new ArrayList<Report>();
+		for(DashboardReportConfig conf: reportConfigurations){
+			this.reports.add(facade.getReport(conf.getDashboardReportType(), conf.getDashboardReportTime()));
+		}
 	}
 	
 	/**

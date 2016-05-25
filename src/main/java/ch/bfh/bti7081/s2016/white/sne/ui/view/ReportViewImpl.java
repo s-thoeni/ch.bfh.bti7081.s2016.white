@@ -1,6 +1,7 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.vaadin.addon.charts.Chart;
@@ -8,7 +9,6 @@ import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.XAxis;
-import com.vaadin.addon.charts.model.YAxis;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -35,13 +35,27 @@ public class ReportViewImpl extends CustomComponent implements ReportView {
 		Configuration conf = chart.getConfiguration();
 		conf.setTitle("Incidents");
 		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(report.getFrom());
+		int startDate = calendar.get(Calendar.DAY_OF_YEAR);
+		calendar.setTime(report.getTo());
+		int endDate = calendar.get(Calendar.DAY_OF_YEAR);
+
 		List<Number> values = new ArrayList<Number>();
 		List<String> categories = new ArrayList<String>();
+		for (int i = 0; i <= (endDate-startDate); i++) {
+			calendar.setTime(report.getFrom());
+			calendar.add(Calendar.DAY_OF_YEAR, i);
+			values.add(0);
+			categories.add(Integer.toString(calendar.get(Calendar.DAY_OF_YEAR)));
+		}
+		
 		for (Record record : report.getRecords()) {
-			int value = values.get(record.getDate().getDate()).intValue();
+			calendar.setTime(record.getDate());
+			int index = calendar.get(Calendar.DAY_OF_YEAR)-startDate;
+			int value = values.get(index).intValue();
 			++value;
-			values.add(record.getDate().getDate(), value);
-			categories.add(record.getDate().getDate(), record.getDate().toString());
+			values.set(index, value);
 		}
 		
 		ListSeries series = new ListSeries("Incidents");

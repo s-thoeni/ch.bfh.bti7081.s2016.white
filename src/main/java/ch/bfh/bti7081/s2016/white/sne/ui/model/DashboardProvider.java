@@ -33,7 +33,7 @@ public class DashboardProvider {
 		//ToDo: Shit with List<DashboardReportConfig> for DashboardProvider -> Presenter and so on...
 		
 		facade = new ReportFacadeImpl();
-		this.reports = facade.getReports(types, ReportTimeframe.YESTERDAY, true);	
+		//this.reports = facade.getReports(types, ReportTimeframe.YESTERDAY, true);	
 	}
 	
 	/**

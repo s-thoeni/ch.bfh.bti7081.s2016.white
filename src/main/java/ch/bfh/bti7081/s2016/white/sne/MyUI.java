@@ -15,11 +15,16 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
+import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.ReportPresenter;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportView;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportViewImpl;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -45,6 +50,7 @@ public class MyUI extends UI {
         
         
         //FIXME: DUMMY CONFIGURATION
+        /*
         Configuration config = new Configuration();
         config.setReportTypes(new ReportType[]{ReportType.AVAILABLE_EMPLOYEES, ReportType.CASHFLOW, ReportType.EFFORT, ReportType.ENTRIES_EXITS, ReportType.INCIDENTS, ReportType.PATIENS});
         
@@ -52,7 +58,13 @@ public class MyUI extends UI {
         
         layout.addComponent(db.getView());                
         layout.setComponentAlignment(db.getView(), Alignment.MIDDLE_CENTER);
-        
+        */
+
+		ReportProvider reportModel = new ReportProvider();
+		ReportView reportView = new ReportViewImpl(reportModel.getReportByTypeAndTimeFrame(ReportType.INCIDENTS, ReportTimeframe.LAST_WEEK));
+		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
+		
+		layout.addComponent(reportPresenter.getView());
         setContent(layout);
     }
 

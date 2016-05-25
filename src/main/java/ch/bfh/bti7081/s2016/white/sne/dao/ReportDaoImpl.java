@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
@@ -29,10 +30,17 @@ public class ReportDaoImpl implements ReportDao {
 		result.setTo(to);
 		
 		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(to);
+		int endDate = calendar.get(Calendar.DAY_OF_YEAR);
+		calendar.setTime(from);
+		int startDate = calendar.get(Calendar.DAY_OF_YEAR);
 		
 		List<Record> records = new ArrayList<Record>();
+		Random rand = new Random();
 		
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < 1000; ++i) {
+			calendar.setTime(from);
+			calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate-startDate+1));
 			PatientRecord record = new PatientRecord();
 			record.setIncident("Incident" + i);
 			record.setDate(calendar.getTime());

@@ -11,8 +11,8 @@ public class Configuration {
 		private ReportType dashboardReport;
 		private ReportTimeframe dashboardReportsspan;
 	
-		public DashboardReportConfig(ReportType dashboardReports,ReportTimeframe dashboardReportsspan) {
-			this.dashboardReport = dashboardReports;
+		public DashboardReportConfig(ReportType dashboardReport,ReportTimeframe dashboardReportsspan) {
+			this.dashboardReport = dashboardReport;
 			this.dashboardReportsspan = dashboardReportsspan;
 		}
 		

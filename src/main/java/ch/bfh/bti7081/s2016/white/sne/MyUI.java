@@ -14,7 +14,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
@@ -45,8 +47,8 @@ public class MyUI extends UI {
         
         
         //FIXME: DUMMY CONFIGURATION
-        Configuration config = new Configuration();
-        config.setReportTypes(new ReportType[]{ReportType.AVAILABLE_EMPLOYEES, ReportType.CASHFLOW, ReportType.EFFORT, ReportType.ENTRIES_EXITS, ReportType.INCIDENTS, ReportType.PATIENS});
+        User user = null;
+        Configuration config = new ConfigurationFacadeImpl().getConfig(user);
         
         DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(), layout);
         

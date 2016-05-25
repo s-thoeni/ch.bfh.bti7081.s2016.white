@@ -11,18 +11,38 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacade;
+import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacadeImpl;
+import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
+import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.ConfigurationPresenter;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
+
 
 @SuppressWarnings("serial")
 public class UiLayout extends SlideMenuView {
+	private static final String USER = "T-Boy!";
+	private Configuration config; 
 	
 	public UiLayout() {
 		final VerticalLayout root = new VerticalLayout();
+		root.setSizeFull();
+		
 		root.setMargin(true);
 		root.setSpacing(true);
+		root.setHeight("100%");
+		root.setWidth("100%");
 		setContent(root);
 
 		getNavigationBar().setCaption("header");
 
+		// TODO: this layout should also implement the glorious mvp pattern!
+		// Get the user-config: 
+		ConfigurationFacade configFacade = new ConfigurationFacadeImpl();
+		this.config = configFacade.getConfig(new User(USER));
+		
 		// add menu items
 		buildMenu();
 
@@ -61,7 +81,10 @@ public class UiLayout extends SlideMenuView {
 		});
 		getMenu().addComponent(close);
 
-		
+		Label user = new Label("Hi! " + USER);
+		user.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
+		getMenu().addComponent(user);
+
 
 		// Buttons with styling (slightly smaller with left-aligned text)
 		Button b = new Button("Dashboard");
@@ -75,20 +98,15 @@ public class UiLayout extends SlideMenuView {
 
 				// TODO automate with the nav listener
 				getMenu().close();
-
+				
+				DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl());
 				// Only this button actually does something in the menu. Here we
 				// navigate to a dummy view.
-				getNavigationManager().navigateTo(new NavigationView() {
-					private static final long serialVersionUID = 7226460754270812124L;
-
-					{
-						setContent(new Label("another view"));
-						setCaption("DashBoard");
-					}
-				});
+				UiLayout.this.setContent(db.getView());
+				//getNavigationManager().navigateTo(db.getView());
 			}
 		});
-
+		
 		// Section labels have a bolded style
 		Label l = new Label("Human Resources");
 		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
@@ -125,11 +143,29 @@ public class UiLayout extends SlideMenuView {
 		
 		l = new Label("Settings:");
 		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-		getMenu().addComponent(l);
+		getMenu().addComponent(l);			
 
 		b = new Button("Options");
 		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-		getMenu().addComponent(b);
+		getMenu().addComponent(b);		
+		
+		b.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				// TODO automate with the nav listener
+				getMenu().close();
+				
+				ConfigurationProvider prov = new ConfigurationProvider(new User(USER));
+				ConfigurationView view = new ConfigurationViewImpl();
+				ConfigurationPresenter cv = new ConfigurationPresenter(prov,view);
+				// Only this button actually does something in the menu. Here we
+				// navigate to a dummy view.
+				UiLayout.this.setContent(cv.getView());
+				//getNavigationManager().navigateTo(db.getView());
+			}
+		});
 		
 	}
 }

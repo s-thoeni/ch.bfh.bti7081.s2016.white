@@ -20,6 +20,7 @@ public class MyUI extends UI {
 		setContent(layout);
 
 		final UiLayout view = new UiLayout();
+
 		layout.navigateTo(view);
 
     }

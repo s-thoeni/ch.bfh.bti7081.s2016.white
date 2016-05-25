@@ -10,9 +10,6 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView.DashboardViewListene
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
-
-
-
 public class ConfigurationViewImpl extends CustomComponent implements ConfigurationView{
 	private GridLayout grid;
 	

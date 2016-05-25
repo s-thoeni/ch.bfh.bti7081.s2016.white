@@ -3,7 +3,10 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.vaadin.thomas.slidemenu.SlideMenuView;
+
 import com.vaadin.ui.AbsoluteLayout;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Notification;
@@ -42,7 +45,7 @@ public class DashboardViewImpl extends CustomComponent implements DashboardView{
 		this.setWidth(null);
 
 		// The composition root MUST be set
-		setCompositionRoot(grid);
+		super.setCompositionRoot(grid);
 	}	
 
 
@@ -64,4 +67,10 @@ public class DashboardViewImpl extends CustomComponent implements DashboardView{
 		listeners.add(listener);
 	}
 
+
+
+	@Override
+	public void navigateTo(Component component) {
+		super.setCompositionRoot(component);
+	}
 }

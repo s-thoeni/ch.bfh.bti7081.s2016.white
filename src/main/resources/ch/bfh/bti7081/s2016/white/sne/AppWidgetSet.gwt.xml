@@ -1,0 +1,12 @@
+<module>
+
+    <inherits name="org.vaadin.thomas.slidemenu.SlidemenuWidgetset" />
+
+    <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
+
+    <inherits name="com.vaadin.addon.charts.Widgetset" />
+
+    <inherits name="com.vaadin.DefaultWidgetSet" />
+
+    <inherits name="ch.bfh.bti7081.s2016.white.sne.MyAppWidgetset" />
+</module>

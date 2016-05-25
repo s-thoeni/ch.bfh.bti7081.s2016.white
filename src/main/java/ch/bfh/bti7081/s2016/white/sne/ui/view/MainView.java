@@ -25,8 +25,9 @@ public class MainView extends CustomComponent {
 
 		// Add some Views
 		// NOTE: First View should have empty "" name
-		navigator.addView(MenuView.NAME, new MenuView());
-		navigator.addView("ConfigurationView", ConfigurationView.class);
-		//navigator.addView("DashboardViewImpl", new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(), layout));
+		//navigator.addView(MenuView.NAME, new MenuView());
+		//navigator.addView("ConfigurationView", ConfigurationViewImpl.class);
+
+		//navigator.addView("DashboardViewImpl", );
 	}
 }

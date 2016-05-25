@@ -1,6 +1,5 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
-
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
@@ -16,10 +15,9 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	ConfigurationView view;
 	VerticalLayout layout;
 	
-	public ConfigurationPresenter(ConfigurationProvider model, ConfigurationView view, VerticalLayout layout) {
+	public ConfigurationPresenter(ConfigurationProvider model, ConfigurationView view) {
 		this.model = model;
 		this.view = view;
-		this.layout = layout;
 		
 		Configuration config = model.getConfig();
 		
@@ -48,7 +46,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	}
 	
 	public Component getView() {
-		return (ConfigurationViewImpl) this.view;
+		return (Component) this.view;
 	}
 	
 	

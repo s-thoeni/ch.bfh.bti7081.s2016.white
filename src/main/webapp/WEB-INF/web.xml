@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+  id="WebApp_ID" version="2.4"
+  xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+     http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <servlet>
+    <servlet-name>MyUiServlet</servlet-name>
+    <servlet-class>
+        com.vaadin.server.VaadinServlet
+    </servlet-class>
+    <init-param>
+      <param-name>UI</param-name>
+      <param-value>ch.bfh.bti7081.s2016.white.sne.MyUI</param-value>
+    </init-param>
+    <init-param>
+      <param-name>productionMode</param-name>
+      <param-value>false</param-value>
+    </init-param>
+
+    <!-- If not using the default widget set -->
+    <init-param>
+      <param-name>widgetset</param-name>
+      <param-value>org.vaadin.thomas.slidemenu.SlidemenuWidgetset</param-value>
+    </init-param>
+  </servlet>
+  
+  <!-- example servlet from Slidemenu Addon -->
+  <servlet>
+    <servlet-name>exampleservlet</servlet-name>
+    <servlet-class>
+        com.vaadin.server.VaadinServlet
+    </servlet-class>
+
+    <init-param>
+      <param-name>UI</param-name>
+      <param-value>org.vaadin.thomas.slidemenu.SlidemenuUI</param-value>
+    </init-param>
+
+    <!-- If not using the default widget set-->
+    <init-param>
+      <param-name>widgetset</param-name>
+      <param-value>org.vaadin.thomas.slidemenu.SlidemenuWidgetset</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MyUiServlet</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+</web-app>

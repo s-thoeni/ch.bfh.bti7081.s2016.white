@@ -5,4 +5,8 @@
     <inherits name="com.vaadin.DefaultWidgetSet"/>
 
     <inherits name="com.vaadin.addon.charts.Widgetset" />
+
+    <inherits name="org.vaadin.thomas.slidemenu.SlidemenuWidgetset" />
+
+    <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
 </module>

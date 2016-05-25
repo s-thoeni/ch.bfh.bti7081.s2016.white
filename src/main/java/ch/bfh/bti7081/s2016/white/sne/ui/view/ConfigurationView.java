@@ -1,11 +1,13 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TwinColSelect;
 
 
 @SuppressWarnings("serial")
-public class ConfigurationView extends CustomComponent {
+public class ConfigurationView extends CustomComponent implements View {
 	
 	public ConfigurationView() {
 		TwinColSelect tileSelect = new TwinColSelect();
@@ -23,6 +25,12 @@ public class ConfigurationView extends CustomComponent {
         
         setCompositionRoot(tileSelect);
 
+	}
+
+	@Override
+	public void enter(ViewChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

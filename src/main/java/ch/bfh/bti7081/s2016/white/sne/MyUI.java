@@ -6,7 +6,8 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
-import ch.bfh.bti7081.s2016.white.sne.ui.view.UiLayout;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.UiPresenter;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.UiLayoutImpl;
 
 
 
@@ -19,9 +20,11 @@ public class MyUI extends UI {
     	final NavigationManager layout = new NavigationManager();
 		setContent(layout);
 
-		final UiLayout view = new UiLayout();
-
-		layout.navigateTo(view);
+		
+		final UiLayoutImpl ul = new UiLayoutImpl();
+		UiPresenter up = new UiPresenter(ul);
+		
+		layout.navigateTo(ul);
 
     }
 

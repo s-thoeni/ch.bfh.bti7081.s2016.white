@@ -5,8 +5,13 @@ import java.util.List;
 
 import org.vaadin.thomas.slidemenu.SlideMenuView;
 
+import com.vaadin.addon.touchkit.gwt.client.vcom.navigation.NavigationViewState;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.server.Responsive;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Notification;
@@ -18,34 +23,39 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
 
-public class DashboardViewImpl extends CustomComponent implements DashboardView{
+public class DashboardViewImpl extends SneMenuView implements DashboardView{
 	
-	private GridLayout grid;
+	private CssLayout grid;
 	private List<TileComponent> tiles;
 	
 	private List<DashboardViewListener> listeners;
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public DashboardViewImpl() {
+	public DashboardViewImpl(Configuration config) {
+		super(config);
+		
+		getNavigationBar().setCaption("Dashboard");
+		
 		this.tiles = new ArrayList<TileComponent>();
 		this.listeners = new ArrayList<DashboardViewListener>();
 		
-		this.grid = new GridLayout(1, 6);
-		grid.setMargin(false);
-		grid.setSpacing(true);
-		grid.setWidth("100%");
-		grid.setHeight("100%");
+		this.grid = new CssLayout();
+		//grid.setMargin(false);
+		//grid.setSpacing(false);
+		//grid.setWidth(null);
+		//grid.setHeight(null);
 
-		grid.setStyleName("dashboard");
-		
-		this.setWidth(null);
+		this.setStyleName("slidemenu");
+		grid.setStyleName("responsive-db");
+		//this.setWidth(null);
+		grid.setSizeFull();
+
+		Responsive.makeResponsive(grid);
+
 
 		// The composition root MUST be set
-		super.setCompositionRoot(grid);
+		this.setContent(grid);
 	}	
 
 
@@ -67,10 +77,12 @@ public class DashboardViewImpl extends CustomComponent implements DashboardView{
 		listeners.add(listener);
 	}
 
-
-
 	@Override
 	public void navigateTo(Component component) {
-		super.setCompositionRoot(component);
+		getNavigationManager().navigateTo(component);
 	}
+	
+	public NavigationManager getNavigationManager() {
+		 return super.getNavigationManager();
+	 }
 }

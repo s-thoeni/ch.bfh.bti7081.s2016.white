@@ -9,10 +9,10 @@
 		<description>Vaadin production mode</description>
 		<param-name>productionMode</param-name>
 		<param-value>false</param-value>
-	</context-param>
+	</context-param>	  
 	<servlet>
 		<servlet-name>Layout</servlet-name>
-		<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+		<servlet-class>ch.bfh.bti7081.s2016.white.sne.SneServlet</servlet-class>
 		<init-param>
 			<description>Sne layout</description>
 			<param-name>UI</param-name>

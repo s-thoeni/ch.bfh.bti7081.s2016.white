@@ -3,15 +3,18 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView.DashboardViewListener;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
-public class ConfigurationViewImpl extends CustomComponent implements ConfigurationView{
-	private GridLayout grid;
+public class ConfigurationViewImpl extends NavigationView implements ConfigurationView{
+	private VerticalLayout grid;
 	
 	private List<ConfigSet> configSets;
 	private List<ConfigurationViewListener> listeners;
@@ -25,18 +28,18 @@ public class ConfigurationViewImpl extends CustomComponent implements Configurat
 		this.configSets = new ArrayList<ConfigSet>();
 		this.listeners = new ArrayList<ConfigurationViewListener>();
 		
-		this.grid = new GridLayout(1, 6);
-		grid.setMargin(false);
-		grid.setSpacing(true);
+		this.grid = new VerticalLayout();
+		
 		grid.setWidth("100%");
 		grid.setHeight("100%");
 
 		grid.setStyleName("dashboard");
 		
 		this.setWidth(null);
-
+		//grid.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
 		
-		setCompositionRoot(grid);
+		
+		this.setContent(grid);
 	}
 	
 	@Override

@@ -63,6 +63,9 @@ public class ReportFacadeImpl implements ReportFacade {
 		
 		// FIXME: Add exception handling
 		if(result == null) return null;
+		result.setFrom(from);
+		result.setTo(to);
+		
 		if(calculateSummary) 
 			aggregateSummary(result);
 		return result;

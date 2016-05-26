@@ -30,7 +30,7 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 		List<Report> reports = model.getReports();
 
 		for(Report r: reports){
-			TileComponentImpl tile = new TileComponentImpl(r.getName(), r.getSummary(), r.getName());
+			TileComponentImpl tile = new TileComponentImpl(r.getName(), r.getSummary(), r.getFrom(), r.getTo(), r.getName());
 			view.addTile(tile);
 		}
 		
@@ -40,7 +40,7 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 	@Override
 	public void tileClick(String id) {
 		ReportProvider reportModel = new ReportProvider();
-		ReportViewImpl reportView = new ReportViewImpl(reportModel.getReportByTypeAndTimeFrame(ReportType.INCIDENTS, ReportTimeframe.LAST_WEEK));
+		ReportViewImpl reportView = new ReportViewImpl(model.getReportByName(id));
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);	
 		this.view.navigateTo(reportPresenter.getView());
 	}

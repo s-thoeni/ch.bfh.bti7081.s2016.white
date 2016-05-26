@@ -33,7 +33,13 @@ public class DashboardProvider {
 		
 		this.reports = new ArrayList<Report>();
 		for(DashboardReportConfig conf: reportConfigurations){
-			this.reports.add(facade.getReport(conf.getDashboardReportType(), conf.getDashboardReportTime()));
+			//System.out.println(conf.getDashboardReportType());
+			try {
+				this.reports.add(facade.getReport(conf.getDashboardReportType(), conf.getDashboardReportTime(), true));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -44,6 +50,7 @@ public class DashboardProvider {
 	 */
 	public Report getReportByName(String name){
 		for(Report report: reports){
+			//System.out.println(report.getName());
 			if(report.getName().equals(name))
 				return report;
 		}

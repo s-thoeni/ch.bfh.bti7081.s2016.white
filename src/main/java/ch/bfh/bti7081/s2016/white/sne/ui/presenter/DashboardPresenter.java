@@ -22,8 +22,7 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 	DashboardProvider model;
 	DashboardView view;
 	
-	public DashboardPresenter(DashboardProvider model, DashboardView view){
-
+	public DashboardPresenter(DashboardProvider model, DashboardViewImpl view){
 		this.model = model;
 		this.view  = view;
 		

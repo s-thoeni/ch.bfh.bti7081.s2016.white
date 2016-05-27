@@ -23,7 +23,7 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
 
-public class DashboardViewImpl extends SneMenuView implements DashboardView{
+public class DashboardViewImpl extends SneMenuViewImpl implements DashboardView{
 	
 	private CssLayout grid;
 	private List<TileComponent> tiles;

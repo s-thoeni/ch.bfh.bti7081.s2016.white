@@ -1,9 +1,12 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.view.components;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
@@ -16,6 +19,8 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private static final SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+	
 	private Label reportName;
 	
 	private Label reportSummary;
@@ -24,6 +29,8 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 	
 	// Listeners:
 	private List<TileClickListener> listeners = new ArrayList<TileClickListener>();
+
+	private Label timeframe;
 	
 	/**
 	 * Displayes a rectangle with a title and a value. The event when clicked on a tile consist of only the id of the clicked tile.
@@ -33,7 +40,7 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 	 * @param value - the value to be displayed
 	 * @param id - the id returned when the tile is clicked
 	 */
-	public TileComponentImpl(String title, String value, String id){
+	public TileComponentImpl(String title, String value, Date from, Date to, String id){
 		this.listeners = new ArrayList<TileClickListener>();
 		this.id = id;
 		
@@ -42,26 +49,31 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 		int height = UI.getCurrent().getPage().getBrowserWindowHeight();
 		
 		//init all labels:
-		reportName = new Label(title);	
+		reportName = new Label("<b>" + title + "</b>", ContentMode.HTML);	
 		reportSummary = new Label(value);
+		
+		timeframe = new Label(sf.format(from) + " - " + sf.format(from));
 		
 		reportName.setWidth(null);
 		reportSummary.setWidth(null);
+		timeframe.setWidth(null);
 		
+
 		// position and add relevant components:		
 		AbsoluteLayout container = new AbsoluteLayout();
 		
 		//this id will be returned when event is triggered
 		container.setId(id);
-		container.addComponent(reportName, "left: 10px; top: 20px");
-		container.addComponent(reportSummary, "right: 10px; bottom: 50px");
-
+		container.addComponent(reportName, "left: 5px; top: 7px");
+		container.addComponent(reportSummary, "right: 10px; bottom: 20px");
+		container.addComponent(timeframe, "right: 10px; top: 7px");
+		
 		// used later on
 		container.addLayoutClickListener(e -> tileClicked(e));
 		
 		// Set size of the tile:
-		container.setWidth(width - 40 + "px");
-		container.setHeight(height / 6 - 20 + "px");		
+		container.setWidth(width - 20 + "px");
+		container.setHeight(height / 6 - 15 + "px");		
 		
 		setCompositionRoot(container);		
 	}
@@ -74,7 +86,7 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 
 	@Override
 	public void setTitle(String title) {
-		reportName.setValue(title);
+		reportName.setValue("<b>" + title + "</b>");
 	}
 
 	@Override
@@ -82,6 +94,11 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 		reportSummary.setValue(value);
 	}
 
+	@Override
+	public void setTimeframe(Date from, Date to) {
+		timeframe.setValue(sf.format(from) + "-" + sf.format(from));
+	}
+	
 	@Override
 	public void addListener(TileClickListener listener) {
 		listeners.add(listener);		

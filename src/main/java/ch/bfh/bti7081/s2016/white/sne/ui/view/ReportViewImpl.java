@@ -9,6 +9,7 @@ import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.XAxis;
+import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -16,7 +17,7 @@ import com.vaadin.ui.Label;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
-public class ReportViewImpl extends CustomComponent implements ReportView {
+public class ReportViewImpl extends NavigationView implements ReportView {
 
 	// TODO(jan): Verify that this serialVersionUID makes sense
 	private static final long serialVersionUID = 2L;
@@ -24,8 +25,7 @@ public class ReportViewImpl extends CustomComponent implements ReportView {
 	private List<ReportViewListener> listeners = new ArrayList<ReportViewListener>();
 	
 	public ReportViewImpl(Report report) {
-		Label titleLabel = new Label("Report View");
-		titleLabel.setValue(report.getName());
+		getNavigationBar().setCaption(report.getName());
 		
 		// TODO(jan): Load data for chart dynamically
 		Chart chart = new Chart(ChartType.LINE);
@@ -69,14 +69,12 @@ public class ReportViewImpl extends CustomComponent implements ReportView {
 		conf.addxAxis(xAxis);
 		
 		GridLayout layout = new GridLayout(4, 5);
-		layout.addComponent(titleLabel, 0, 0, 3, 0);
 		layout.addComponent(chart);
 		
-		this.setCompositionRoot(layout);
+		super.setContent(layout);
 	}
 
 	public void addListener(ReportViewListener listener) {
 		this.listeners.add(listener);
 	}
-
 }

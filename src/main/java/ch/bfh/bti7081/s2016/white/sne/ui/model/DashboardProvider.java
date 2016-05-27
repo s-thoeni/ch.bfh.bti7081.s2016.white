@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
@@ -33,9 +34,15 @@ public class DashboardProvider {
 		ReportType[] types = new ReportType[reportConfigurations.size()];
 		ReportTimeframe[] spans = new ReportTimeframe[reportConfigurations.size()];
 		
-		for(int i = 0; i < reportConfigurations.size(); i++) {
-			types[i] = reportConfigurations.get(i).getDashboardReportType();
-			spans[i] = reportConfigurations.get(i).getDashboardReportTime();
+		this.reports = new ArrayList<Report>();
+		for(DashboardReportConfig conf: reportConfigurations){
+			//System.out.println(conf.getDashboardReportType());
+			try {
+				this.reports.add(facade.getReport(conf.getDashboardReportType(), conf.getDashboardReportTime(), true));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		facade = new ReportFacadeImpl();
@@ -51,6 +58,7 @@ public class DashboardProvider {
 	 */
 	public Report getReportByName(String name){
 		for(Report report: reports){
+			//System.out.println(report.getName());
 			if(report.getName().equals(name))
 				return report;
 		}

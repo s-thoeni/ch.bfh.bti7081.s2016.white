@@ -5,7 +5,7 @@ public interface ReportView {
 	public interface ReportViewListener {
 				
 	}
-	
+		
 	public void addListener(ReportViewListener listener);
 	
 }

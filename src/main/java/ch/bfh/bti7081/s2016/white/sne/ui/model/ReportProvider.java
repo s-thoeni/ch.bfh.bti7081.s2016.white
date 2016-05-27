@@ -15,7 +15,7 @@ public class ReportProvider {
 	}
 	
 	public Report getReportByTypeAndTimeFrame(ReportType type, ReportTimeframe timeFrame) {
-		return this.facade.getReport(type, timeFrame);
+		return this.facade.getReport(type, timeFrame);		
 	}
 
 }

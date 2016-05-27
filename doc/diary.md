@@ -31,6 +31,13 @@
 | 2016-04-08 | all attendants | Preparing task06													|
 | 2016-04-08 | sidlm3		  | Presented task06													|
 | 2016-04-15 | all attendants | workshop: working on CS1 task07	in group							|
+| 2016-04-20 | all attendants | workshop: working on CS1 task07	in group							|
+| 2016-04-20 | thons1, shepd1 | presented domain model and sequence diagrams in class				|
+| 2016-05-11 | thons1, shepd1 | workshop: working on CS1 task09	in group							|
+| 2016-05-13 | thons1, eller1 | presented architecture overview in class							|
+| 2016-05-13 | all attendants | planning: create plan for sprint 1									|
+| 2016-05-27 | all attendants | Meeting: results of Sprint 1										|
+| 2016-05-27 | all attendants | planning: create plan for sprint 2									|
 
 
 

@@ -8,6 +8,7 @@ import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuViewImpl;
@@ -48,11 +49,9 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener{
 	@Override
 	public void showDashboard(Configuration config) {
 		menuClosed();
-		DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(config));
-		// Only this button actually does something in the menu. Here we
-		// navigate to a dummy view.
-		//view.setContent(db.getView());
-		 view.getNavigationManager().navigateTo(db.getView());
+		if(view instanceof DashboardView ) return;
+		 DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(config));
+		 view.getNavigationManager().navigateTo(view);
 		
 	}
 

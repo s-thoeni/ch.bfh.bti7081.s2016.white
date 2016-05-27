@@ -28,12 +28,9 @@ public class DashboardProvider {
 
 	public DashboardProvider(Configuration config) {
 		List<DashboardReportConfig> reportConfigurations = config.getReports();
+
+		facade = new ReportFacadeImpl();
 				
-		//ToDo: Shit with List<DashboardReportConfig> for DashboardProvider -> Presenter and so on...
-		
-		ReportType[] types = new ReportType[reportConfigurations.size()];
-		ReportTimeframe[] spans = new ReportTimeframe[reportConfigurations.size()];
-		
 		this.reports = new ArrayList<Report>();
 		for(DashboardReportConfig conf: reportConfigurations){
 			//System.out.println(conf.getDashboardReportType());
@@ -44,11 +41,6 @@ public class DashboardProvider {
 				e.printStackTrace();
 			}
 		}
-		
-		facade = new ReportFacadeImpl();
-		
-		//FIXME
-		this.reports = facade.getReports(types, ReportTimeframe.YESTERDAY, true);
 	}
 	
 	/**

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
+import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
@@ -27,9 +28,15 @@ public class ReportDaoImpl implements ReportDao {
 
 		for (int i = 0; i < 1000; ++i) {
 			calendar.setTime(from);
-			calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate + 1));
-			PatientRecord record = new PatientRecord();
-			record.setIncident("Incident" + i);
+			if ((endDate - startDate) > 0) {
+				calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate));
+			}
+			PersonalRecord record = new PersonalRecord();
+			record.setPersonName("John Doe");
+			record.setAvailable(rand.nextBoolean());
+			if (!record.isAvailable()) {
+				record.setUnavailableReason("Dead");
+			}
 			record.setDate(calendar.getTime());
 			records.add(record);
 		}
@@ -50,6 +57,7 @@ public class ReportDaoImpl implements ReportDao {
 		List<Record> records = new ArrayList<Record>();
 		Random rand = new Random();
 
+		// TODO(jan): mock this stuff for real
 		for (int i = 0; i < 1000; ++i) {
 			calendar.setTime(from);
 			calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate + 1));
@@ -77,7 +85,9 @@ public class ReportDaoImpl implements ReportDao {
 
 		for (int i = 0; i < 1000; ++i) {
 			calendar.setTime(from);
-			calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate + 1));
+			if ((endDate - startDate) > 0) {
+				calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate));
+			}
 			PatientRecord record = new PatientRecord();
 			record.setIncident("Incident" + i);
 			record.setDate(calendar.getTime());

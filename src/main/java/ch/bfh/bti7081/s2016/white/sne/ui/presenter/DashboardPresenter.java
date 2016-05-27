@@ -41,7 +41,7 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 	public void tileClick(String id) {
 		ReportProvider reportModel = new ReportProvider();
 		ReportViewImpl reportView = new ReportViewImpl(model.getReportByName(id));
-		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);	
+		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 		this.view.navigateTo(reportPresenter.getView());
 	}
 

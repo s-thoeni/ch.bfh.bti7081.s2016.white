@@ -10,10 +10,9 @@ YESTERDAY{
 		DatePair dp = new DatePair();
 		Calendar c = Calendar.getInstance();
 		
-		dp.setTo(new Date(c.getTimeInMillis()));
-		
 		c.add(Calendar.DATE, -1);
-		
+
+		dp.setTo(new Date(c.getTimeInMillis()));
 		dp.setFrom(new Date(c.getTimeInMillis()));
 		return dp;
 	}
@@ -43,7 +42,6 @@ YESTERDAY{
 		
 		dp.setTo(new Date(c.getTimeInMillis()));
 		
-		// TODO: Our week starts monday, correct?
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		
 		dp.setFrom(new Date(c.getTimeInMillis()));

@@ -10,6 +10,7 @@ import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.XAxis;
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -29,30 +30,27 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		
 		// TODO(jan): Load data for chart dynamically
 		Chart chart = new Chart(ChartType.LINE);
-		chart.setWidth("500px");
-		chart.setHeight("500px");
 		
 		Configuration conf = chart.getConfiguration();
-		conf.setTitle("Incidents");
+		conf.setTitle(report.getName());
+		
+		Calendar endTimeCalendar = Calendar.getInstance();
+		endTimeCalendar.setTime(report.getTo());
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(report.getFrom());
-		int startDate = calendar.get(Calendar.DAY_OF_YEAR);
-		calendar.setTime(report.getTo());
-		int endDate = calendar.get(Calendar.DAY_OF_YEAR);
 
 		List<Number> values = new ArrayList<Number>();
 		List<String> categories = new ArrayList<String>();
-		for (int i = 0; i <= (endDate-startDate); i++) {
-			calendar.setTime(report.getFrom());
-			calendar.add(Calendar.DAY_OF_YEAR, i);
+		while (endTimeCalendar.compareTo(calendar) >= 0) {
 			values.add(0);
 			categories.add(Integer.toString(calendar.get(Calendar.DAY_OF_YEAR)));
+			calendar.add(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
 		}
 		
 		for (Record record : report.getRecords()) {
 			calendar.setTime(record.getDate());
-			int index = calendar.get(Calendar.DAY_OF_YEAR)-startDate;
+			int index = endTimeCalendar.get(Calendar.DAY_OF_YEAR)-calendar.get(Calendar.DAY_OF_YEAR);
 			int value = values.get(index).intValue();
 			++value;
 			values.set(index, value);

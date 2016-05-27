@@ -17,7 +17,7 @@ public class Configuration {
 		}
 		
 		public ReportType getDashboardReportType() {
-			return dashboardReport;		
+			return dashboardReport;
 		}
 		
 		public void setReportType(ReportType type){

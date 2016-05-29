@@ -8,6 +8,7 @@ import java.util.Random;
 import ch.bfh.bti7081.s2016.white.sne.dao.ReportDao;
 import ch.bfh.bti7081.s2016.white.sne.dao.ReportDaoImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
@@ -107,5 +108,10 @@ public class ReportFacadeImpl implements ReportFacade {
 		//TODO: this is random stuff for now:
 		Random rnd = new Random();
 		report.setSummary("" + rnd.nextInt(10000));
+	}
+
+	@Override
+	public Report getReport(ReportType type, DatePair datePair) {
+		return getReport(type, datePair.getFrom(), datePair.getTo());
 	}
 }

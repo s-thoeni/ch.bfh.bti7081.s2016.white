@@ -19,3 +19,11 @@
 	padding-left: 2px;
 	margin-right: -2px;
 }
+
+.mytheme .v-formlayout-captioncell {
+	text-align: left;
+}
+
+.mytheme .v-formlayout-row {
+	padding-bottom: 10px;
+}

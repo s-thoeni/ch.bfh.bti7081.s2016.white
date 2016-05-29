@@ -78,6 +78,15 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 				
 
 		// Section labels have a bolded style
+		b = new Button("Reports");
+		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
+		getMenu().addComponent(b);
+		b.addClickListener((ClickEvent event) -> {
+			for (SneMenuListener listener : listeners)
+				listener.showReports();
+		});
+		
+		
 		Label l = new Label("Human Resources");
 		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
 		getMenu().addComponent(l);

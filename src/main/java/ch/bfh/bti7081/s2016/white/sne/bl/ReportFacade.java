@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
@@ -24,6 +25,8 @@ public interface ReportFacade {
 	public List<Report> getReports(ReportType[] types, ReportTimeframe timeframe, boolean calculateSummary);
 	
 	public List<Report> getReports(ReportType[] types, Date from, Date to, boolean calculateSummary);
+
+	public Report getReport(ReportType type, DatePair datePair);
 		
 }
 

@@ -52,4 +52,12 @@ $v-border: 1px solid (v-shade 0.7);
     padding-left: 2px;
     margin-right: -2px;
 	}
+	
+	//FormLayout
+	.v-formlayout-captioncell { 
+	text-align: left;
+	}
+	.v-formlayout-row {
+		padding-bottom:10px;
+	}
 }

@@ -10,7 +10,7 @@ public interface SneMenuView {
 		
 		void showDashboard(Configuration config);
 		void showConfiguration();
-		void showReport();
+		void showReports();
 	}
 	
 	public void addListener(SneMenuListener listener);

@@ -9,19 +9,21 @@
 INSERT INTO Position
 	(positionName)
 VALUES
-	('nurse'),
+	('assistant'),
 	('receptionist'),
 	('doctor'),
-	('health visior'),
-	('manager');
+	('health visitor'),
+	('manager'),
+	('psychiatrist');
 
 	
 INSERT INTO Department
 	(departmentName)
-VALUES
+VALUES	
 	('home care'),
 	('clinic treatment'),
-	('administration');
+	('administration'),
+	('accident and emergency unit');
 
 
 INSERT INTO IncidentType

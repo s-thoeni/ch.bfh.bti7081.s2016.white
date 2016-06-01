@@ -4,26 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.thomas.slidemenu.SlideMenu;
-import org.vaadin.thomas.slidemenu.SlideMenu.SlideMenuListener;
 import org.vaadin.thomas.slidemenu.SlideMenuView;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
-import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacade;
-import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
-import ch.bfh.bti7081.s2016.white.sne.data.User;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.presenter.ConfigurationPresenter;
-import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.SneMenuPresenter;
 
 

@@ -2,7 +2,6 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
 import com.vaadin.ui.Component;
 
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
 public interface DashboardView {	   

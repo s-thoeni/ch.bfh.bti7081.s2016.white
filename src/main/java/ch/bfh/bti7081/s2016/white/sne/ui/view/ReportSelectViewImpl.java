@@ -6,10 +6,10 @@ import java.util.List;
 import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.NativeSelect;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 

@@ -107,7 +107,7 @@ public class ReportFacadeImpl implements ReportFacade {
 	private void aggregateSummary(Report report) {
 		//TODO: this is random stuff for now:
 		Random rnd = new Random();
-		report.setSummary("" + rnd.nextInt(10000));
+		report.setSummary(rnd.nextInt(10000));
 	}
 
 	@Override

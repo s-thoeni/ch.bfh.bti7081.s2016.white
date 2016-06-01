@@ -7,9 +7,7 @@ import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
-import ch.bfh.bti7081.s2016.white.sne.data.Configuration.DashboardReportConfig;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 
 /**
  * Provider for dashboard functionality. Needs to be initialized with a Configuration. Reads configured reports with their summary
@@ -21,21 +19,21 @@ public class DashboardProvider {
 	private ReportFacade facade;
 	
 	private List<Report> reports;
-
+	
 	public List<Report> getReports() {
 		return reports;
 	}
-
+	
 	public DashboardProvider(Configuration config) {
-		List<DashboardReportConfig> reportConfigurations = config.getReports();
+		List<ReportConfig> reportConfigurations = config.getReports();
 
-		facade = new ReportFacadeImpl();
-				
+		this.facade = new ReportFacadeImpl();
+		
 		this.reports = new ArrayList<Report>();
-		for(DashboardReportConfig conf: reportConfigurations){
+		for(ReportConfig conf: reportConfigurations){
 			//System.out.println(conf.getDashboardReportType());
 			try {
-				this.reports.add(facade.getReport(conf.getDashboardReportType(), conf.getDashboardReportTime(), true));
+				this.reports.add(facade.getReport(conf.getReportType(), conf.getReportTimeframe(), true));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

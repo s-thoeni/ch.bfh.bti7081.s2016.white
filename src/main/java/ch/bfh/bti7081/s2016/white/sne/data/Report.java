@@ -1,12 +1,12 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 public class Report {
 
 	private List<Record> records;
-	private String summary;
+	private int summary;
 	private String name;
 	private Date from;
 	private Date to;
@@ -23,11 +23,11 @@ public class Report {
 		this.records = reports;
 	}
 
-	public String getSummary() {
+	public int getSummary() {
 		return this.summary;
 	}
 
-	public void setSummary(String summary) {
+	public void setSummary(int summary) {
 		this.summary = summary;
 	}
 	

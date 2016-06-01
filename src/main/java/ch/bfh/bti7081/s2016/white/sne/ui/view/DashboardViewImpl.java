@@ -3,22 +3,12 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.vaadin.thomas.slidemenu.SlideMenuView;
-
-import com.vaadin.addon.touchkit.gwt.client.vcom.navigation.NavigationViewState;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
-import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 

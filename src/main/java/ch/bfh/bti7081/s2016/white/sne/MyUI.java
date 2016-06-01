@@ -15,7 +15,6 @@ import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
-
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 
 @SuppressWarnings("serial")

@@ -27,7 +27,7 @@ CREATE TABLE Employee (
 );
 
 ALTER TABLE Department
-	ADD COLUMN departmentManager
+	ADD COLUMN departmentHead
 	REFERENCES Employee(userID);
 
 CREATE TABLE Patient (

@@ -55,7 +55,7 @@ CREATE TABLE Incident (
 	incidentID			INTEGER PRIMARY KEY AUTOINCREMENT,
 	treatmentID			INTEGER NOT NULL,
 	typeID				INTEGER NOT NULL,
-	desciription		NVARCHAR(128) NOT NULL,
+	desciription		NVARCHAR(2048) NULL,
 	FOREIGN KEY(treatmentID) REFERENCES Treatment(treatmentID),
 	FOREIGN KEY(typeID) REFERENCES IncidentType(typeID)
 );

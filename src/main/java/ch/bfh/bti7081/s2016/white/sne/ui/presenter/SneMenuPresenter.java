@@ -11,7 +11,6 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportSelectView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportSelectViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuViewImpl;
@@ -39,14 +38,12 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 
 	@Override
 	public void menuOpened() {
-		// this.view.getRoot().addComponent(new Label("opened!"));
 		this.view.getMenu().open();
 
 	}
 
 	@Override
 	public void menuClosed() {
-		// this.view.getRoot().addComponent(new Label("closed!"));
 		this.view.getMenu().close();
 	}
 

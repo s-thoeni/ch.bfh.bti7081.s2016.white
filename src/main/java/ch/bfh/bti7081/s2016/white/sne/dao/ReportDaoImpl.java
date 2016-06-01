@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,23 +80,34 @@ public class ReportDaoImpl implements ReportDao {
 	@Override
 	public Report getIncidents(Date from, Date to) {
 		Report result = new Report("Notfälle");
+		
+		// Load JDBC Driver
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/home/jdellsperger/.sne/databases/care.db");
-
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println("JDBC class not found " + e.getMessage());
+		}
+		
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:care.db");
 			
 			List<Record> records = new ArrayList<Record>();
 			int i = 0;
 			Statement stm = connection.createStatement();
-			ResultSet rs = stm.executeQuery(
-					"SELECT i.incidentId,t.treatmentId,i.desciription,t.treatmentDate "
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String query = "SELECT i.incidentId, t.treatmentId, i.desciription, t.treatmentDate "
 					+ "FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId "
-					+ "WHERE t.treatmentDate >= '2015-12-20' AND t.treatmentDate <= '2015-12-31';");
+					+ "WHERE t.treatmentDate >= '" + sdf.format(from) + "' AND t.treatmentDate <= '" + sdf.format(to) + "';";
+			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				PatientRecord record = new PatientRecord();
-				System.out.println(rs.getString("treatmentDate"));
 				record.setIncident("Incident " + ++i);
-				record.setDate(rs.getDate("treatmentDate"));
-				records.add(record);
+				try {
+					record.setDate(sdf.parse(rs.getString("treatmentDate")));
+					records.add(record);
+				} catch (ParseException pe) {
+					System.out.println("Could not parse date: " + pe.getMessage());
+				}
 			}
 
 			result.setRecords(records);

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
@@ -49,6 +50,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		startDayCal.set(Calendar.MINUTE, startDayCal.getActualMinimum(Calendar.MINUTE));
 		startDayCal.set(Calendar.SECOND, startDayCal.getActualMinimum(Calendar.MINUTE));
 		int startDate = startDayCal.get(Calendar.DAY_OF_YEAR);
+		long startDateInMillis = startDayCal.getTimeInMillis();
 		int maxDayInStartYear = startDayCal.getActualMaximum(Calendar.DAY_OF_YEAR);
 		
 		Calendar endDayCal = Calendar.getInstance();
@@ -78,15 +80,9 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			calendar.setTime(record.getDate());
 			if ((calendar.compareTo(startDayCal) >= 0) &&
 				(calendar.compareTo(endDayCal) <= 0)) {
-				int index = calendar.get(Calendar.DAY_OF_YEAR)-startDate;
+				long recordDateInMillis = calendar.getTimeInMillis();
+				int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
 				
-				/*
-				 * The index has to be adjusted in case the year changes in the reports
-				 * timespan.
-				 */
-				if (index < 0) {
-					index += maxDayInStartYear;
-				}
 				int value = values.get(index).intValue();
 				++value;
 				values.set(index, value);

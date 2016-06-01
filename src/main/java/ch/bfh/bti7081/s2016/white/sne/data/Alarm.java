@@ -1,18 +1,34 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
-import java.util.Comparator;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 
 public class Alarm {
 	private Report alarmReport;
-	private int value;
-	private Comparator comparator;
+	private Operator operator;
+	private int errorValue;
+	private int warningValue;
+	private AlarmState alarmState;
 
-	public Alarm(Report alarmReport, int value, Comparator comparator) {
+	public Alarm(Report alarmReport, int errorValue, int warningValue, Operator operator) {
 		this.alarmReport = alarmReport;
-		this.value = value;
-		this.comparator = comparator;
+		this.errorValue = errorValue;
+		this.warningValue = warningValue;
+		this.operator = operator;
+		this.alarmState = new AlarmOkState();
 	}
 
+//	public void checkAlarmState(){
+//		int summaryVal = alarmReport.getSummary();
+//		if(this.operator.compareInt(summaryVal, this.errorValue)){
+//			this.alarmState = new AlarmErrorState();
+//		}else if(this.operator.compareInt(summaryVal, this.warningValue)){
+//			this.alarmState = new AlarmWarningState();
+//		}else{
+//			this.alarmState = new AlarmOkState();
+//		}
+//		
+//	}
+	
 	public Report getAlarmReport() {
 		return this.alarmReport;
 	}
@@ -21,20 +37,22 @@ public class Alarm {
 		this.alarmReport = alarmReport;
 	}
 
-	public int getValue() {
-		return this.value;
+
+	public int getErrorValue() {
+		return this.errorValue;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setErrorValue(int errorValue) {
+		this.errorValue = errorValue;
 	}
 
-	public Comparator getComparator() {
-		return this.comparator;
+	
+	public int getWarningValue() {
+		return this.warningValue;
 	}
 
-	public void setComparator(Comparator comparator) {
-		this.comparator = comparator;
+	public void setWarningValue(int warningValue) {
+		this.warningValue = warningValue;
 	}
 
 }

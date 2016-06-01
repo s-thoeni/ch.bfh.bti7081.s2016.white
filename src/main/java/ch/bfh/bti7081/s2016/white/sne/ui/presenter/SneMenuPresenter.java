@@ -62,7 +62,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		// TODO automate with the nav listener
 		menuClosed();
 		ConfigurationProvider prov = new ConfigurationProvider(new User(USER));
-		ConfigurationView view = new ConfigurationViewImpl();
+		ConfigurationViewImpl view = new ConfigurationViewImpl();
 		ConfigurationPresenter cv = new ConfigurationPresenter(prov, view);
 		// Only this button actually does something in the menu. Here we
 		// navigate to a dummy view.

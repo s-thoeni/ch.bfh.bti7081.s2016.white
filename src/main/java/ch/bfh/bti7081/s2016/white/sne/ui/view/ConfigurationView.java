@@ -1,15 +1,20 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
+import com.vaadin.ui.Component;
+
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
 public interface ConfigurationView {
 
 	public interface ConfigurationViewListener {
-		void saveClick();
-		
 		void addClick();
 		
+		void saveClick();
+		
+		void cancelClick();
+		
 		void deleteClick(String id);
+
 	}
 	
 	public void addListener(ConfigurationViewListener listener);
@@ -18,8 +23,5 @@ public interface ConfigurationView {
 	
 	void deleteConfigSet(ConfigSetImpl configSet);
 	
-	void clickOk();
-	
-	void clickCancel();
-
+	public void navigateTo(Component component);   
 }

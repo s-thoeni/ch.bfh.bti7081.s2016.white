@@ -89,7 +89,7 @@ public class ReportDaoImpl implements ReportDao {
 		}
 		
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:care.db");
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:db/care.db");
 			
 			List<Record> records = new ArrayList<Record>();
 			int i = 0;

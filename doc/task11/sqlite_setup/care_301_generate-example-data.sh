@@ -12,7 +12,7 @@ department=("home care" "clinic treatment" "administration" "accident and emerge
 incident_type=("vulgarity", "violence", "drop" "drunkenness" "drug consumption" "drug abuse" "sexual abuse" "suicide")
 
 
-# fill table employee
+### fill table employee
 tmpfile=`mktemp`
 
 while read line
@@ -32,7 +32,7 @@ rm $tmpfile
 
 
 
-# fill table patient
+### fill table patient
 tmpfile2=`mktemp`
 
 while read line
@@ -50,9 +50,43 @@ rm $tmpfile2
 
 
 
-# fill table treatment
+### fill table treatment
 tmpfile3=`mktemp`
+tmpfile4=`mktemp`
+treatmentid=0
+
 echo "INSERT INTO Treatment (patientID, employeeID, treatmentDate, duration) VALUES (30, 170, \"2014-01-01\", 35)" >> $tmpfile3
+echo "INSERT INTO Incident (treatmentID, typeID) VALUES (1, 1)" >> $tmpfile4
+
+function is_absent() {
+	if (( ($RANDOM%356) > 260 ))
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function is_incident() {
+	if (( ($RANDOM%100) >= 98 ))
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function get_incident_type() {
+	if (( ($RANDOM%1000) >= 999 ))
+	then
+		incident_type=8
+	elif (( ($RANDOM%1000) >= 990 ))
+	then
+		incident_type=7
+	else
+		incident_type=$(( ($RANDOM%6)+1 ))
+	fi
+}
 
 # loop for year 2013, 2014, 2015
 for y in {2013..2015}
@@ -67,42 +101,62 @@ do
 			if (( "$i" == "2" )) && (( "$j" > "28" ))
 			then
 				continue
-			elif (( "$i" == "4" )) && (( "$i" == "6" )) && (( "$i" == "9" ))  && (( "$i" == "11" )) && (( "$j" > "30" ))
+			elif (( (( "$i" == "4" )) || (( "$i" == "6" )) || (( "$i" == "9" ))  || (( "$i" == "11" )) )) && (( "$j" > "30" ))
 			then
 				continue
 			else
-				pat=$(( ($RANDOM%1100)+1 ))
-				emp=$(( ($RANDOM%300)+1 ))
-				dur=$(( ($RANDOM%90)+6 ))
+				# loop over all employees
+				for e in {1..300}
+				do
+					if is_absent ;
+					then
+						continue
+					else
+						pat=$(( ($RANDOM%1100)+1 ))
+						emp=$e
+						dur=$(( ($RANDOM%90)+6 ))
 				
-				# format month properly
-				if (( "$i" <= 9 ))
-				then
-					mon="0$i"
-				else
-					mon=$i
-				fi
+						# format month properly
+						if (( "$i" <= 9 ))
+						then
+							mon="0$i"
+						else
+							mon=$i
+						fi
 
-				# format day properly
-				if (( "$j" <= 9 ))
-				then
-					day="0$j"
-				else
-					day=$j
-				fi
-				
-				echo ",($pat, $emp, \"$y-$mon-$day\", $dur)" >> $tmpfile3
+						# format day properly
+						if (( "$j" <= 9 ))
+						then
+							day="0$j"
+						else
+							day=$j
+						fi
+					
+						echo ",($pat, $emp, \"$y-$mon-$day\", $dur)" >> $tmpfile3
+						
+						((treatmentid++))
+
+						if is_incident ;
+						then
+							get_incident_type
+							type=$incident_type
+							echo ",($treatmentid,$type)" >> $tmpfile4
+						fi
+					fi
+				done
 			fi
 		done
+		#echo "generate data until $y-$mon-$day"
 	done
 done
 
 echo ";" >> $tmpfile3
+echo ";" >> $tmpfile4
 sqlite3 ~/.sne/databases/care.db < $tmpfile3
-echo "data for table Treatment generated"
+sqlite3 ~/.sne/databases/care.db < $tmpfile4
+echo "data for table Treatment and Incident generated"
 
 rm $tmpfile3
-
-
+rm $tmpfile4
 
 

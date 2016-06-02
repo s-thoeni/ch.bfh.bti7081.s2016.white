@@ -19,13 +19,15 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
 /**
- * Loads and saves the configuration of the user. 
+ * Loads and saves the configuration of the user.
+ * 
  * @author mcdizzu
  *
  */
 public class ConfigurationDAOImpl implements ConfigurationDAO {
 
 	private Connection connection;
+	private Statement stm;
 
 	public ConfigurationDAOImpl() {
 		// Load JDBC Driver
@@ -36,7 +38,7 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 		}
 
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
+			this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
 		} catch (SQLException e) {
 			System.out.println("Could not set connection to conf.db " + e.getMessage());
 		}
@@ -53,7 +55,7 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 		List<ReportConfig> reports = new ArrayList<ReportConfig>();
 
 		try {
-			Statement stm = connection.createStatement();
+			stm = connection.createStatement();
 
 			String query = " SELECT c.tileNumber, c.reportType, c.reportTimeFrame FROM Configuration AS c INNER JOIN User AS u ON c.userID = u.userID WHERE u.userName == '" + user.getUserName()
 					+ "';";
@@ -70,6 +72,18 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println("Could not execute getConfig query " + e.getMessage());
+		} finally {
+			try {
+				if (this.stm != null)
+					this.stm.close();
+			} catch (SQLException se2) {
+			} // nothing we can do
+			try {
+				if (this.connection != null)
+					this.connection.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		}
 
 		config.setReports(reports);
@@ -98,7 +112,7 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 
 				query = query.substring(0, query.length() - 1) + ";";
 
-				//System.out.println(query);
+				// System.out.println(query);
 
 				rs = stm.executeQuery(query);
 			} catch (SQLException e) {

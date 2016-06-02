@@ -11,6 +11,7 @@ public interface SneMenuView {
 		void showDashboard(Configuration config);
 		void showConfiguration();
 		void showReports();
+		void showAlarms();
 	}
 	
 	public void addListener(SneMenuListener listener);

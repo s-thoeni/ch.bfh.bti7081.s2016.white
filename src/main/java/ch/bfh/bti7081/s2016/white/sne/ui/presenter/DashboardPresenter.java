@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.vaadin.ui.Component;
 
+import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
@@ -42,5 +44,18 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 
 	public Component getView() {
 		return (DashboardViewImpl) this.view;
+	}
+
+	public void refresh(Configuration config) {
+		model.setReportConfigurations(config.getReports());
+		view.removeAll();
+		List<Report> reports = model.getReports();
+
+		for(Report r: reports){
+			TileComponentImpl tile = new TileComponentImpl(r.getName(), String.valueOf(r.getSummary()), r.getFrom(), r.getTo(), r.getName());
+			view.addTile(tile);
+		}
+		
+		view.addListener(this);		
 	}
 }

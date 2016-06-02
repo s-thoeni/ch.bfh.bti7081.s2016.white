@@ -21,17 +21,23 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 @Theme("mytheme")
 public class MyUI extends UI {
 
+	private DashboardPresenter db;
     @Override
     protected void init(VaadinRequest vaadinRequest) {
     	final NavigationManager layout = new NavigationManager();
 		setContent(layout);
 		ConfigurationFacade fac = new ConfigurationFacadeImpl();
 		Configuration config = fac.getConfig(new User("lucas.wirtz"));
-		DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(config));		
 		
+		db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(config));		
+
 		layout.navigateTo(db.getView());
     }
 
+    public DashboardPresenter getDashboard(){
+    	return db;
+    }
+    
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {

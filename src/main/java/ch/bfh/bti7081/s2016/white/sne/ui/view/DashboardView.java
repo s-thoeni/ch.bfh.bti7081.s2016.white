@@ -18,5 +18,8 @@ public interface DashboardView {
 	 */
 	void addTile(TileComponentImpl tile);
 
-	public void navigateTo(Component component);    
+	public void navigateTo(Component component);
+
+	public void removeAll();
+
 }

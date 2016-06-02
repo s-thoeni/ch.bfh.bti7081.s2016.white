@@ -52,7 +52,7 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 		reportName = new Label("<b>" + title + "</b>", ContentMode.HTML);	
 		reportSummary = new Label(value);
 		
-		timeframe = new Label(sf.format(from) + " - " + sf.format(from));
+		timeframe = new Label(sf.format(from) + " - " + sf.format(to));
 		
 		reportName.setWidth(null);
 		reportSummary.setWidth(null);

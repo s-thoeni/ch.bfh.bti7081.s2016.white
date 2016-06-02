@@ -5,8 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
@@ -71,8 +74,17 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 				configuration.add(new ReportConfig(conf.getReportType(), conf.getReportTimeframe()));
 			}
 		}
-		this.model.setConfig(new Configuration(configuration), user);
-		this.view.getNatigationManager().navigateBack();
+		this.model.setConfig(new Configuration(configuration), user);		
+
+		UI ui = view.getNatigationManager().getUI();
+		if(ui instanceof MyUI){
+			MyUI sneui = (MyUI) ui;
+			DashboardPresenter db = sneui.getDashboard();
+			db.refresh(this.model.getConfig());
+			view.getNavigationManager().navigateTo(db.getView());
+		}else{
+			Notification.show("We could not navigate corretly, please refresh the page manually");
+		}
 	}
 
 	@Override
@@ -88,19 +100,14 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	public void deleteClick(String id) {
 		System.out.println("ID: " + id);
 		List<ConfigSetImpl> configSets = view.getConfigSets();
-		Iterator<ConfigSetImpl> configSetIterator = configSets.iterator();
-		ConfigSetImpl c = null;
-		int i = 0;
-		while (configSetIterator.hasNext()) {
-			c = configSetIterator.next();
-			if (c.getId().equals(id)) {
-				view.deleteConfigSet(c);
+		
+		for(int i =0; i<configSets.size();i++){
+			if(configSets.get(i).getId().equals(id)){
+				view.deleteConfigSet(configSets.get(i));
 			}
 		}
-		while (configSetIterator.hasNext()) {
-			c = configSetIterator.next();
-			c.setId(String.valueOf(i++));
-
+		for(int i =0; i<configSets.size();i++){
+			configSets.get(i).setId(String.valueOf(i));
 		}
 	}
 

@@ -51,8 +51,8 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 				System.out.println("Could not set connection to conf.db " + e.getMessage());
 			}
 			stm = connection.createStatement();
-			String query = " SELECT c.tileNumber, c.reportType, c.reportTimeFrame FROM Configuration AS c INNER JOIN User AS u ON c.userID = u.userID WHERE u.userName == '" + user.getUserName()
-					+ "';";
+			String query = " SELECT c.tileNumber, c.reportType, c.reportTimeFrame FROM Configuration AS c INNER JOIN User AS u ON c.userID = u.userID WHERE u.userName == '"
+					+ user.getUserName() + "';";
 
 			// System.out.println(query);
 
@@ -89,51 +89,56 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 	public void setConfig(List<ReportConfig> reports, User user) {
 
 		// do nothing if there are no report config
-		if (reports.size() > 0) {
+
+		try {
 			try {
-				try {
-					this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
-				} catch (SQLException e) {
-					System.out.println("Could not set connection to conf.db " + e.getMessage());
-				}
-				stm = connection.createStatement();
+				this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
+			} catch (SQLException e) {
+				System.out.println("Could not set connection to conf.db " + e.getMessage());
+			}
+			stm = connection.createStatement();
 
-				// get userName id
-				ResultSet rs = stm.executeQuery(" SELECT userID FROM User WHERE userName == '" + user.getUserName() + "';");
-				int id = rs.getInt("userID");
+			// get userName id
+			ResultSet rs = stm.executeQuery(" SELECT userID FROM User WHERE userName == '" + user.getUserName() + "';");
+			int id = rs.getInt("userID");
 
-				// delete old ones
-				stm.execute(" DELETE FROM Configuration WHERE userID == " + id + ";");
+			// delete old ones
+			stm.execute(" DELETE FROM Configuration WHERE userID == " + id + ";");
 
-				// insert report config
-				String query = " INSERT INTO Configuration (reportType, reportTimeFrame, userID) VALUES ";
+			for (ReportConfig rc : reports) {
+				String query;
+				StringBuffer sb = new StringBuffer();
+				sb.append("INSERT INTO CONFIGURATION");
+				sb.append("( reportType, reportTimeFrame, userId) VALUES");
+				sb.append("(\"");
+				sb.append(rc.getReportType().toString());
+				sb.append("\",\"");
+				sb.append(rc.getReportTimeframe().toString());
+				sb.append("\",");
+				sb.append(id);
+				sb.append(");");
 
-				for (ReportConfig rc : reports) {
-					query += "('" + rc.getReportType().toString() + "', '" + rc.getReportTimeframe().toString() + "', " + id + "),";
-				}
-
-				query = query.substring(0, query.length() - 1) + ";";
+				query = sb.toString();
 
 				System.out.println(query);
-
 				stm.execute(query);
-				
-			} catch (SQLException e) {
-				System.out.println("Could not execute setConfig query " + e.getMessage());
-			} finally {
-				try {
-					if (this.stm != null)
-						this.stm.close();
-				} catch (SQLException se2) {
-				} // nothing we can do
-				try {
-					if (this.connection != null)
-						this.connection.close();
-				} catch (SQLException se) {
-					se.printStackTrace();
-				}
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Could not execute setConfig query " + e.getMessage());
+		} finally {
+			try {
+				if (this.stm != null)
+					this.stm.close();
+			} catch (SQLException se2) {
+			} // nothing we can do
+			try {
+				if (this.connection != null)
+					this.connection.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
 			}
 		}
-
 	}
+
 }

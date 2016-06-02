@@ -13,6 +13,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.SneMenuPresenter;
 
 
@@ -23,7 +24,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 	
 	// Get the user-config: 
 	Configuration config;
-
+	
 	private List<SneMenuListener> listeners;
 	
 	public SneMenuViewImpl(Configuration config) {
@@ -79,13 +80,22 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
 		getMenu().addComponent(l);
 
-		b = new Button("Options");
+		b = new Button("Dashboard");
 		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
 		getMenu().addComponent(b);
 
 		b.addClickListener((ClickEvent event) -> {
 			for (SneMenuListener listener : listeners)
 				listener.showConfiguration();
+		});
+		
+		b = new Button("Alarms");
+		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
+		getMenu().addComponent(b);
+
+		b.addClickListener((ClickEvent event) -> {
+			for (SneMenuListener listener : listeners)
+				listener.showAlarms();
 		});
 	}
 

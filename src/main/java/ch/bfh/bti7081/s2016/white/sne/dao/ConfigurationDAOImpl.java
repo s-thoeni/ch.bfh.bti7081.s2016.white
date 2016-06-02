@@ -5,14 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
-import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
-import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
@@ -36,12 +32,6 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 		} catch (ClassNotFoundException e) {
 			System.out.println("JDBC class not found " + e.getMessage());
 		}
-
-		try {
-			this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
-		} catch (SQLException e) {
-			System.out.println("Could not set connection to conf.db " + e.getMessage());
-		}
 	}
 
 	@Override
@@ -55,12 +45,16 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 		List<ReportConfig> reports = new ArrayList<ReportConfig>();
 
 		try {
+			try {
+				this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
+			} catch (SQLException e) {
+				System.out.println("Could not set connection to conf.db " + e.getMessage());
+			}
 			stm = connection.createStatement();
-
 			String query = " SELECT c.tileNumber, c.reportType, c.reportTimeFrame FROM Configuration AS c INNER JOIN User AS u ON c.userID = u.userID WHERE u.userName == '" + user.getUserName()
 					+ "';";
 
-			//System.out.println(query);
+			// System.out.println(query);
 
 			ResultSet rs = stm.executeQuery(query);
 
@@ -68,7 +62,7 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 				ReportType rt = ReportType.valueOf(rs.getString("reportType"));
 				ReportTimeframe rtf = ReportTimeframe.valueOf(rs.getString("reportTimeFrame"));
 
-				reports.add(new ReportConfig(rs.getInt("tileNumber"), rt, rtf));
+				reports.add(new ReportConfig(rt, rtf));
 			}
 		} catch (SQLException e) {
 			System.out.println("Could not execute getConfig query " + e.getMessage());
@@ -97,28 +91,49 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 		// do nothing if there are no report config
 		if (reports.size() > 0) {
 			try {
-				Statement stm = connection.createStatement();
+				try {
+					this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
+				} catch (SQLException e) {
+					System.out.println("Could not set connection to conf.db " + e.getMessage());
+				}
+				stm = connection.createStatement();
 
 				// get userName id
 				ResultSet rs = stm.executeQuery(" SELECT userID FROM User WHERE userName == '" + user.getUserName() + "';");
 				int id = rs.getInt("userID");
 
+				// delete old ones
+				stm.execute(" DELETE FROM Configuration WHERE userID == " + id + ";");
+
 				// insert report config
-				String query = " INSERT INTO Configuration (tileNumber, reportType, reportTimeFrame, userID) VALUES" + "";
+				String query = " INSERT INTO Configuration (reportType, reportTimeFrame, userID) VALUES ";
 
 				for (ReportConfig rc : reports) {
-					query += "(" + rc.getId() + ", '" + rc.getReportType().toString() + "', '" + rc.getReportTimeframe().toString() + "', " + id + "),";
+					query += "('" + rc.getReportType().toString() + "', '" + rc.getReportTimeframe().toString() + "', " + id + "),";
 				}
 
 				query = query.substring(0, query.length() - 1) + ";";
 
-				// System.out.println(query);
+				System.out.println(query);
 
-				rs = stm.executeQuery(query);
+				stm.execute(query);
+				
 			} catch (SQLException e) {
 				System.out.println("Could not execute setConfig query " + e.getMessage());
+			} finally {
+				try {
+					if (this.stm != null)
+						this.stm.close();
+				} catch (SQLException se2) {
+				} // nothing we can do
+				try {
+					if (this.connection != null)
+						this.connection.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
 			}
 		}
-	}
 
+	}
 }

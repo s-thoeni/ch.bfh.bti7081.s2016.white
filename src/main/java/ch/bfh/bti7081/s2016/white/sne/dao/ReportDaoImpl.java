@@ -188,7 +188,7 @@ public class ReportDaoImpl implements ReportDao {
 
 	@Override
 	public Report getEntriesExits(Date from, Date to) {
-		Report result = new Report("Aktuelle Patientanzahl");
+		Report result = new Report("Ein/Austritte");
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(to);
@@ -213,7 +213,7 @@ public class ReportDaoImpl implements ReportDao {
 
 	@Override
 	public Report getPatientCount(Date from, Date to) {
-		Report result = new Report("CashFlow");
+		Report result = new Report("Aktuelle Patientanzahl");
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(to);
@@ -263,7 +263,7 @@ public class ReportDaoImpl implements ReportDao {
 
 	@Override
 	public Report getCashFlow(Date from, Date to) {
-		Report result = new Report("Suizide");
+		Report result = new Report("Cash Flow");
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(to);

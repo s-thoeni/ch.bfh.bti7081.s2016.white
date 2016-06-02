@@ -11,6 +11,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationView.AlarmConfigurationViewListener;
@@ -70,9 +71,39 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		vertical.addComponent(h1);
 		vertical.addComponent(h2);
 		
+		addTitle();
 		this.setContent(vertical);
 	}
 	
+	private void addTitle() {
+		HorizontalLayout horizontal = new HorizontalLayout();
+
+		horizontal.setWidth("100%");
+		horizontal.setHeight("100%");
+		Label type = new Label("Report");
+		Label time = new Label("Timeframe");
+		Label comp = new Label("Comparator");
+		Label warn = new Label("Warning value");
+		Label alert = new Label("Alert value");
+		Label hidden = new Label(" ");
+		
+		horizontal.addComponent(type);
+		horizontal.addComponent(time);
+		horizontal.addComponent(comp);
+		horizontal.addComponent(warn);
+		horizontal.addComponent(alert);
+		horizontal.addComponent(hidden);
+		
+		horizontal.setComponentAlignment(type, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(time, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(comp, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(warn, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(alert, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(hidden, Alignment.MIDDLE_LEFT);
+		
+		grid.addComponent(horizontal);
+	}
+
 	@Override
 	public void addListener(AlarmConfigurationViewListener listener) {
 		listeners.add(listener);

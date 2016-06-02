@@ -35,8 +35,7 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 	public AlarmConfigurationPresenter(AlarmConfigurationProvider model, AlarmConfigurationViewImpl view) {
 		this.model = model;
 		this.view = view;
-
-	
+		
 		int i = 0;
 
 		for (Alarm al :  model.getAlarms()) {			
@@ -54,10 +53,7 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 
 	@Override
 	public void addClick() {
-		int i = 0;
-		for (AlarmSetImpl c : view.getAlarmSets()) {
-			i++;
-		}
+		int i = view.getAlarmSets().size() -1;
 		AlarmSetImpl alarmSet = new AlarmSetImpl();
 		alarmSet.setId(String.valueOf(i));
 		view.addAlarmSet(alarmSet);

@@ -98,7 +98,6 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 
 	@Override
 	public void deleteClick(String id) {
-		System.out.println("ID: " + id);
 		List<ConfigSetImpl> configSets = view.getConfigSets();
 		
 		for(int i =0; i<configSets.size();i++){

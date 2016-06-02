@@ -86,10 +86,7 @@ public class ConfigurationDAOImpl implements ConfigurationDAO {
 	}
 
 	@Override
-	public void setConfig(List<ReportConfig> reports, User user) {
-
-		// do nothing if there are no report config
-
+	public void setConfig(List<ReportConfig> reports, User user) {		
 		try {
 			try {
 				this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");

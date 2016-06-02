@@ -27,7 +27,7 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 		List<Report> reports = model.getReports();
 
 		for(Report r: reports){
-			TileComponentImpl tile = new TileComponentImpl(r.getName(), String.valueOf(r.getSummary()), r.getFrom(), r.getTo(), r.getName());
+			TileComponentImpl tile = new TileComponentImpl(r.getName(), String.valueOf(r.getSummary()), r.getFrom(), r.getTo(), r.getName(), r.getType());
 			view.addTile(tile);
 		}
 		
@@ -52,10 +52,8 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 		List<Report> reports = model.getReports();
 
 		for(Report r: reports){
-			TileComponentImpl tile = new TileComponentImpl(r.getName(), String.valueOf(r.getSummary()), r.getFrom(), r.getTo(), r.getName());
+			TileComponentImpl tile = new TileComponentImpl(r.getName(), String.valueOf(r.getSummary()), r.getFrom(), r.getTo(), r.getName(), r.getType());
 			view.addTile(tile);
-		}
-		
-		view.addListener(this);		
+		}		
 	}
 }

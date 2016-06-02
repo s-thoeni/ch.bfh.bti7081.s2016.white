@@ -12,6 +12,8 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+
 public class TileComponentImpl extends CustomComponent implements TileComponent{
 	
 	/**
@@ -40,7 +42,7 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 	 * @param value - the value to be displayed
 	 * @param id - the id returned when the tile is clicked
 	 */
-	public TileComponentImpl(String title, String value, Date from, Date to, String id){
+	public TileComponentImpl(String title, String value, Date from, Date to, String id, ReportType type){
 		this.listeners = new ArrayList<TileClickListener>();
 		this.id = id;
 		
@@ -50,6 +52,10 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 		
 		//init all labels:
 		reportName = new Label("<b>" + title + "</b>", ContentMode.HTML);	
+		
+		if(type == ReportType.CASHFLOW || type == ReportType.EFFORT){
+			value = value.concat(" .-");
+		}
 		reportSummary = new Label(value);
 		
 		timeframe = new Label(sf.format(from) + " - " + sf.format(to));

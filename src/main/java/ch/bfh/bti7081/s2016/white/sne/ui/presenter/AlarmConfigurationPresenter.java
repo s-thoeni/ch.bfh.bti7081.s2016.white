@@ -11,6 +11,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.AlarmConfigurationProvider;
@@ -30,19 +31,16 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 public class AlarmConfigurationPresenter implements AlarmConfigurationView.AlarmConfigurationViewListener {
 	private AlarmConfigurationProvider model;
 	private AlarmConfigurationViewImpl view;
-	private List<Alarm> alarms;
 
 	public AlarmConfigurationPresenter(AlarmConfigurationProvider model, AlarmConfigurationViewImpl view) {
 		this.model = model;
 		this.view = view;
 
-		this.alarms = model.getAlarms();
+	
 		int i = 0;
 
-		for (Alarm al : alarms) {
-			ReportConfig c = al.getAlarmReportConfig();
-			
-			AlarmSetImpl configSet = new AlarmSetImpl(c.getReportType(), c.getReportTimeframe());
+		for (Alarm al :  model.getAlarms()) {			
+			AlarmSetImpl configSet = new AlarmSetImpl(al);
 			
 			configSet.setId(String.valueOf(i));
 			((AlarmSet) configSet).addListener(id -> deleteClick(id));
@@ -77,14 +75,18 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 
 		for (AlarmSetImpl conf : this.view.getAlarmSets()) {
 			ReportTimeframe timeframe = conf.getReportTimeframe();
-			ReportType type = conf.getReportType();
-			
+			ReportType type = conf.getReportType();			
 			ReportConfig repConf = new ReportConfig(type, timeframe);
-			Alarm newAlarm = new Alarm(repConf, 0, 0, null);
+			
+			Operator comp = conf.getComparator();
+			int error = conf.getErrorValue();
+			int warn = conf.getWarnValue();
+			
+			Alarm newAlarm = new Alarm(repConf, error, warn, comp);
 			configuration.add(newAlarm);
 			
 		}
-		this.model.setAlarms(alarms, user);
+		this.model.setAlarms(configuration, user);
 		this.view.getNatigationManager().navigateBack();
 	}
 
@@ -99,21 +101,15 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 
 	@Override
 	public void deleteClick(String id) {
-		System.out.println("ID: " + id);
-		List<AlarmSetImpl> configSets = view.getAlarmSets();
-		Iterator<AlarmSetImpl> alarmSetIterator = configSets.iterator();
-		AlarmSetImpl c = null;
-		int i = 0;
-		while (alarmSetIterator.hasNext()) {
-			c = alarmSetIterator.next();
-			if (c.getId().equals(id)) {
-				view.deleteAlarmSet(c);
+		List<AlarmSetImpl> alarmSets = view.getAlarmSets();
+		
+		for(int i =0; i<alarmSets.size();i++){
+			if(alarmSets.get(i).getId().equals(id)){
+				view.deleteAlarmSet(alarmSets.get(i));
 			}
 		}
-		while (alarmSetIterator.hasNext()) {
-			c = alarmSetIterator.next();
-			c.setId(String.valueOf(i++));
-
+		for(int i =0; i<alarmSets.size();i++){
+			alarmSets.get(i).setId(String.valueOf(i));
 		}
 	}
 

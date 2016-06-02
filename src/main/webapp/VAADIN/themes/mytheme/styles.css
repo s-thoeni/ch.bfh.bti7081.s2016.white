@@ -27,3 +27,11 @@
 .mytheme .v-formlayout-row {
 	padding-bottom: 10px;
 }
+
+.mytheme .v-button-Error .v-icon {
+	color: red;
+}
+
+.mytheme .v-button-Warning .v-icon {
+	color: orange;
+}

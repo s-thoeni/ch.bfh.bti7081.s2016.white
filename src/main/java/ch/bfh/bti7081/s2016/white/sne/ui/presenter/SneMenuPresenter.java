@@ -6,10 +6,8 @@ import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.AlarmConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportSelectViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuViewImpl;
@@ -24,7 +22,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 
 	private static final String USER = "lucas.wirtz";
 	private SneMenuViewImpl view;
-	
+
 	public SneMenuPresenter(SneMenuViewImpl view) {
 		this.view = view;
 		this.view.addListener(this);

@@ -60,4 +60,12 @@ $v-border: 1px solid (v-shade 0.7);
 	.v-formlayout-row {
 		padding-bottom:10px;
 	}
+	
+	
+	.v-button-Error .v-icon {
+	    color:red;
+	} 
+	.v-button-Warning .v-icon {
+	    color:orange;
+	} 
 }

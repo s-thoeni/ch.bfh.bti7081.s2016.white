@@ -8,6 +8,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 
+import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
@@ -21,8 +22,8 @@ public class DashboardViewImpl extends SneMenuViewImpl implements DashboardView 
 
 	private static final long serialVersionUID = 1L;
 
-	public DashboardViewImpl(Configuration config) {
-		super(config);
+	public DashboardViewImpl(Configuration config, List<Alarm> alarms) {
+		super(config, alarms);
 
 		getNavigationBar().setCaption("Dashboard");
 

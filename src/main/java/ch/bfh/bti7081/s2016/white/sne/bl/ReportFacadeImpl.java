@@ -3,12 +3,12 @@ package ch.bfh.bti7081.s2016.white.sne.bl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import ch.bfh.bti7081.s2016.white.sne.dao.ReportDao;
 import ch.bfh.bti7081.s2016.white.sne.dao.ReportDaoImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
@@ -24,6 +24,16 @@ public class ReportFacadeImpl implements ReportFacade {
 	@Override
 	public Report getReport(ReportType type, Date from, Date to) {
 		return getReport(type, from, to, false);
+	}
+	
+	@Override
+	public Report getReport(ReportConfig definition) {
+		return getReport(definition.getReportType(), definition.getReportTimeframe(), false);
+	}
+	
+	@Override
+	public Report getReport(ReportConfig definition, boolean calculateSummary) {
+		return getReport(definition.getReportType(), definition.getReportTimeframe(), calculateSummary);
 	}
 
 	@Override

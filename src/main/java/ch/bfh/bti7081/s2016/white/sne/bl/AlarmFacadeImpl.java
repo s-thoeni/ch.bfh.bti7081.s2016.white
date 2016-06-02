@@ -20,6 +20,16 @@ public class AlarmFacadeImpl implements AlarmFacade{
 	public List<Alarm> getAlarms() {
 		return dao.getAlarms(this.user);
 	}
+	
+	@Override
+	public List<Alarm> checkAlarms(List<Alarm> alarms) {
+		ReportFacade repFac = new ReportFacadeImpl();
+		alarms.forEach((alarm) ->{
+			alarm.setAlarmReport(repFac.getReport(alarm.getAlarmReportConfig(), true));
+			alarm.checkAlarmState();
+		});
+		return alarms;
+	}
 
 	@Override
 	public void storeAlarms(List<Alarm> alarms) {

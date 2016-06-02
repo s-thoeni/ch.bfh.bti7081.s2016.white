@@ -1,5 +1,7 @@
 package ch.bfh.bti7081.s2016.white.sne;
 
+import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
@@ -9,8 +11,11 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacade;
+import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacadeImpl;
+import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
@@ -26,11 +31,18 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
     	final NavigationManager layout = new NavigationManager();
 		setContent(layout);
-		ConfigurationFacade fac = new ConfigurationFacadeImpl();
-		Configuration config = fac.getConfig(new User("lucas.wirtz"));
+		User user = new User("lucas.wirtz");
+		ConfigurationFacade configFac = new ConfigurationFacadeImpl();
+		Configuration config = configFac.getConfig(user);
 		
-		db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(config));		
-
+		AlarmFacade alarmFac = new AlarmFacadeImpl(user);
+		List<Alarm> alarms = alarmFac.getAlarms();
+		
+		DashboardProvider provider = new DashboardProvider(config, user);
+		DashboardViewImpl view = new DashboardViewImpl(config, provider.checkAlarms(alarms));
+		
+		db = new DashboardPresenter(provider, view);		
+		
 		layout.navigateTo(db.getView());
     }
 

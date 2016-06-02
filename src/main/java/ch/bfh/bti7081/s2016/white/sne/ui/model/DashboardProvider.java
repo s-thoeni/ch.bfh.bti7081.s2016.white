@@ -3,11 +3,15 @@ package ch.bfh.bti7081.s2016.white.sne.ui.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacade;
+import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
+import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
+import ch.bfh.bti7081.s2016.white.sne.data.User;
 
 /**
  * Provider for dashboard functionality. Needs to be initialized with a Configuration. Reads configured reports with their summary
@@ -16,7 +20,8 @@ import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
  *
  */
 public class DashboardProvider {
-	private ReportFacade facade;
+	private ReportFacade repFac;
+	private AlarmFacade alarmFac;
 	
 	private List<ReportConfig> reportConfigurations;
 	
@@ -25,7 +30,7 @@ public class DashboardProvider {
 		for(ReportConfig conf: getReportConfigurations()){
 			//System.out.println(conf.getDashboardReportType());
 			try {
-				reports.add(facade.getReport(conf.getReportType(), conf.getReportTimeframe(), true));
+				reports.add(repFac.getReport(conf.getReportType(), conf.getReportTimeframe(), true));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -34,9 +39,15 @@ public class DashboardProvider {
 		return reports;
 	}
 	
-	public DashboardProvider(Configuration config) {
+	public List<Alarm> checkAlarms(List<Alarm> alarms) {		
+		
+		return alarmFac.checkAlarms(alarms);
+	}
+	
+	public DashboardProvider(Configuration config, User user) {
 		this.setReportConfigurations(config.getReports());
-		this.facade = new ReportFacadeImpl();	
+		this.repFac = new ReportFacadeImpl();
+		this.alarmFac = new AlarmFacadeImpl(user);
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2016.white.sne.data;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmErrorState;
+import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmNotCheckedState;
 import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmOkState;
 import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmState;
 import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmWarningState;
@@ -20,7 +21,7 @@ public class Alarm {
 		this.errorValue = errorValue;
 		this.warningValue = warningValue;
 		this.operator = operator;
-		this.alarmState = new AlarmOkState();
+		this.alarmState = new AlarmNotCheckedState();
 	}
 
 	public void checkAlarmState() {
@@ -35,6 +36,10 @@ public class Alarm {
 
 	}
 
+	public Object[] visualizeAlarm(){
+		return this.alarmState.visualizeAlarm(this);
+	}
+	
 	public Report getAlarmReport() {
 		return this.alarmReport;
 	}

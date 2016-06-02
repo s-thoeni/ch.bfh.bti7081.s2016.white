@@ -7,13 +7,17 @@ import org.vaadin.thomas.slidemenu.SlideMenu;
 import org.vaadin.thomas.slidemenu.SlideMenuView;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.addon.touchkit.ui.Popover;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
 
+import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
-import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.SneMenuPresenter;
 
 
@@ -24,15 +28,20 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 	
 	// Get the user-config: 
 	Configuration config;
-	
+	List<Alarm> alarms;
+
 	private List<SneMenuListener> listeners;
 	
-	public SneMenuViewImpl(Configuration config) {
+	public SneMenuViewImpl(Configuration config, List<Alarm> alarms) {
 		this.config = config;
+		this.alarms = alarms;
 		listeners = new ArrayList<SneMenuListener>();
 		// add menu items
 		buildMenu();
-
+		
+		// add alarming popover
+		buildAlarming();
+		
 		new SneMenuPresenter(this);
 		
 		// We can also set the width of the popup, default is 80%
@@ -89,7 +98,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 				listener.showConfiguration();
 		});
 		
-		b = new Button("configure Alarms");
+		b = new Button("Alarms");
 		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
 		getMenu().addComponent(b);
 
@@ -97,6 +106,38 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 			for (SneMenuListener listener : listeners)
 				listener.showAlarms();
 		});
+	}
+	
+	private void buildAlarming(){
+		Table table = new Table("Alarms");
+		table.addContainerProperty("State", String.class, null);
+		table.addContainerProperty("Report", String.class, null);
+		table.addContainerProperty("Value", Integer.class, null);
+		table.addContainerProperty("Operator", String.class, null);
+		table.addContainerProperty("Threshhold", Integer.class, null);
+		int index = 1;
+		for(Alarm alarm: alarms){
+			if(alarm.visualizeAlarm()!=null){
+				table.addItem(alarm.visualizeAlarm(), index);
+				index++;
+			}
+		}
+		table.setPageLength(table.size());
+		if(true){
+			Popover popover = new Popover();
+			popover.setContent(table);
+			Button alarmButton = new Button();
+			alarmButton.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
+//			alarmButton.setStyleName("Error");
+			alarmButton.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					popover.showRelativeTo(getRightComponent());
+				}
+			});
+	
+			getNavigationBar().setRightComponent(alarmButton);
+		}
 	}
 
 	public static String getUser() {

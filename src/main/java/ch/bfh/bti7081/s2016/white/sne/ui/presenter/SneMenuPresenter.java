@@ -23,7 +23,7 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuViewImpl;
  */
 public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 
-	private static final String USER = "T-Boy";
+	private static final String USER = "lucas.wirtz";
 	private SneMenuViewImpl view;
 
 	public SneMenuPresenter(SneMenuViewImpl view) {

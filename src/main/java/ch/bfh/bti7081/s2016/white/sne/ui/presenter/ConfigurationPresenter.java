@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,6 +9,9 @@ import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
+import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
@@ -22,43 +26,50 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	private ConfigurationViewImpl view;
 	private VerticalLayout layout;
 	private Configuration config;
-	
+
 	public ConfigurationPresenter(ConfigurationProvider model, ConfigurationViewImpl view) {
 		this.model = model;
 		this.view = view;
-		
+
 		config = model.getConfig();
 		int i = 0;
-		
-		for(ReportConfig c: config.getReports()){
+
+		for (ReportConfig c : config.getReports()) {
 			ConfigSetImpl configSet = new ConfigSetImpl(c.getReportType(), c.getReportTimeframe());
 			configSet.setId(String.valueOf(i));
-			((ConfigSet)configSet).addListener(id -> deleteClick(id));
+			((ConfigSet) configSet).addListener(id -> deleteClick(id));
 			view.addConfigSet(configSet);
 			i++;
 		}
-		
+
 		view.addListener(this);
 	}
-	
-	
+
 	@Override
 	public void addClick() {
-		int i=0;
-		for(ConfigSetImpl c: view.getConfigSets()){
+		int i = 0;
+		for (ConfigSetImpl c : view.getConfigSets()) {
 			i++;
-		}	
+		}
 
 		ConfigSetImpl configSet = new ConfigSetImpl();
 		configSet.setId(String.valueOf(i));
-		view.addConfigSet(configSet);	
-		((ConfigSet)configSet).addListener(id -> deleteClick(id));
-		
+		view.addConfigSet(configSet);
+		((ConfigSet) configSet).addListener(id -> deleteClick(id));
+
 	}
-	
+
 	@Override
 	public void saveClick() {
 		
+		// DUMMY DATA
+		//FIXME: get user from elsewhere... where is it stored?
+		User user = new User("lucas.wirtz");
+		List<ReportConfig> reports = new ArrayList<ReportConfig>();
+		reports.add(new ReportConfig(ReportType.AVAILABLE_EMPLOYEES, ReportTimeframe.YESTERDAY)); 
+		reports.add(new ReportConfig(ReportType.CASHFLOW, ReportTimeframe.YESTERDAY));
+		this.config.setReports(reports);
+		this.model.setConfig(config, user);
 		
 		this.view.getNatigationManager().navigateBack();
 	}
@@ -67,31 +78,29 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	public void cancelClick() {
 		this.view.getNatigationManager().navigateBack();
 	}
-	
+
 	public Component getView() {
 		return (Component) this.view;
 	}
 
 	@Override
 	public void deleteClick(String id) {
-		System.out.println("ID: "+id);
+		System.out.println("ID: " + id);
 		List<ConfigSetImpl> configSets = view.getConfigSets();
 		Iterator<ConfigSetImpl> configSetIterator = configSets.iterator();
 		ConfigSetImpl c = null;
 		int i = 0;
-		while(configSetIterator.hasNext()) {
+		while (configSetIterator.hasNext()) {
 			c = configSetIterator.next();
 			if (c.getId().equals(id)) {
 				view.deleteConfigSet(c);
-			} 
+			}
 		}
-		while(configSetIterator.hasNext()) {
+		while (configSetIterator.hasNext()) {
 			c = configSetIterator.next();
 			c.setId(String.valueOf(i++));
-			
+
 		}
 	}
 
-
-	
 }

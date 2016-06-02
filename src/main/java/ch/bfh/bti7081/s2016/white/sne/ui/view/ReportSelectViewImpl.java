@@ -43,6 +43,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 		this.root.addComponent(reportSelect);
 
 		// from
+		//DateField from = new DateField("From: ");
 		DatePicker from = new DatePicker("From: ");
 		this.root.addComponent(from);
 		

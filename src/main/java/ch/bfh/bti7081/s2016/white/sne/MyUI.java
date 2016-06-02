@@ -26,7 +26,7 @@ public class MyUI extends UI {
     	final NavigationManager layout = new NavigationManager();
 		setContent(layout);
 		ConfigurationFacade fac = new ConfigurationFacadeImpl();
-		Configuration config = fac.getConfig(new User("T-Boy"));
+		Configuration config = fac.getConfig(new User("lucas.wirtz"));
 		DashboardPresenter db = new DashboardPresenter(new DashboardProvider(config), new DashboardViewImpl(config));		
 		
 		layout.navigateTo(db.getView());

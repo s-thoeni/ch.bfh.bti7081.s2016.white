@@ -1,6 +1,7 @@
 package ch.bfh.bti7081.s2016.white.sne.dao;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,12 @@ import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
+
+/**
+ * Loads and saves the configuration of the user. 
+ * @author mcdizzu
+ *
+ */
 public class ReportDaoImpl implements ReportDao {
 
 	@Override

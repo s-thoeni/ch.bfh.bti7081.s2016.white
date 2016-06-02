@@ -7,15 +7,15 @@
 ----------------------------------------------------------------------
 
 INSERT INTO User
-	(firstName, surName)
+	(firstName, surName, userName)
 VALUES
-	('Lucas', 'Wirtz'),
-	('Kathrin','Krüger'),
-	('Alice','Lang'),
-	('Carolin','Gruber'),
-	('Konrad','Beck'),
-	('Simone','Fisher'),
-	('Kevin','Meier');
+	('Lucas', 'Wirtz', 'lucas.wirtz'),
+	('Kathrin','Krüger', 'kathrin.krueger'),
+	('Alice','Lang', 'alice.lang'),
+	('Carolin','Gruber', 'carolin.gruber'),
+	('Konrad','Beck', 'konrad.beck'),
+	('Simone','Fisher', 'simone.fisher'),
+	('Kevin','Meier', 'kevin.meier');
 
 
 --INSERT INTO Configuration

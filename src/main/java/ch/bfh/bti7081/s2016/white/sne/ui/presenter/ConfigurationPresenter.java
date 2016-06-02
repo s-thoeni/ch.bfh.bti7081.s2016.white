@@ -51,7 +51,6 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 		for (ConfigSetImpl c : view.getConfigSets()) {
 			i++;
 		}
-
 		ConfigSetImpl configSet = new ConfigSetImpl();
 		configSet.setId(String.valueOf(i));
 		view.addConfigSet(configSet);
@@ -61,16 +60,18 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 
 	@Override
 	public void saveClick() {
-		
+
 		// DUMMY DATA
-		//FIXME: get user from elsewhere... where is it stored?
+		// FIXME: get user from elsewhere... where is it stored?
 		User user = new User("lucas.wirtz");
-		List<ReportConfig> reports = new ArrayList<ReportConfig>();
-		reports.add(new ReportConfig(ReportType.AVAILABLE_EMPLOYEES, ReportTimeframe.YESTERDAY)); 
-		reports.add(new ReportConfig(ReportType.CASHFLOW, ReportTimeframe.YESTERDAY));
-		this.config.setReports(reports);
-		this.model.setConfig(config, user);
-		
+		List<ReportConfig> configuration = new ArrayList<ReportConfig>();
+
+		for (ConfigSetImpl conf : this.view.getConfigSets()) {
+			if (conf.getReportType() != null && conf.getReportTimeframe() != null) {
+				configuration.add(new ReportConfig(conf.getReportType(), conf.getReportTimeframe()));
+			}
+		}
+		this.model.setConfig(new Configuration(configuration), user);
 		this.view.getNatigationManager().navigateBack();
 	}
 

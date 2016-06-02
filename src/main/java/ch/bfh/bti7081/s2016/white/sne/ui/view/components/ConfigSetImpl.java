@@ -19,11 +19,12 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 	private static final long serialVersionUID = 1L;
 	private List<ConfigSetListener> listeners;
 	
+	private NativeSelect reportSelector = new NativeSelect();
+	private NativeSelect timeSelector = new NativeSelect();
+	
 	public ConfigSetImpl(ReportType report, ReportTimeframe span) {
 		this.listeners = new ArrayList<ConfigSetListener>();
-		
-		NativeSelect reportSelector = new NativeSelect();
-		NativeSelect timeSelector = new NativeSelect();
+				
 		Button removeBtn = new Button("-");
 		
 		ReportType[] types = ReportType.values();
@@ -82,7 +83,22 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 		for(ConfigSetListener listener : listeners)
 			listener.deleteClick(this.getId());
 	}
-
+	
+	public ReportType getReportType(){
+		if(reportSelector.getValue() instanceof ReportType){
+			return (ReportType) reportSelector.getValue();
+		} else{
+			return null;
+		}
+	}
+	
+	public ReportTimeframe getReportTimeframe(){
+		if(timeSelector.getValue() instanceof ReportTimeframe){
+			return (ReportTimeframe) timeSelector.getValue();
+		} else{
+			return null;
+		}
+	}
 	
 }
 

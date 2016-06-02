@@ -3,6 +3,8 @@ package ch.bfh.bti7081.s2016.white.sne.data;
 import java.util.Date;
 import java.util.List;
 
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+
 public class Report {
 
 	private List<Record> records;
@@ -10,6 +12,7 @@ public class Report {
 	private String name;
 	private Date from;
 	private Date to;
+	private ReportType type;
 	
 	public Report(String name) {
 		this.name = name;
@@ -55,5 +58,12 @@ public class Report {
 		this.to = to;
 	}
 
+	public ReportType getType() {
+		return type;
+	}
+
+	public void setType(ReportType type) {
+		this.type = type;
+	}
 }
 

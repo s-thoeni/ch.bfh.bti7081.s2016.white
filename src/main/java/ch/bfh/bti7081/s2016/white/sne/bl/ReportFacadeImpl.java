@@ -7,6 +7,7 @@ import java.util.Random;
 
 import ch.bfh.bti7081.s2016.white.sne.dao.ReportDao;
 import ch.bfh.bti7081.s2016.white.sne.dao.ReportDaoImpl;
+import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
@@ -41,24 +42,31 @@ public class ReportFacadeImpl implements ReportFacade {
 		switch (type){
 		case AVAILABLE_EMPLOYEES:
 			result = dao.getAvailableEmployee(from, to);
+			result.setType(ReportType.AVAILABLE_EMPLOYEES);
 			break;
 		case CASHFLOW:
 			result = dao.getCashFlow(from, to);
+			result.setType(ReportType.CASHFLOW);
 			break;
 		case EFFORT:
 			result = dao.getEffort(from, to);
+			result.setType(ReportType.EFFORT);
 			break;
 		case ENTRIES_EXITS:
 			result = dao.getEntriesExits(from, to);
+			result.setType(ReportType.ENTRIES_EXITS);
 			break;
 		case INCIDENTS:
 			result =  dao.getIncidents(from, to);
+			result.setType(ReportType.INCIDENTS);
 			break;
 		case PATIENS:
 			result = dao.getPatientCount(from, to);
+			result.setType(ReportType.PATIENS);
 			break;
 		case SICK_LEAVES:
 			result = dao.getSickLeaves(from, to);
+			result.setType(ReportType.SICK_LEAVES);
 			break;
 		}
 		
@@ -105,9 +113,11 @@ public class ReportFacadeImpl implements ReportFacade {
 	}
 
 	private void aggregateSummary(Report report) {
-		//TODO: this is random stuff for now:
-		Random rnd = new Random();
-		report.setSummary(rnd.nextInt(10000));
+		int sum = 0;
+		for(Record rec : report.getRecords()){
+			sum += rec.getSummary();
+		}
+		report.setSummary(sum);
 	}
 
 	@Override

@@ -75,41 +75,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 				listener.showReports();
 		});
 		
-		
-		Label l = new Label("Human Resources");
-		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-		getMenu().addComponent(l);
-
-		// add more buttons for a more realistic look.
-		b = new Button("Report HR");
-		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-		getMenu().addComponent(b);
-
-		l = new Label("Patients / Health care");
-		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-		getMenu().addComponent(l);
-
-		b = new Button("Report P1");
-		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-		getMenu().addComponent(b);
-
-		b = new Button("Report P2");
-		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-		getMenu().addComponent(b);
-
-		l = new Label("Finance");
-		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-		getMenu().addComponent(l);
-
-		b = new Button("Report F1");
-		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-		getMenu().addComponent(b);
-
-		b = new Button("Report F2");
-		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-		getMenu().addComponent(b);
-
-		l = new Label("Settings:");
+		Label l = new Label("Settings:");
 		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
 		getMenu().addComponent(l);
 

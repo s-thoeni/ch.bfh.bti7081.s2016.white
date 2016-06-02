@@ -1,5 +1,10 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
+/**
+ * Class representing information from treatment data sources (e.g. patient management system) 
+ * @author team white
+ *
+ */
 public class PatientRecord extends Record {
 
 	private String patientName;

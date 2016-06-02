@@ -1,11 +1,28 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
+/**
+ * class representing information from financial data sources (e.g. accounting)  
+ * @author team white
+ *
+ */
 public class FinancialRecord extends Record {
 
+	/**
+	 * Financial effort (germ. = "Aufwand")
+	 * key performance indicator
+	 */
 	private float effort;
+	/**
+	 * Financial return (germ. = "Ertrag")
+	 * key performance indicator
+	 */
 	private float returnValue;
+	/**
+	 * Financial cashflow (
+	 * 
+	 */
 	private float cashFlow;
-
+	
 	public float getEffort() {
 		return this.effort;
 	}

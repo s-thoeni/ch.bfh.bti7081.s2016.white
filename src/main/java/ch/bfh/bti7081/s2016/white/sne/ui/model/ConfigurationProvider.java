@@ -1,12 +1,8 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
-import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 
 

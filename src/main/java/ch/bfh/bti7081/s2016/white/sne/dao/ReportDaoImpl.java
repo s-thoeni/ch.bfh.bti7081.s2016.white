@@ -1,7 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.dao;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +25,23 @@ import ch.bfh.bti7081.s2016.white.sne.data.Report;
  *
  */
 public class ReportDaoImpl implements ReportDao {
+	
+	private Connection connection;
+
+	public ReportDaoImpl() {
+		// Load JDBC Driver
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println("JDBC class not found " + e.getMessage());
+		}
+
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
+		} catch (SQLException e) {
+			System.out.println("Could not set connection to conf.db " + e.getMessage());
+		}
+	}
 
 	@Override
 	public Report getAvailableEmployee(Date from, Date to) {

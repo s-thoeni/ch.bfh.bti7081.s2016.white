@@ -6,7 +6,6 @@ import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportSelectProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
@@ -74,7 +73,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 	@Override
 	public void showReports() {
 		menuClosed();
-		ReportSelectPresenter rsp = new ReportSelectPresenter(new ReportSelectProvider(), new ReportSelectViewImpl());
+		ReportSelectPresenter rsp = new ReportSelectPresenter(new ReportSelectViewImpl());
 		view.getNavigationManager().navigateTo(rsp.getView());
 
 	}

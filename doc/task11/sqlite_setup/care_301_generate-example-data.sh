@@ -88,8 +88,8 @@ function get_incident_type() {
 	fi
 }
 
-# loop for year 2013, 2014, 2015
-for y in {2013..2015}
+# loop for year 2013, 2014, 2015, 2016
+for y in {2013..2016}
 do
 	# loop over all month
 	for i in {1..12}

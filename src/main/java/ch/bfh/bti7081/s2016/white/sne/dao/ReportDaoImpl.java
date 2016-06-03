@@ -357,25 +357,51 @@ public class ReportDaoImpl implements ReportDao {
 	@Override
 	public Report getCashFlow(Date from, Date to) {
 		Report result = new Report("Cash Flow");
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(to);
-		int endDate = calendar.get(Calendar.DAY_OF_YEAR);
-		calendar.setTime(from);
-		int startDate = calendar.get(Calendar.DAY_OF_YEAR);
-
 		List<Record> records = new ArrayList<Record>();
-		Random rand = new Random();
-
-		for (int i = 0; i < 1000; ++i) {
-			calendar.setTime(from);
-			calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate + 1));
-			PatientRecord record = new PatientRecord();
-			record.setIncident("Incident" + i);
-			record.setDate(calendar.getTime());
-			records.add(record);
+		try {
+			this.connection = DriverManager.getConnection("jdbc:sqlite:db/accounting.db");
+		} catch (SQLException e) {
+			System.out.println("Could not set connection to accounting.db " + e.getMessage());
 		}
-		result.setRecords(records);
+		try {
+			Statement stm = connection.createStatement();
+			String query = "SELECT journalID, journalDate, effort, return, cashFlow " + "FROM Journal "
+					+ "WHERE journalDate >= '" + sdf.format(from) + "' AND journalDate <= '" + sdf.format(to) + "';";
+			System.out.println(query);
+			ResultSet rs = stm.executeQuery(query);
+			while (rs.next()) {
+				FinancialRecord record = new FinancialRecord();
+				try {
+					record.setEffort(Float.parseFloat(rs.getString("cashFlow")));
+				} catch (NullPointerException npe) {
+					System.out.println("Recieved no input from database: " + npe.getMessage());
+				} catch (NumberFormatException nfe) {
+					System.out.println("Could not parse cash-flow as float: " + nfe.getMessage());
+				}
+				record.setSummary(1);
+				try {
+					record.setDate(sdf.parse(rs.getString("journalDate")));
+					records.add(record);
+				} catch (ParseException pe) {
+					System.out.println("Could not parse date: " + pe.getMessage());
+				}
+			}
+			result.setRecords(records);
+		} catch (SQLException e) {
+			System.out.println("SQLException: " + e.getMessage());
+		} finally {
+			try {
+				if (this.stm != null)
+					this.stm.close();
+			} catch (SQLException se2) {
+			} // nothing we can do
+			try {
+				if (this.connection != null)
+					this.connection.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 		return result;
 	}
 

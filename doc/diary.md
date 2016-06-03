@@ -36,9 +36,11 @@
 | 2016-05-11 | thons1, shepd1 | workshop: working on CS1 task09	in group							|
 | 2016-05-13 | thons1, eller1 | presented architecture overview in class							|
 | 2016-05-13 | all attendants | planning: create plan for sprint 1									|
-| 2016-05-27 | all attendants | Meeting: results of Sprint 1										|
+| 2016-05-27 | all attendants | Meeting: review of Sprint 1											|
 | 2016-05-27 | all attendants | planning: create plan for sprint 2									|
-
+| 2016-06-03 | sprim5, eller1 | presented task12 and task13 in class 								|
+| 2016-06-03 | all attendants | Meeting: review of Sprint 2											|
+| 2016-06-03 | all attendants | planning: create plan for sprint 3									|
 
 
 # Absence

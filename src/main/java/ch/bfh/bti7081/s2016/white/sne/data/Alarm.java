@@ -21,6 +21,7 @@ public class Alarm {
 		this.alarmState = new AlarmNotCheckedState();
 	}
 
+	
 	public Object[] visualizeAlarm(){
 		this.alarmState.check(this);
 		return this.alarmState.visualizeAlarm(this);

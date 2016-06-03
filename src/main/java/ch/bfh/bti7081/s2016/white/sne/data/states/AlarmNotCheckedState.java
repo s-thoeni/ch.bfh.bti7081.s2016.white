@@ -19,9 +19,8 @@ public class AlarmNotCheckedState implements AlarmState {
 	 * @return Object[] (mainly Strings)
 	 */
 	public Object[] visualizeAlarm(Alarm alarm) {
-		// check and output
-		check(alarm);
-		return alarm.visualizeAlarm();
+		// no output when unchecked
+		return null;
 	}
 	
 	@Override

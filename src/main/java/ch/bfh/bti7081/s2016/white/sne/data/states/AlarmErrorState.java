@@ -33,7 +33,8 @@ public class AlarmErrorState implements AlarmState {
 		alarm.setAlarmReport(repFac.getReport(alarm.getAlarmReportConfig(), true));
 		
 		int summaryVal = alarm.getAlarmReport().getSummary();
-		if (alarm.getOperator().compareInt(summaryVal, alarm.getWarningValue())) {
+		
+		if (!alarm.getOperator().compareInt(summaryVal, alarm.getErrorValue()) && alarm.getOperator().compareInt(summaryVal, alarm.getWarningValue())) {
 			alarm.setAlarmState(new AlarmWarningState());
 		} else if(!alarm.getOperator().compareInt(summaryVal, alarm.getErrorValue())){
 			alarm.setAlarmState(new AlarmOkState());

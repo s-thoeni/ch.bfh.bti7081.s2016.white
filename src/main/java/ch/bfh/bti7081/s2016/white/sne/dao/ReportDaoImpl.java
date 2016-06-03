@@ -55,7 +55,7 @@ public class ReportDaoImpl implements ReportDao {
 			Statement stm = connection.createStatement();
 			String query = "SELECT e.employeeFirstName, e.employeeSurName, t.treatmentDate " + "FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID == e.employeeID "
 					+ "WHERE t.treatmentDate >= '" + sdf.format(from) + "' AND t.treatmentDate <= '" + sdf.format(to) + "';";
-			System.out.println(query);
+			//System.out.println(query);
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				PersonalRecord record = new PersonalRecord();
@@ -70,7 +70,6 @@ public class ReportDaoImpl implements ReportDao {
 					System.out.println("Could not parse date: " + pe.getMessage());
 				}
 			}
-			result.setRecords(records);
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 		} finally {
@@ -78,6 +77,7 @@ public class ReportDaoImpl implements ReportDao {
 				if (this.stm != null)
 					this.stm.close();
 			} catch (SQLException se2) {
+				System.out.println("Nothing we can do...");
 			} // nothing we can do
 			try {
 				if (this.connection != null)
@@ -86,6 +86,7 @@ public class ReportDaoImpl implements ReportDao {
 				se.printStackTrace();
 			}
 		}
+		result.setRecords(records);
 		return result;
 	}
 
@@ -122,7 +123,6 @@ public class ReportDaoImpl implements ReportDao {
 					System.out.println("Could not parse date: " + pe.getMessage());
 				}
 			}
-			result.setRecords(records);
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 		} finally {
@@ -138,6 +138,7 @@ public class ReportDaoImpl implements ReportDao {
 				se.printStackTrace();
 			}
 		}
+		result.setRecords(records);
 		return result;
 	}
 
@@ -168,7 +169,6 @@ public class ReportDaoImpl implements ReportDao {
 					System.out.println("Could not parse date: " + pe.getMessage());
 				}
 			}
-			result.setRecords(records);
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 		} finally {
@@ -184,6 +184,7 @@ public class ReportDaoImpl implements ReportDao {
 				se.printStackTrace();
 			}
 		}
+		result.setRecords(records);
 		return result;
 	}
 
@@ -255,7 +256,7 @@ public class ReportDaoImpl implements ReportDao {
 			Statement stm = connection.createStatement();
 			String query = "SELECT journalID, journalDate, effort, return, cashFlow " + "FROM Journal "
 					+ "WHERE journalDate >= '" + sdf.format(from) + "' AND journalDate <= '" + sdf.format(to) + "';";
-			System.out.println(query);
+			//System.out.println(query);
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				FinancialRecord record = new FinancialRecord();
@@ -274,7 +275,6 @@ public class ReportDaoImpl implements ReportDao {
 					System.out.println("Could not parse date: " + pe.getMessage());
 				}
 			}
-			result.setRecords(records);
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 		} finally {
@@ -290,6 +290,7 @@ public class ReportDaoImpl implements ReportDao {
 				se.printStackTrace();
 			}
 		}
+		result.setRecords(records);
 		return result;
 		
 	}
@@ -330,7 +331,6 @@ public class ReportDaoImpl implements ReportDao {
 					System.out.println("Could not parse date: " + pe.getMessage());
 				}
 			}
-			result.setRecords(records);
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 		} finally {
@@ -346,6 +346,7 @@ public class ReportDaoImpl implements ReportDao {
 				se.printStackTrace();
 			}
 		}
+		result.setRecords(records);
 		return result;
 	}
 
@@ -365,9 +366,10 @@ public class ReportDaoImpl implements ReportDao {
 		}
 		try {
 			Statement stm = connection.createStatement();
-			String query = "SELECT journalID, journalDate, effort, return, cashFlow " + "FROM Journal "
+			String query = "SELECT journalID, journalDate, effort, return, cashFlow " 
+					+ "FROM Journal "
 					+ "WHERE journalDate >= '" + sdf.format(from) + "' AND journalDate <= '" + sdf.format(to) + "';";
-			System.out.println(query);
+			//System.out.println(query);
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				FinancialRecord record = new FinancialRecord();
@@ -381,12 +383,12 @@ public class ReportDaoImpl implements ReportDao {
 				record.setSummary(1);
 				try {
 					record.setDate(sdf.parse(rs.getString("journalDate")));
+					record.setCashFlow(rs.getFloat("cashFlow"));
 					records.add(record);
 				} catch (ParseException pe) {
 					System.out.println("Could not parse date: " + pe.getMessage());
 				}
 			}
-			result.setRecords(records);
 		} catch (SQLException e) {
 			System.out.println("SQLException: " + e.getMessage());
 		} finally {
@@ -402,6 +404,7 @@ public class ReportDaoImpl implements ReportDao {
 				se.printStackTrace();
 			}
 		}
+		result.setRecords(records);
 		return result;
 	}
 

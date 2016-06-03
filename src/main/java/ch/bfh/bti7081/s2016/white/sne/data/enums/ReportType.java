@@ -11,6 +11,7 @@ public enum ReportType {
 	SICK_LEAVES,
 	INCIDENTS,
 	ENTRIES_EXITS,
+	// TODO: Correct this word. It is spelled wrong. It is bad and it should feel bad.
 	PATIENS,
 	EFFORT, 
 	CASHFLOW

@@ -15,6 +15,7 @@ import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 
+import ch.bfh.bti7081.s2016.white.sne.data.FinancialRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
@@ -36,7 +37,6 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		grid.setWidth(100, Unit.PERCENTAGE);
 		grid.setHeight(50, Unit.PERCENTAGE);
 		grid.addColumn("Date", String.class);
-		grid.addColumn("Incident", String.class);
 		
 		Configuration conf = chart.getConfiguration();
 		conf.setTitle(report.getName());
@@ -47,16 +47,16 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		startDayCal.setTime(report.getFrom());
 		startDayCal.set(Calendar.HOUR_OF_DAY, startDayCal.getActualMinimum(Calendar.HOUR_OF_DAY));
 		startDayCal.set(Calendar.MINUTE, startDayCal.getActualMinimum(Calendar.MINUTE));
-		startDayCal.set(Calendar.SECOND, startDayCal.getActualMinimum(Calendar.MINUTE));
-		int startDate = startDayCal.get(Calendar.DAY_OF_YEAR);
+		startDayCal.set(Calendar.SECOND, startDayCal.getActualMinimum(Calendar.SECOND));
+		startDayCal.set(Calendar.MILLISECOND, startDayCal.getActualMinimum(Calendar.MILLISECOND));
 		long startDateInMillis = startDayCal.getTimeInMillis();
-		int maxDayInStartYear = startDayCal.getActualMaximum(Calendar.DAY_OF_YEAR);
 		
 		Calendar endDayCal = Calendar.getInstance();
 		endDayCal.setTime(report.getTo());
 		endDayCal.set(Calendar.HOUR_OF_DAY, endDayCal.getActualMaximum(Calendar.HOUR_OF_DAY));
 		endDayCal.set(Calendar.MINUTE, endDayCal.getActualMaximum(Calendar.MINUTE));
-		endDayCal.set(Calendar.SECOND, endDayCal.getActualMaximum(Calendar.MINUTE));
+		endDayCal.set(Calendar.SECOND, endDayCal.getActualMaximum(Calendar.SECOND));
+		endDayCal.set(Calendar.MILLISECOND, endDayCal.getActualMaximum(Calendar.MILLISECOND));
 
 		List<Number> values = new ArrayList<Number>();
 
@@ -75,24 +75,72 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
 		}
 		
-		for (Record record : report.getRecords()) {
-			calendar.setTime(record.getDate());
-			if ((calendar.compareTo(startDayCal) >= 0) &&
-				(calendar.compareTo(endDayCal) <= 0)) {
-				long recordDateInMillis = calendar.getTimeInMillis();
-				int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-				
-				int value = values.get(index).intValue();
-				++value;
-				values.set(index, value);
-			}
+		String seriesIndicator;
+		
+		switch (report.getType()) {
+		case EFFORT:
+			seriesIndicator = "Effort";
+			grid.addColumn("Effort", String.class);
+			for (Record record : report.getRecords()) {
+				if (record instanceof FinancialRecord) {
+					calendar.setTime(record.getDate());
+					if ((calendar.compareTo(startDayCal) >= 0) &&
+						(calendar.compareTo(endDayCal) <= 0)) {
+						long recordDateInMillis = calendar.getTimeInMillis();
+						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+						
+						float value = values.get(index).floatValue();
+						value += ((FinancialRecord) record).getEffort();
+						values.set(index, value);
 
-			if (record instanceof PatientRecord) {
-				grid.addRow(sdf.format(calendar.getTime()), ((PatientRecord) record).getIncident());
+						grid.addRow(sdf.format(calendar.getTime()), String.valueOf(((FinancialRecord) record).getEffort()));
+					}
+				}
+			}
+			break;
+		case CASHFLOW:
+			seriesIndicator = "Cashflow";
+			grid.addColumn("Cashflow", String.class);
+			for (Record record : report.getRecords()) {
+				if (record instanceof FinancialRecord) {
+					calendar.setTime(record.getDate());
+					if ((calendar.compareTo(startDayCal) >= 0) &&
+						(calendar.compareTo(endDayCal) <= 0)) {
+						long recordDateInMillis = calendar.getTimeInMillis();
+						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+						
+						float value = values.get(index).floatValue();
+						value += ((FinancialRecord) record).getCashFlow();
+						values.set(index, value);
+
+						grid.addRow(sdf.format(calendar.getTime()), String.valueOf(((FinancialRecord) record).getCashFlow()));
+					}
+				}
+			}
+			break;
+		case INCIDENTS:
+		default:
+			seriesIndicator = "Incidents";
+			grid.addColumn("Incident", String.class);
+			for (Record record : report.getRecords()) {
+				if (record instanceof PatientRecord) {
+					calendar.setTime(record.getDate());
+					if ((calendar.compareTo(startDayCal) >= 0) &&
+						(calendar.compareTo(endDayCal) <= 0)) {
+						long recordDateInMillis = calendar.getTimeInMillis();
+						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+						
+						int value = values.get(index).intValue();
+						++value;
+						values.set(index, value);
+	
+						grid.addRow(sdf.format(calendar.getTime()), ((PatientRecord) record).getIncident());
+					}
+				}
 			}
 		}
 		
-		ListSeries series = new ListSeries("Incidents");
+		ListSeries series = new ListSeries(seriesIndicator);
 		series.setData(values);
 		conf.addSeries(series);
 		

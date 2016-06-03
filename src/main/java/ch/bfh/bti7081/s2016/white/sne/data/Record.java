@@ -21,6 +21,10 @@ public abstract class Record {
 	 * specific report.
 	 */
 	private int summary;
+	
+	public Record() {
+		this.summary = 0;
+	}
 
 	public Date getDate() {
 		return this.date;

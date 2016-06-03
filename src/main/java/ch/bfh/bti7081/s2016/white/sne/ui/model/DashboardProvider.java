@@ -3,11 +3,8 @@ package ch.bfh.bti7081.s2016.white.sne.ui.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacade;
-import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
-import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
@@ -21,7 +18,6 @@ import ch.bfh.bti7081.s2016.white.sne.data.User;
  */
 public class DashboardProvider {
 	private ReportFacade repFac;
-	private AlarmFacade alarmFac;
 	
 	private List<ReportConfig> reportConfigurations;
 	
@@ -39,15 +35,9 @@ public class DashboardProvider {
 		return reports;
 	}
 	
-	public List<Alarm> checkAlarms(List<Alarm> alarms) {		
-		
-		return alarmFac.checkAlarms(alarms);
-	}
-	
 	public DashboardProvider(Configuration config, User user) {
 		this.setReportConfigurations(config.getReports());
 		this.repFac = new ReportFacadeImpl();
-		this.alarmFac = new AlarmFacadeImpl(user);
 	}
 	
 	/**

@@ -8,6 +8,4 @@ public interface AlarmFacade {
 	public List<Alarm> getAlarms();
 
 	void storeAlarms(List<Alarm> alarms);
-	
-	public List<Alarm> checkAlarms(List<Alarm> alarms);
 }

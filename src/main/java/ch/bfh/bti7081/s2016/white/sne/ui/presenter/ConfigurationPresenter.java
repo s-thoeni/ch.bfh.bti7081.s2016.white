@@ -1,7 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.vaadin.ui.Component;
@@ -13,16 +12,11 @@ import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 
 public class ConfigurationPresenter implements ConfigurationView.ConfigurationViewListener {
 	private ConfigurationProvider model;

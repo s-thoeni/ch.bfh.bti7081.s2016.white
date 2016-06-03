@@ -12,13 +12,16 @@ public class FinancialRecord extends Record {
 	 * key performance indicator
 	 */
 	private float effort;
+	
 	/**
 	 * Financial return (germ. = "Ertrag")
 	 * key performance indicator
 	 */
 	private float returnValue;
+	
 	/**
-	 * Financial cashflow (
+	 * Financial cashflow
+	 * (the simple way: return - effort + write-off)
 	 * 
 	 */
 	private float cashFlow;
@@ -47,4 +50,9 @@ public class FinancialRecord extends Record {
 		this.cashFlow = cashFlow;
 	}
 
+	@Override
+	public String toString() {
+		return "FinancialRecord [effort=" + effort + ", returnValue=" + returnValue + ", cashFlow=" + cashFlow + "]";
+	}
+	
 }

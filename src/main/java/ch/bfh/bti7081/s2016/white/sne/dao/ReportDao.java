@@ -17,5 +17,7 @@ public interface ReportDao {
 	
 	public Report getEffort(Date from, Date to);
 	
+	public Report getReturn(Date from, Date to);
+	
 	public Report getCashFlow(Date from, Date to);
 }

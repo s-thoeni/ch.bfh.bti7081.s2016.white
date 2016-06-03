@@ -6,7 +6,6 @@ import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;

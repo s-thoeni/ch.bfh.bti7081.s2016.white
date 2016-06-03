@@ -109,26 +109,39 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 	}
 	
 	private void buildAlarming(){
+		boolean hasWarning = false;
+		boolean hasError = false;
 		Table table = new Table("Alarms");
 		table.addContainerProperty("State", String.class, null);
 		table.addContainerProperty("Report", String.class, null);
-		table.addContainerProperty("Value", Integer.class, null);
-		table.addContainerProperty("Operator", String.class, null);
-		table.addContainerProperty("Threshhold", Integer.class, null);
+		table.addContainerProperty("Check", String.class, null);
 		int index = 1;
 		for(Alarm alarm: alarms){
-			if(alarm.visualizeAlarm()!=null){
-				table.addItem(alarm.visualizeAlarm(), index);
+			Object[] alarmVisualization = alarm.visualizeAlarm();
+			if(alarmVisualization!=null){
+				table.addItem(alarmVisualization, index);
+				switch (alarmVisualization[0].toString()){
+				case "Error":
+					hasError = true;
+					break;
+				case "Warning":
+					hasWarning = true;
+					break;
+				}
 				index++;
 			}
 		}
 		table.setPageLength(table.size());
-		if(true){
+		if(hasError || hasWarning){
 			Popover popover = new Popover();
 			popover.setContent(table);
 			Button alarmButton = new Button();
 			alarmButton.setIcon(FontAwesome.EXCLAMATION_TRIANGLE);
-//			alarmButton.setStyleName("Error");
+			if(hasError){
+				alarmButton.setStyleName("Error");
+			}else if(hasWarning){
+				alarmButton.setStyleName("Warning");
+			}
 			alarmButton.addClickListener(new ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {

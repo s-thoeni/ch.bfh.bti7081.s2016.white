@@ -8,17 +8,11 @@ import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationView.AlarmConfigurationViewListener;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView.DashboardViewListener;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSet;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
 public class AlarmConfigurationViewImpl extends NavigationView implements AlarmConfigurationView{
 	private VerticalLayout grid;

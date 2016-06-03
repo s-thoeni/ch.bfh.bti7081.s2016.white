@@ -39,7 +39,7 @@ public class MyUI extends UI {
 		List<Alarm> alarms = alarmFac.getAlarms();
 		
 		DashboardProvider provider = new DashboardProvider(config, user);
-		DashboardViewImpl view = new DashboardViewImpl(config, provider.checkAlarms(alarms));
+		DashboardViewImpl view = new DashboardViewImpl(config, alarms);
 		
 		db = new DashboardPresenter(provider, view);		
 		

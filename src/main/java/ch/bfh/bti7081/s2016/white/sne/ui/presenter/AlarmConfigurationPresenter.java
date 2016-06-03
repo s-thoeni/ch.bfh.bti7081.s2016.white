@@ -1,32 +1,21 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
-import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.AlarmConfigurationProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationViewImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSet;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 
 public class AlarmConfigurationPresenter implements AlarmConfigurationView.AlarmConfigurationViewListener {
 	private AlarmConfigurationProvider model;

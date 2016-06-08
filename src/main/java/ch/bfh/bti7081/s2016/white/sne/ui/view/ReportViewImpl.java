@@ -140,7 +140,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				}
 			}
 			break;
-		case PATIENS:
+		case PATIENTS:
 			seriesIndicator = "Patients";
 			grid.addColumn("Patient", String.class);
 			for (Record record : report.getRecords()) {

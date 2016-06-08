@@ -166,8 +166,4 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 	 public NavigationManager getNavigationManager() {
 		 return super.getNavigationManager();
 	 }
-
-	public void navigateTo(Component view) {
-		navigateTo(view);		
-	}
 }

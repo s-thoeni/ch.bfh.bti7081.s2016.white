@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2016.white.sne.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +21,8 @@ public class AlarmDaoImpl implements AlarmDao {
 	private Connection connection;
 	private Statement stm;
 
+	private static final String SELECT_ALARMS = "SELECT a.reportType, a.alarmTimeFrame, a.comperator, a.errorValue, a.warnValue FROM Alarm AS a INNER JOIN User AS u ON a.userID = u.userID WHERE u.userName == ?";
+	
 	public AlarmDaoImpl() {
 		// Load JDBC Driver
 		try {
@@ -32,25 +35,19 @@ public class AlarmDaoImpl implements AlarmDao {
 	public List<Alarm> getAlarms(User user) {
 		List<Alarm> alarms = new ArrayList<Alarm>();
 
-		/*
-		 * alarmID INTEGER PRIMARY KEY AUTOINCREMENT, reportType NVARCHAR(128)
-		 * NOT NULL, alarmTimeFrame NVARCHAR(128) NOT NULL, comperator
-		 * NVARCHAR(128) NOT NULL, errorValue INTEGER NOT NULL, warnValue
-		 * INTEGER NOT NULL, userID INTEGER NOT NULL,
-		 */
 		try {
 			try {
 				this.connection = DriverManager.getConnection("jdbc:sqlite:db/conf.db");
 			} catch (SQLException e) {
 				System.out.println("Could not set connection to conf.db " + e.getMessage());
 			}
+			
 			stm = connection.createStatement();
-			String query = " SELECT a.reportType, a.alarmTimeFrame, a.comperator, a.errorValue, a.warnValue FROM Alarm AS a INNER JOIN User AS u ON a.userID = u.userID WHERE u.userName == '"
-					+ user.getUserName() + "';";
+			PreparedStatement prpstmt = connection.prepareStatement(SELECT_ALARMS);
+			
+			prpstmt.setString(1, user.getUserName());
 
-			System.out.println(query);
-
-			ResultSet rs = stm.executeQuery(query);
+			ResultSet rs = prpstmt.executeQuery();
 
 			while (rs.next()) {
 				ReportType rt = ReportType.valueOf(rs.getString("reportType"));

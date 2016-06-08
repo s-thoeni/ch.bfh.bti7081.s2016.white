@@ -7,10 +7,11 @@
 ----------------------------------------------------------------------
 
 CREATE TABLE User (
-	userID		INTEGER PRIMARY KEY AUTOINCREMENT,
-	firstName	NVARCHAR(128) NOT NULL,
-	surName		NVARCHAR(128) NOT NULL,
-	userName	NVARCHAR(128) NOT NULL
+	userID			INTEGER PRIMARY KEY AUTOINCREMENT,
+	firstName		NVARCHAR(128) NOT NULL,
+	surName			NVARCHAR(128) NOT NULL,
+	userName		NVARCHAR(128) NOT NULL,
+	userPassword	NVARCHAR(256) NOT NULL
 );
 
 CREATE TABLE Configuration (

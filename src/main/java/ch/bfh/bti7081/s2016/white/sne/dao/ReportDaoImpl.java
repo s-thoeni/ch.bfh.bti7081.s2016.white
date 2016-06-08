@@ -53,7 +53,7 @@ public class ReportDaoImpl implements ReportDao {
 		}
 		try {
 			Statement stm = connection.createStatement();
-			String query = "SELECT e.employeeFirstName, e.employeeSurName, t.treatmentDate " + "FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID == e.employeeID "
+			String query = "SELECT DISTINCT e.employeeFirstName, e.employeeSurName, t.treatmentDate " + "FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID == e.employeeID "
 					+ "WHERE t.treatmentDate >= '" + sdf.format(from) + "' AND t.treatmentDate <= '" + sdf.format(to) + "';";
 			//System.out.println(query);
 			ResultSet rs = stm.executeQuery(query);

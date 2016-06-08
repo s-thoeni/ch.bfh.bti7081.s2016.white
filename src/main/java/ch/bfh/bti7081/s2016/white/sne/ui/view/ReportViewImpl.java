@@ -12,11 +12,13 @@ import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.XAxis;
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.addon.touchkit.ui.TabBarView;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.data.FinancialRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
+import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
@@ -28,7 +30,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	private List<ReportViewListener> listeners = new ArrayList<ReportViewListener>();
 	
 	public ReportViewImpl(Report report) {
-		getNavigationBar().setCaption(report.getName());
+		this.getNavigationBar().setCaption(report.getName());
 		
 		Chart chart = new Chart(ChartType.LINE);
 		chart.setHeight(50, Unit.PERCENTAGE);
@@ -118,6 +120,67 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				}
 			}
 			break;
+		case AVAILABLE_EMPLOYEES:
+			seriesIndicator = "Available Employees";
+			grid.addColumn("Employee", String.class);
+			for (Record record : report.getRecords()) {
+				if (record instanceof PersonalRecord) {
+					calendar.setTime(record.getDate());
+					if ((calendar.compareTo(startDayCal) >= 0) &&
+						(calendar.compareTo(endDayCal) <= 0)) {
+						long recordDateInMillis = calendar.getTimeInMillis();
+						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+						
+						float value = values.get(index).floatValue();
+						++value;
+						values.set(index, value);
+						
+						grid.addRow(sdf.format(calendar.getTime()), ((PersonalRecord) record).getPersonName());
+					}
+				}
+			}
+			break;
+		case PATIENS:
+			seriesIndicator = "Patients";
+			grid.addColumn("Patient", String.class);
+			for (Record record : report.getRecords()) {
+				if (record instanceof PatientRecord) {
+					calendar.setTime(record.getDate());
+					if ((calendar.compareTo(startDayCal) >= 0) &&
+						(calendar.compareTo(endDayCal) <= 0)) {
+						long recordDateInMillis = calendar.getTimeInMillis();
+						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+						
+						int value = values.get(index).intValue();
+						++value;
+						values.set(index, value);
+	
+						grid.addRow(sdf.format(calendar.getTime()), ((PatientRecord) record).getIncident());
+					}
+				}
+			}
+			break;
+		case SICK_LEAVES:
+			seriesIndicator = "Absences";
+			grid.addColumn("Employee", String.class);
+			grid.addColumn("Reason", String.class);
+			for (Record record : report.getRecords()) {
+				if (record instanceof PersonalRecord) {
+					calendar.setTime(record.getDate());
+					if ((calendar.compareTo(startDayCal) >= 0) &&
+						(calendar.compareTo(endDayCal) <= 0)) {
+						long recordDateInMillis = calendar.getTimeInMillis();
+						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+						
+						float value = values.get(index).floatValue();
+						++value;
+						values.set(index, value);
+						
+						grid.addRow(sdf.format(calendar.getTime()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getUnavailableReason());
+					}
+				}
+			}
+			break;
 		case INCIDENTS:
 		default:
 			seriesIndicator = "Incidents";
@@ -146,11 +209,16 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		
 		conf.addxAxis(xAxis);
 		
+		VerticalLayout lineChartLayout = new VerticalLayout();
+		lineChartLayout.addComponent(chart);
+
+		VerticalLayout gridLayout = new VerticalLayout();
+		gridLayout.addComponent(grid);
+		gridLayout.setSpacing(false);
 		
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(false);
-		layout.addComponent(chart);
-		layout.addComponent(grid);
+		TabBarView layout = new TabBarView();
+		layout.addTab(lineChartLayout, "Linechart");
+		layout.addTab(gridLayout, "Records");
 		
 		super.setContent(layout);
 	}

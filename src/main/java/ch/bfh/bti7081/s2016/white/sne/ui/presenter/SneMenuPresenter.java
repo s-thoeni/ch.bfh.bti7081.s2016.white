@@ -82,7 +82,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		// Only this button actually does something in the menu. Here we
 		// navigate to a dummy view.
 
-		this.view.navigateTo(cv.getView());
+		this.view.getNavigationManager().navigateTo(cv.getView());
 
 	}
 

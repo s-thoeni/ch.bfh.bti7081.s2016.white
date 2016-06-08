@@ -21,7 +21,7 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+	private final SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 	
 	private Label reportName;
 	

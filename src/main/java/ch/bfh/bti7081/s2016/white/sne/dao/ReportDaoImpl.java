@@ -30,7 +30,7 @@ public class ReportDaoImpl implements ReportDao {
 	private Connection connection;
 	private Statement stm;
 
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	public ReportDaoImpl() {
 		// Load JDBC Driver

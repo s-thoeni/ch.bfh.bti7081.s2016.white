@@ -11,8 +11,6 @@ public interface ReportDao {
 	
 	public Report getIncidents(Date from, Date to);
 	
-	public Report getEntriesExits(Date from, Date to);
-	
 	public Report getPatientCount(Date from, Date to);
 	
 	public Report getEffort(Date from, Date to);

@@ -189,31 +189,6 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public Report getEntriesExits(Date from, Date to) {
-		Report result = new Report("Ein/Austritte");
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(to);
-		int endDate = calendar.get(Calendar.DAY_OF_YEAR);
-		calendar.setTime(from);
-		int startDate = calendar.get(Calendar.DAY_OF_YEAR);
-
-		List<Record> records = new ArrayList<Record>();
-		Random rand = new Random();
-
-		for (int i = 0; i < 1000; ++i) {
-			calendar.setTime(from);
-			calendar.add(Calendar.DAY_OF_YEAR, rand.nextInt(endDate - startDate + 1));
-			PatientRecord record = new PatientRecord();
-			record.setIncident("Incident" + i);
-			record.setDate(calendar.getTime());
-			records.add(record);
-		}
-		result.setRecords(records);
-		return result;
-	}
-
-	@Override
 	public Report getPatientCount(Date from, Date to) {
 		Report result = new Report("Aktuelle Patientanzahl");
 

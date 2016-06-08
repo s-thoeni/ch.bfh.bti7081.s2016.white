@@ -62,17 +62,13 @@ public class ReportFacadeImpl implements ReportFacade {
 			result = dao.getEffort(from, to);
 			result.setType(ReportType.EFFORT);
 			break;
-		case ENTRIES_EXITS:
-			result = dao.getEntriesExits(from, to);
-			result.setType(ReportType.ENTRIES_EXITS);
-			break;
 		case INCIDENTS:
 			result =  dao.getIncidents(from, to);
 			result.setType(ReportType.INCIDENTS);
 			break;
-		case PATIENS:
+		case PATIENTS:
 			result = dao.getPatientCount(from, to);
-			result.setType(ReportType.PATIENS);
+			result.setType(ReportType.PATIENTS);
 			break;
 		case SICK_LEAVES:
 			result = dao.getSickLeaves(from, to);

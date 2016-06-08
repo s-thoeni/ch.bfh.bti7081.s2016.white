@@ -55,11 +55,24 @@ CREATE TABLE Incident (
 	incidentID			INTEGER PRIMARY KEY AUTOINCREMENT,
 	treatmentID			INTEGER NOT NULL,
 	typeID				INTEGER NOT NULL,
-	desciription		NVARCHAR(2048) NULL,
+	description			NVARCHAR(2048) NULL,
 	FOREIGN KEY(treatmentID) REFERENCES Treatment(treatmentID),
 	FOREIGN KEY(typeID) REFERENCES IncidentType(typeID)
 );
 
+
+CREATE TABLE Absence (
+	absenceID			INTEGER PRIMARY KEY AUTOINCREMENT,
+	employeeID			INTEGER NOT NULL,
+	absenceDate			DATE NOT NULL,
+	absenceReason		INTEGER NOT NULL,
+	FOREIGN KEY(absenceReason) REFERENCES AbsenceReason(reasonID)
+);
+
+CREATE TABLE AbsenceReason (
+	reasonID			INTEGER PRIMARY KEY AUTOINCREMENT,
+	reasonDescription	NVARCHAR(32) NULL
+);
 
 -- Optional Tables Invoicing for future enhancements of reporting features
 CREATE TABLE Invoice (

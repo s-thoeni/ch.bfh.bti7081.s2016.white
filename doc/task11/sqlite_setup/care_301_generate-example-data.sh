@@ -10,7 +10,7 @@
 position=("assistant" "receptionist" "doctor" "health visitor" "manager" "psychiatrist")
 department=("home care" "clinic treatment" "administration" "accident and emergency unit")
 incident_type=("vulgarity", "violence", "drop" "drunkenness" "drug consumption" "drug abuse" "sexual abuse" "suicide")
-
+absence_reason=("Illness", "Vacation", "Overslept", "Compensation", "Appointment", "Education", "Pregnancy")
 
 ### fill table employee
 tmpfile=`mktemp`
@@ -53,10 +53,13 @@ rm $tmpfile2
 ### fill table treatment
 tmpfile3=`mktemp`
 tmpfile4=`mktemp`
+tmpfile5=`mktemp`
 treatmentid=0
+absenceid=0
 
 echo "INSERT INTO Treatment (patientID, employeeID, treatmentDate, duration) VALUES (30, 170, \"2014-01-01\", 35)" >> $tmpfile3
 echo "INSERT INTO Incident (treatmentID, typeID) VALUES (1, 1)" >> $tmpfile4
+echo "INSERT INTO Absence (employeeID, absenceDate, absenceReason) VALUES (01, \"2014-01-01\", \"Employee is sick\")" >> $tmpfile5
 
 function is_absent() {
 	if (( ($RANDOM%356) > 260 ))
@@ -88,6 +91,23 @@ function get_incident_type() {
 	fi
 }
 
+function get_absence_type() {
+	if (( ($RANDOM%100) >= 98 ))
+	then
+		absenceid=7			# pregnancy
+	elif (( ($RANDOM%100) >= 95 ))
+	then
+		absenceid=8			# other
+	elif (( ($RANDOM%100) >= 90 ))
+	then
+		absenceid=6			# education
+	else
+		absenceid=$(( ($RANDOM%5)+1 ))
+	fi
+}
+
+
+echo "Start generating Data for Treatment and Incident"
 # loop for year 2013, 2014, 2015, 2016
 for y in {2013..2016}
 do
@@ -98,7 +118,7 @@ do
 		for j in {1..31}
 		do
 			# do not creat dates that don't exist
-			if (( "$i" == "2" )) && (( "$j" > "28" ))
+			if (( (( "$i" == "2" )) && (( "$j" > "28" )) && (( "$y" != "2016")) | (( "$i" == "2" )) && (( "$j" > "29" )) ))
 			then
 				continue
 			elif (( (( "$i" == "4" )) || (( "$i" == "6" )) || (( "$i" == "9" ))  || (( "$i" == "11" )) )) && (( "$j" > "30" ))
@@ -110,7 +130,11 @@ do
 				do
 					if is_absent ;
 					then
-						continue
+						emp=$e
+						get_absence_type
+
+						echo ",($emp, \"$y-$mon-$day\", $absenceid)" >> $tmpfile5
+						
 					else
 						pat=$(( ($RANDOM%1100)+1 ))
 						emp=$e
@@ -146,17 +170,20 @@ do
 				done
 			fi
 		done
-		#echo "generate data until $y-$mon-$day"
+		echo "  -> generate data until $y-$mon-$day"
 	done
 done
 
 echo ";" >> $tmpfile3
 echo ";" >> $tmpfile4
+echo ";" >> $tmpfile5
 sqlite3 ~/.sne/databases/care.db < $tmpfile3
 sqlite3 ~/.sne/databases/care.db < $tmpfile4
+sqlite3 ~/.sne/databases/care.db < $tmpfile5
 echo "data for table Treatment and Incident generated"
 
 rm $tmpfile3
 rm $tmpfile4
+rm $tmpfile5
 
 

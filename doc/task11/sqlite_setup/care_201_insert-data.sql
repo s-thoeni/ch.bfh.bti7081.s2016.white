@@ -39,5 +39,17 @@ VALUES
 	('suicide');
 
 
+	
+INSERT INTO AbsenceReason
+	(reasonDescription)
+VALUES
+	('Illness'),
+	('Vacation'),
+	('Overslept'),
+	('Compensation'),
+	('Appointment'),		-- arzttermin
+	('Education'),
+	('Pregnancy'),
+	('Other');
 
 

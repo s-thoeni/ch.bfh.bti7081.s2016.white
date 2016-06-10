@@ -3,6 +3,9 @@ package ch.bfh.bti7081.s2016.white.sne.ui.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
@@ -17,21 +20,28 @@ import ch.bfh.bti7081.s2016.white.sne.data.User;
  *
  */
 public class DashboardProvider {
+	//Initialize new logger for this class
+	private static final Logger logger = LogManager.getLogger(DashboardProvider.class);
+	
 	private ReportFacade repFac;
 	
 	private List<ReportConfig> reportConfigurations;
 	
-	public List<Report> getReports() {		
+	public List<Report> getReports() {	
+		logger.debug("->");
 		List<Report> reports= new ArrayList<Report>();
 		for(ReportConfig conf: getReportConfigurations()){
 			//System.out.println(conf.getDashboardReportType());
 			try {
 				reports.add(repFac.getReport(conf.getReportType(), conf.getReportTimeframe(), true));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				logger.error("Error reading report! ", e);
+				
+				//TODO: should display exception on View!
 				e.printStackTrace();
 			}
 		}
+		logger.debug("<-");
 		return reports;
 	}
 	

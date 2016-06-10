@@ -22,33 +22,33 @@ public class ReportFacadeImpl implements ReportFacade {
 	}
 
 	@Override
-	public Report getReport(ReportType type, Date from, Date to) {
+	public Report<? extends Record> getReport(ReportType type, Date from, Date to) {
 		return getReport(type, from, to, false);
 	}
 	
 	@Override
-	public Report getReport(ReportConfig definition) {
+	public Report<? extends Record> getReport(ReportConfig definition) {
 		return getReport(definition.getReportType(), definition.getReportTimeframe(), false);
 	}
 	
 	@Override
-	public Report getReport(ReportConfig definition, boolean calculateSummary) {
+	public Report<? extends Record> getReport(ReportConfig definition, boolean calculateSummary) {
 		return getReport(definition.getReportType(), definition.getReportTimeframe(), calculateSummary);
 	}
 
 	@Override
-	public Report getReport(ReportType type, ReportTimeframe timeframe) {
+	public Report<? extends Record> getReport(ReportType type, ReportTimeframe timeframe) {
 		return getReport(type, timeframe, false);
 	}
 
 	@Override
-	public Report getReport(ReportType type, ReportTimeframe timeframe, boolean calculateSummary) {
+	public Report<? extends Record> getReport(ReportType type, ReportTimeframe timeframe, boolean calculateSummary) {
 		return getReport(type, timeframe.getConcreteDate().getFrom() , timeframe.getConcreteDate().getTo(), calculateSummary);
 	}	
 
 	@Override
-	public Report getReport(ReportType type, Date from, Date to, boolean calculateSummary) {
-		Report result = null;
+	public Report<? extends Record> getReport(ReportType type, Date from, Date to, boolean calculateSummary) {
+		Report<? extends Record> result = null;
 		switch (type){
 		case AVAILABLE_EMPLOYEES:
 			result = dao.getAvailableEmployee(from, to);
@@ -87,38 +87,38 @@ public class ReportFacadeImpl implements ReportFacade {
 	}
 
 	@Override
-	public List<Report> getReports(ReportType[] types, Date from, Date to) {
-		List<Report> reports = new ArrayList<Report>();
+	public List<Report<? extends Record>> getReports(ReportType[] types, Date from, Date to) {
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 		for (ReportType type : types)
 			reports.add(getReport(type, from, to));
 		return reports;
 	}
 
 	@Override
-	public List<Report> getReports(ReportType[] types, ReportTimeframe timeframe) {
-		List<Report> reports = new ArrayList<Report>();
+	public List<Report<? extends Record>> getReports(ReportType[] types, ReportTimeframe timeframe) {
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 		for (ReportType type : types)
 			reports.add(getReport(type, timeframe));
 		return reports;
 	}
 
 	@Override
-	public List<Report> getReports(ReportType[] types, ReportTimeframe timeframe, boolean calculateSummary) {
-		List<Report> reports = new ArrayList<Report>();
+	public List<Report<? extends Record>> getReports(ReportType[] types, ReportTimeframe timeframe, boolean calculateSummary) {
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 		for (ReportType type : types)
 			reports.add(getReport(type, timeframe, calculateSummary));
 		return reports;
 	}
 
 	@Override
-	public List<Report> getReports(ReportType[] types, Date from, Date to, boolean calculateSummary) {
-		List<Report> reports = new ArrayList<Report>();
+	public List<Report<? extends Record>> getReports(ReportType[] types, Date from, Date to, boolean calculateSummary) {
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 		for (ReportType type : types)
 			reports.add(getReport(type, from, to, calculateSummary));
 		return reports;
 	}
 
-	private void aggregateSummary(Report report) {
+	private void aggregateSummary(Report<? extends Record> report) {
 		int sum = 0;
 		for(Record rec : report.getRecords()){
 			sum += rec.getSummary();
@@ -127,7 +127,7 @@ public class ReportFacadeImpl implements ReportFacade {
 	}
 
 	@Override
-	public Report getReport(ReportType type, DatePair datePair) {
+	public Report<? extends Record> getReport(ReportType type, DatePair datePair) {
 		return getReport(type, datePair.getFrom(), datePair.getTo());
 	}
 }

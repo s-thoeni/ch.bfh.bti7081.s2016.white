@@ -23,13 +23,18 @@ import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
 public class ReportViewImpl extends NavigationView implements ReportView {
-
+	
 	// TODO(jan): Verify that this serialVersionUID makes sense
 	private static final long serialVersionUID = 2L;
 
 	private List<ReportViewListener> listeners = new ArrayList<ReportViewListener>();
 	
-	public ReportViewImpl(Report report) {
+	private class RecordInRange {
+		public boolean isInRange;
+		public Calendar cal;
+	}
+	
+	public ReportViewImpl(Report<? extends Record> report) {
 		this.getNavigationBar().setCaption(report.getName());
 		
 		Chart chart = new Chart(ChartType.LINE);
@@ -77,127 +82,79 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
 		}
 		
-		String seriesIndicator;
+		String seriesIndicator = report.getType().getSeriesIndicator();
 		
 		switch (report.getType()) {
 		case EFFORT:
-			seriesIndicator = "Effort";
 			grid.addColumn("Effort", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
-					calendar.setTime(record.getDate());
-					if ((calendar.compareTo(startDayCal) >= 0) &&
-						(calendar.compareTo(endDayCal) <= 0)) {
-						long recordDateInMillis = calendar.getTimeInMillis();
-						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-						
-						float value = values.get(index).floatValue();
-						value += ((FinancialRecord) record).getEffort();
-						values.set(index, value);
-
-						grid.addRow(sdf.format(calendar.getTime()), String.valueOf(((FinancialRecord) record).getEffort()));
+					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
+					if (rir.isInRange) {
+						this.updateValue(rir.cal, startDateInMillis, values, ((FinancialRecord) record).getEffort());
+						grid.addRow(sdf.format(rir.cal.getTime()), String.valueOf(((FinancialRecord) record).getEffort()));
 					}
 				}
 			}
 			break;
 		case CASHFLOW:
-			seriesIndicator = "Cashflow";
 			grid.addColumn("Cashflow", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
-					calendar.setTime(record.getDate());
-					if ((calendar.compareTo(startDayCal) >= 0) &&
-						(calendar.compareTo(endDayCal) <= 0)) {
-						long recordDateInMillis = calendar.getTimeInMillis();
-						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-						
-						float value = values.get(index).floatValue();
-						value += ((FinancialRecord) record).getCashFlow();
-						values.set(index, value);
-
-						grid.addRow(sdf.format(calendar.getTime()), String.valueOf(((FinancialRecord) record).getCashFlow()));
+					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
+					if (rir.isInRange) {
+						this.updateValue(rir.cal, startDateInMillis, values, ((FinancialRecord) record).getCashFlow());
+						grid.addRow(sdf.format(rir.cal.getTime()), String.valueOf(((FinancialRecord) record).getCashFlow()));
 					}
 				}
 			}
 			break;
 		case AVAILABLE_EMPLOYEES:
-			seriesIndicator = "Available Employees";
 			grid.addColumn("Employee", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
-					calendar.setTime(record.getDate());
-					if ((calendar.compareTo(startDayCal) >= 0) &&
-						(calendar.compareTo(endDayCal) <= 0)) {
-						long recordDateInMillis = calendar.getTimeInMillis();
-						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-						
-						float value = values.get(index).floatValue();
-						++value;
-						values.set(index, value);
-						
-						grid.addRow(sdf.format(calendar.getTime()), ((PersonalRecord) record).getPersonName());
+					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
+					if (rir.isInRange) {
+						this.updateValue(rir.cal, startDateInMillis, values);
+						grid.addRow(sdf.format(rir.cal.getTime()), ((PersonalRecord) record).getPersonName());
 					}
 				}
 			}
 			break;
 		case PATIENTS:
-			seriesIndicator = "Patients";
 			grid.addColumn("Patient", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
-					calendar.setTime(record.getDate());
-					if ((calendar.compareTo(startDayCal) >= 0) &&
-						(calendar.compareTo(endDayCal) <= 0)) {
-						long recordDateInMillis = calendar.getTimeInMillis();
-						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-						
-						int value = values.get(index).intValue();
-						++value;
-						values.set(index, value);
-	
-						grid.addRow(sdf.format(calendar.getTime()), ((PatientRecord) record).getIncident());
+					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
+					if (rir.isInRange) {
+						this.updateValue(rir.cal, startDateInMillis, values);
+						grid.addRow(sdf.format(rir.cal.getTime()), ((PatientRecord) record).getIncident());
 					}
 				}
 			}
 			break;
 		case SICK_LEAVES:
-			seriesIndicator = "Absences";
 			grid.addColumn("Employee", String.class);
 			grid.addColumn("Reason", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
-					calendar.setTime(record.getDate());
-					if ((calendar.compareTo(startDayCal) >= 0) &&
-						(calendar.compareTo(endDayCal) <= 0)) {
-						long recordDateInMillis = calendar.getTimeInMillis();
-						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-						
-						float value = values.get(index).floatValue();
-						++value;
-						values.set(index, value);
-						
-						grid.addRow(sdf.format(calendar.getTime()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getUnavailableReason());
+					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
+					if (rir.isInRange) {
+						this.updateValue(rir.cal, startDateInMillis, values);
+						grid.addRow(sdf.format(rir.cal.getTime()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getUnavailableReason());
 					}
 				}
 			}
 			break;
 		case INCIDENTS:
 		default:
-			seriesIndicator = "Incidents";
 			grid.addColumn("Incident", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
-					calendar.setTime(record.getDate());
-					if ((calendar.compareTo(startDayCal) >= 0) &&
-						(calendar.compareTo(endDayCal) <= 0)) {
-						long recordDateInMillis = calendar.getTimeInMillis();
-						int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
-						
-						int value = values.get(index).intValue();
-						++value;
-						values.set(index, value);
-	
-						grid.addRow(sdf.format(calendar.getTime()), ((PatientRecord) record).getIncident());
+					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
+					if (rir.isInRange) {
+						this.updateValue(rir.cal, startDateInMillis, values);
+						grid.addRow(sdf.format(rir.cal.getTime()), ((PatientRecord) record).getIncident());
 					}
 				}
 			}
@@ -221,6 +178,33 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		layout.addTab(gridLayout, "Records");
 		
 		super.setContent(layout);
+	}
+	
+	private void updateValue(Calendar cal, long startDateInMillis, List<Number> values, Number newValue) {
+		long recordDateInMillis = cal.getTimeInMillis();
+		int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+		
+		float value = values.get(index).floatValue();
+		value += newValue.floatValue();
+		values.set(index, value);
+	}
+	
+	private void updateValue(Calendar cal, long startDateInMillis, List<Number> values) {
+		this.updateValue(cal, startDateInMillis, values, 1);
+	}
+	
+	private RecordInRange checkIfRecordIsInRange(Record record, Calendar startDayCal, Calendar endDayCal) {
+		RecordInRange result = new RecordInRange();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(record.getDate());
+		if ((cal.compareTo(startDayCal) >= 0) &&
+			(cal.compareTo(endDayCal) <= 0)) {
+			result.isInRange = true;
+		} else {
+			result.isInRange = false;
+		}
+		result.cal = cal;
+		return result;
 	}
 
 	public void addListener(ReportViewListener listener) {

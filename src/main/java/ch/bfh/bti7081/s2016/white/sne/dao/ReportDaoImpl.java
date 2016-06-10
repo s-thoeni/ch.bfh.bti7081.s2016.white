@@ -16,7 +16,6 @@ import java.util.Random;
 import ch.bfh.bti7081.s2016.white.sne.data.FinancialRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
-import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 
 /**
@@ -42,10 +41,10 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public Report getAvailableEmployee(Date from, Date to) {
-		Report result = new Report("Anwesendes Personal");
+	public Report<PersonalRecord> getAvailableEmployee(Date from, Date to) {
+		Report<PersonalRecord> result = new Report<PersonalRecord>("Anwesendes Personal");
 
-		List<Record> records = new ArrayList<Record>();
+		List<PersonalRecord> records = new ArrayList<PersonalRecord>();
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:db/care.db");
 		} catch (SQLException e) {
@@ -91,10 +90,10 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public Report getSickLeaves(Date from, Date to) {
-		Report result = new Report("Abwesendes Personal");
+	public Report<PersonalRecord> getSickLeaves(Date from, Date to) {
+		Report<PersonalRecord> result = new Report<PersonalRecord>("Abwesendes Personal");
 
-		List<Record> records = new ArrayList<Record>();
+		List<PersonalRecord> records = new ArrayList<PersonalRecord>();
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:db/care.db");
 		} catch (SQLException e) {
@@ -143,9 +142,9 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public Report getIncidents(Date from, Date to) {
-		Report result = new Report("Notfälle");
-		List<Record> records = new ArrayList<Record>();
+	public Report<PatientRecord> getIncidents(Date from, Date to) {
+		Report<PatientRecord> result = new Report<PatientRecord>("Notfälle");
+		List<PatientRecord> records = new ArrayList<PatientRecord>();
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:db/care.db");
 		} catch (SQLException e) {
@@ -189,8 +188,8 @@ public class ReportDaoImpl implements ReportDao {
 	}
 
 	@Override
-	public Report getPatientCount(Date from, Date to) {
-		Report result = new Report("Aktuelle Patientanzahl");
+	public Report<PatientRecord> getPatientCount(Date from, Date to) {
+		Report<PatientRecord> result = new Report<PatientRecord>("Aktuelle Patientanzahl");
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(to);
@@ -198,7 +197,7 @@ public class ReportDaoImpl implements ReportDao {
 		calendar.setTime(from);
 		int startDate = calendar.get(Calendar.DAY_OF_YEAR);
 
-		List<Record> records = new ArrayList<Record>();
+		List<PatientRecord> records = new ArrayList<PatientRecord>();
 		Random rand = new Random();
 
 		for (int i = 0; i < 1000; ++i) {
@@ -219,9 +218,9 @@ public class ReportDaoImpl implements ReportDao {
 	 * @return Report without type, but containing FinancialRecords
 	 */
 	@Override
-	public Report getEffort(Date from, Date to) {
-		Report result = new Report("Aufwand");
-		List<Record> records = new ArrayList<Record>();
+	public Report<FinancialRecord> getEffort(Date from, Date to) {
+		Report<FinancialRecord> result = new Report<FinancialRecord>("Aufwand");
+		List<FinancialRecord> records = new ArrayList<FinancialRecord>();
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:db/accounting.db");
 		} catch (SQLException e) {
@@ -276,9 +275,9 @@ public class ReportDaoImpl implements ReportDao {
 	 * @return Report without type, but containing FinancialRecords
 	 */
 	@Override
-	public Report getReturn(Date from, Date to) {
-		Report result = new Report("Ertrag");
-		List<Record> records = new ArrayList<Record>();
+	public Report<FinancialRecord> getReturn(Date from, Date to) {
+		Report<FinancialRecord> result = new Report<FinancialRecord>("Ertrag");
+		List<FinancialRecord> records = new ArrayList<FinancialRecord>();
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:db/accounting.db");
 		} catch (SQLException e) {
@@ -331,9 +330,9 @@ public class ReportDaoImpl implements ReportDao {
 	 * @return Report without type, but containing FinancialRecords
 	 */
 	@Override
-	public Report getCashFlow(Date from, Date to) {
-		Report result = new Report("Cash Flow");
-		List<Record> records = new ArrayList<Record>();
+	public Report<FinancialRecord> getCashFlow(Date from, Date to) {
+		Report<FinancialRecord> result = new Report<FinancialRecord>("Cash Flow");
+		List<FinancialRecord> records = new ArrayList<FinancialRecord>();
 		try {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:db/accounting.db");
 		} catch (SQLException e) {

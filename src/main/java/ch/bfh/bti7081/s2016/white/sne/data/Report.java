@@ -5,9 +5,9 @@ import java.util.List;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
-public class Report {
+public class Report<T extends Record> {
 
-	private List<Record> records;
+	private List<T> records;
 	private int summary;
 	private String name;
 	private Date from;
@@ -18,11 +18,11 @@ public class Report {
 		this.name = name;
 	}
 
-	public List<Record> getRecords() {
+	public List<T> getRecords() {
 		return this.records;
 	}
 
-	public void setRecords(List<Record> reports) {
+	public void setRecords(List<T> reports) {
 		this.records = reports;
 	}
 

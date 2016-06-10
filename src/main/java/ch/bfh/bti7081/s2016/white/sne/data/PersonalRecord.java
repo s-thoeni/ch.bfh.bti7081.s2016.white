@@ -1,5 +1,9 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
+import com.vaadin.ui.Grid;
+
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+
 /**
  * Class representing information from human resource data sources
  * @author team white

@@ -12,7 +12,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
-public class ConfigurationViewImpl extends NavigationView implements ConfigurationView{
+public class ConfigurationViewImpl extends NavigationView implements ConfigurationView {
 	private VerticalLayout grid;
 	
 	private List<ConfigSetImpl> configSets;

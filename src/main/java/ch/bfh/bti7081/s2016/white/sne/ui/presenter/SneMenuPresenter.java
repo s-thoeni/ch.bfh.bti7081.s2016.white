@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
+import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
@@ -60,8 +61,11 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		// Only this button actually does something in the menu. Here we
 		// navigate to a dummy view.
 
-		view.getNavigationManager().navigateTo(cv.getView());
-
+		NavigationManager nm = view.getNavigationManager();
+		if (nm == null) {
+			nm = new NavigationManager();
+		}
+		nm.navigateTo(cv.getView());
 	}
 
 	@Override

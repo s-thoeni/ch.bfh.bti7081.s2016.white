@@ -1,5 +1,7 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+
 /**
  * Class representing information from treatment data sources (e.g. patient management system) 
  * @author team white

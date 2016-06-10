@@ -19,8 +19,7 @@ public class AlarmOkState implements AlarmState {
 	 * @return Object[] (mainly Strings)
 	 */
 	public Object[] visualizeAlarm(Alarm alarm) {
-		// no output when ok (For testing reasons there is output)
-		return new Object[]{"OK", alarm.getAlarmReport().getName(),alarm.getAlarmReport().getSummary() +" "+ alarm.getOperator().toString() +" "+ alarm.getWarningValue()};
+		return null;
 	}
 	
 	@Override
@@ -41,6 +40,11 @@ public class AlarmOkState implements AlarmState {
 		} else {
 			alarm.setAlarmState(new AlarmOkState());
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Ok";
 	}
 
 }

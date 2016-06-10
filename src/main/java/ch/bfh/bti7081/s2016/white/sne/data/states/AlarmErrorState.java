@@ -1,5 +1,9 @@
 package ch.bfh.bti7081.s2016.white.sne.data.states;
 
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Label;
+
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
@@ -19,7 +23,9 @@ public class AlarmErrorState implements AlarmState {
 	 * @return Object[] (mainly Strings)
 	 */
 	public Object[] visualizeAlarm(Alarm alarm) {
-		return new Object[]{"Error", alarm.getAlarmReport().getName(),alarm.getAlarmReport().getSummary() +" "+ alarm.getOperator().toString() +" "+ alarm.getErrorValue()};
+		Label label = new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml(), ContentMode.HTML);
+		label.addStyleName("Error");
+		return new Object[]{label, alarm.getAlarmReport().getName(),alarm.getAlarmReport().getSummary() +" "+ alarm.getOperator().toString() +" "+ alarm.getErrorValue()};
 	}
 	
 	@Override
@@ -40,5 +46,12 @@ public class AlarmErrorState implements AlarmState {
 			alarm.setAlarmState(new AlarmOkState());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Error";
+	}
+	
+	
 
 }

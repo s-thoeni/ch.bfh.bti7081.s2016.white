@@ -153,9 +153,10 @@ public class ReportDaoImpl implements ReportDao {
 		try {
 			int i = 0;
 			Statement stm = connection.createStatement();
-			// FIXME: typo in db: desciription instead of description
-			String query = "SELECT i.incidentId, t.treatmentId, i.desciription, t.treatmentDate " + "FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId "
-					+ "WHERE t.treatmentDate >= '" + sdf.format(from) + "' AND t.treatmentDate <= '" + sdf.format(to) + "';";
+			String query = "SELECT i.incidentId, t.treatmentId, i.description, t.treatmentDate " 
+					+ "FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId "
+					+ "WHERE t.treatmentDate >= '" 
+					+ sdf.format(from) + "' AND t.treatmentDate <= '" + sdf.format(to) + "';";
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				PatientRecord record = new PatientRecord();

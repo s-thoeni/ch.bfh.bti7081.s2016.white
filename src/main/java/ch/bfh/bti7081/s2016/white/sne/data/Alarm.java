@@ -70,4 +70,8 @@ public class Alarm {
 	public void setAlarmState(AlarmState alarmState) {
 		this.alarmState = alarmState;
 	}
+	
+	public String getAlarmStateString(){
+		return this.alarmState.toString();
+	}
 }

@@ -42,5 +42,10 @@ public class AlarmNotCheckedState implements AlarmState {
 			alarm.setAlarmState(new AlarmOkState());
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "NotChecked";
+	}
 
 }

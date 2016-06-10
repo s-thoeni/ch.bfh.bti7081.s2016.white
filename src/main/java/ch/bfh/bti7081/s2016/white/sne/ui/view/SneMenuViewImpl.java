@@ -112,7 +112,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 		boolean hasWarning = false;
 		boolean hasError = false;
 		Table table = new Table("Alarms");
-		table.addContainerProperty("State", String.class, null);
+		table.addContainerProperty("State", Label.class, null);
 		table.addContainerProperty("Report", String.class, null);
 		table.addContainerProperty("Check", String.class, null);
 		int index = 1;
@@ -120,7 +120,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 			Object[] alarmVisualization = alarm.visualizeAlarm();
 			if(alarmVisualization!=null){
 				table.addItem(alarmVisualization, index);
-				switch (alarmVisualization[0].toString()){
+				switch (alarm.getAlarmStateString()){
 				case "Error":
 					hasError = true;
 					break;

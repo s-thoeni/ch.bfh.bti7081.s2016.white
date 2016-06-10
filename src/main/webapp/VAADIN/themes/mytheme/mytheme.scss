@@ -61,11 +61,14 @@ $v-border: 1px solid (v-shade 0.7);
 		padding-bottom:10px;
 	}
 	
+	.v-touchkit-navbar .v-button .v-icon {
+		font-size: x-large;
+	}
 	
-	.v-button-Error .v-icon {
-	    color:red;
+	.Error{
+	    color:red !important;
 	} 
-	.v-button-Warning .v-icon {
-	    color:orange;
+	.Warning{
+	    color:orange !important;
 	} 
 }

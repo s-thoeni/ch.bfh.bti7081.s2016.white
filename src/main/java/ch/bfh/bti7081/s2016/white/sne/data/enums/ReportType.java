@@ -1,5 +1,8 @@
 package ch.bfh.bti7081.s2016.white.sne.data.enums;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * All available reports should be registered here.
  * 
@@ -15,12 +18,12 @@ public enum ReportType {
 	CASHFLOW(new ReportStyle[]{ReportStyle.LINE_GRAPH,ReportStyle.TABULAR});
 	
 	private ReportType(ReportStyle[] reportStyles) {
-		this.reportStyles = reportStyles;
+		this.reportStyles = Arrays.asList(reportStyles);
 	}
 
-	private final ReportStyle[] reportStyles;
+	private final List<ReportStyle> reportStyles;
 	
-	public ReportStyle[] getReportStyles(){
+	public List<ReportStyle> getReportStyles(){
 		return this.reportStyles;
 	}
 }

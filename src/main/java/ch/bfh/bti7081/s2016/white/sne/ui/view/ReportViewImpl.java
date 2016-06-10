@@ -13,6 +13,7 @@ import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.XAxis;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TabBarView;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 
@@ -21,6 +22,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportStyle;
 
 public class ReportViewImpl extends NavigationView implements ReportView {
 
@@ -203,22 +205,40 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 		}
 		
-		ListSeries series = new ListSeries(seriesIndicator);
-		series.setData(values);
-		conf.addSeries(series);
-		
-		conf.addxAxis(xAxis);
-		
-		VerticalLayout lineChartLayout = new VerticalLayout();
-		lineChartLayout.addComponent(chart);
 
-		VerticalLayout gridLayout = new VerticalLayout();
-		gridLayout.addComponent(grid);
-		gridLayout.setSpacing(false);
 		
 		TabBarView layout = new TabBarView();
-		layout.addTab(lineChartLayout, "Linechart");
-		layout.addTab(gridLayout, "Records");
+		
+		if(report.getType().getReportStyles().contains(ReportStyle.LINE_GRAPH)){
+			ListSeries series = new ListSeries(seriesIndicator);
+			series.setData(values);
+			conf.addSeries(series);
+			
+			conf.addxAxis(xAxis);
+			
+			VerticalLayout lineChartLayout = new VerticalLayout();
+			lineChartLayout.addComponent(chart);
+			
+			layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
+		}
+		
+		if(report.getType().getReportStyles().contains(ReportStyle.PIE_CHART)){
+			VerticalLayout pieChartLayout = new VerticalLayout();
+			pieChartLayout.addComponent(chart);
+			
+			layout.addTab(pieChartLayout, "Piechart", FontAwesome.PIE_CHART);
+		}
+		
+		if(report.getType().getReportStyles().contains(ReportStyle.TABULAR)){
+			VerticalLayout gridLayout = new VerticalLayout();
+			gridLayout.addComponent(grid);
+			gridLayout.setSpacing(false);
+		
+			layout.addTab(gridLayout, "Records", FontAwesome.TABLE);
+		}
+		
+		
+		
 		
 		super.setContent(layout);
 	}

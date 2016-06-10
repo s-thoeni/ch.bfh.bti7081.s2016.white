@@ -16,7 +16,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
 public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 
-	private final String DB_NAME = "conf.db";
+	private static final String DB_NAME = "conf.db";
 	private static final String SELECT_ALARMS = "SELECT a.reportType, a.alarmTimeFrame, a.comperator, a.errorValue, a.warnValue FROM Alarm AS a INNER JOIN User AS u ON a.userID = u.userID WHERE u.userName == ?";
 	private static final String DELETE_ALARMS = "DELETE FROM Alarm WHERE userID == ?";
 	private static final String INSERT_ALARMS = "INSERT INTO Alarm ( reportType, alarmTimeFrame, comperator, errorValue, warnValue, userId) VALUES (?,?,?,?,?,?)";

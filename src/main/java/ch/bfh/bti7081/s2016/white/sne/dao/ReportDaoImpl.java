@@ -24,7 +24,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.Report;
 public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 
 	private static final String DB_NAME = "dwh.db";
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	private static final String SELECT_AVAILABLE_EMPLOYEE = "SELECT e.employeeFirstName, e.employeeSurName, t.treatmentDate FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID == e.employeeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
 	private static final String SELECT_SICK_LEAVES = "";

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
@@ -14,8 +17,18 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
+/**
+ * Class implementing database access for alarm configuration
+ * @author team white
+ *
+ */
 public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
-
+	
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(AlarmDaoImpl.class);
+	
 	private static final String DB_NAME = "conf.db";
 	private static final String SELECT_ALARMS = "SELECT a.reportType, a.alarmTimeFrame, a.comperator, a.errorValue, a.warnValue FROM Alarm AS a INNER JOIN User AS u ON a.userID = u.userID WHERE u.userName == ?";
 	private static final String DELETE_ALARMS = "DELETE FROM Alarm WHERE userID == ?";
@@ -26,6 +39,8 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 	}
 
 	public List<Alarm> getAlarms(User user) {
+		logger.debug("->");
+		
 		List<Alarm> alarms = new ArrayList<Alarm>();
 
 		Connection con = null;
@@ -37,8 +52,12 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			// get alarms
 			stm = con.prepareStatement(SELECT_ALARMS);
 			stm.setString(1, user.getUserName());
+			
+			// log query
+			logger.debug(SELECT_ALARMS);
+			
 			rs = stm.executeQuery();
-
+					
 			// parse results
 			while (rs.next()) {
 				ReportType rt = ReportType.valueOf(rs.getString("reportType"));
@@ -55,20 +74,24 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Could not execute query " + e.getMessage());
+			// log error
+			logger.error("select on database " + DB_NAME + " failed \n" + e.getMessage(), e);
 		} finally {
 
 			try {
 				close(rs, stm, con);
 			} catch (SQLException e) {
-				// TODO
-				e.printStackTrace();
+				// log error
+				logger.error("failed to close sql-connection \n" + e.getMessage(), e);
 			}
 		}
+		logger.debug("<-");
 		return alarms;
 	}
 	
 	private void deleteAlarms(int userId) {
+		logger.debug("->");
+		
 		Connection con = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -78,23 +101,30 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			con = getConnection();
 			stm = con.prepareStatement(DELETE_ALARMS);
 			stm.setInt(1, userId);
+			
+			// log query
+			logger.debug(DELETE_ALARMS);
+			
 			stm.execute();
 		} catch (SQLException e) {
-			System.out.println("Could not execute query " + e.getMessage());
+			// log error
+			logger.error("delete on database " + DB_NAME + " failed \n" + e.getMessage(), e);
 		} finally {
 			try {
 				close(rs, stm, con);
 			} catch (SQLException e) {
-				// TODO
-				e.printStackTrace();
+				// log error
+				logger.error("failed to close sql-connection", e);
 			}
 		}
+		logger.debug("<-");
 	}
 	 
 
 	@Override
 	public void storeAlarms(List<Alarm> alarms, User user) {
-
+		logger.debug("->");
+		
 		Connection con = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -114,23 +144,30 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 				stm.setInt(4, alarm.getErrorValue());
 				stm.setInt(5, alarm.getWarningValue());
 				stm.setInt(6, id);
-
+				
+				// log query
+				logger.debug(INSERT_ALARMS);
+				
 				stm.execute();
 			} catch (SQLException e) {
-				System.out.println("Could not execute query " + e.getMessage());
+				// log error
+				logger.error("insert on database " + DB_NAME + " failed \n" + e.getMessage(), e);
 			} finally {
 				try {
 					close(rs, stm, con);
 				} catch (SQLException e) {
-					// TODO
-					e.printStackTrace();
+					// log error
+					logger.error("failed to close sql-connection", e);
 				}
 			}
 		}
+		logger.debug("<-");
 	}
 
 	@Override
 	public String getDbName() {
+		logger.debug("->");
+		logger.debug("<-");
 		return this.DB_NAME;
 	}
 }

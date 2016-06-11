@@ -20,7 +20,9 @@ import ch.bfh.bti7081.s2016.white.sne.data.User;
  *
  */
 public class DashboardProvider {
-	//Initialize new logger for this class
+	/**
+	 * Logger for this class
+	 */
 	private static final Logger logger = LogManager.getLogger(DashboardProvider.class);
 	
 	private ReportFacade repFac;
@@ -56,19 +58,25 @@ public class DashboardProvider {
 	 * @return Report or null if not found
 	 */
 	public Report getReportByName(String name){
+		logger.debug("->");
 		for(Report report: getReports()){
 			//System.out.println(report.getName());
 			if(report.getName().equals(name))
 				return report;
 		}
+		logger.debug("<-");
 		return null;
 	}
 
 	public List<ReportConfig> getReportConfigurations() {
+		logger.debug("->");
+		logger.debug("<-");
 		return reportConfigurations;
 	}
 
 	public void setReportConfigurations(List<ReportConfig> reportConfigurations) {
+		logger.debug("->");
+		logger.debug("<-");
 		this.reportConfigurations = reportConfigurations;
 	}
 }

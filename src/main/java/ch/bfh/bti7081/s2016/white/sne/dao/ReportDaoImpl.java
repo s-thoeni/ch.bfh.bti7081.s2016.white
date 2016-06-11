@@ -157,10 +157,11 @@ public class ReportDaoImpl implements ReportDao {
 					+ "FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId "
 					+ "WHERE t.treatmentDate >= '" 
 					+ sdf.format(from) + "' AND t.treatmentDate <= '" + sdf.format(to) + "';";
+			
 			ResultSet rs = stm.executeQuery(query);
 			while (rs.next()) {
 				PatientRecord record = new PatientRecord();
-				record.setIncident("Incident " + ++i + ": " + rs.getString("desciription"));
+				record.setIncident("Incident " + ++i + ": " + rs.getString("description"));
 				record.setSummary(1);
 				try {
 					record.setDate(sdf.parse(rs.getString("treatmentDate")));

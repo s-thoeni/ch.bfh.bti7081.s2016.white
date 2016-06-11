@@ -34,6 +34,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	private class RecordInRange {
 		public boolean isInRange;
 		public Calendar cal;
+		public long recordDateInMillis;
 	}
 	
 	public ReportViewImpl(Report<? extends Record> report) {
@@ -60,6 +61,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		endDayCal.set(Calendar.MINUTE, endDayCal.getActualMaximum(Calendar.MINUTE));
 		endDayCal.set(Calendar.SECOND, endDayCal.getActualMaximum(Calendar.SECOND));
 		endDayCal.set(Calendar.MILLISECOND, endDayCal.getActualMaximum(Calendar.MILLISECOND));
+		long endDateInMillis = endDayCal.getTimeInMillis();
 
 		List<Number> values = new ArrayList<Number>();
 
@@ -72,7 +74,12 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		 */
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(report.getFrom());
-		while (calendar.compareTo(endDayCal) <= 0) {
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
+		int numberOfDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
+		for (int i = 0; i <= numberOfDays; ++i) {
 			values.add(0);
 			xAxis.addCategory(sdf.format(calendar.getTime()));
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
@@ -87,7 +94,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				if (record instanceof FinancialRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
 					if (rir.isInRange) {
-						this.updateValue(rir.cal, startDateInMillis, values, ((FinancialRecord) record).getEffort());
+						this.updateValue(rir.recordDateInMillis, startDateInMillis, values, ((FinancialRecord) record).getEffort());
 						grid.addRow(sdf.format(rir.cal.getTime()), String.valueOf(((FinancialRecord) record).getEffort()));
 					}
 				}
@@ -99,7 +106,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				if (record instanceof FinancialRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
 					if (rir.isInRange) {
-						this.updateValue(rir.cal, startDateInMillis, values, ((FinancialRecord) record).getCashFlow());
+						this.updateValue(rir.recordDateInMillis, startDateInMillis, values, ((FinancialRecord) record).getCashFlow());
 						grid.addRow(sdf.format(rir.cal.getTime()), String.valueOf(((FinancialRecord) record).getCashFlow()));
 					}
 				}
@@ -111,7 +118,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				if (record instanceof PersonalRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
 					if (rir.isInRange) {
-						this.updateValue(rir.cal, startDateInMillis, values);
+						this.updateValue(rir.recordDateInMillis, startDateInMillis, values);
 						grid.addRow(sdf.format(rir.cal.getTime()), ((PersonalRecord) record).getPersonName());
 					}
 				}
@@ -123,7 +130,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				if (record instanceof PatientRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
 					if (rir.isInRange) {
-						this.updateValue(rir.cal, startDateInMillis, values);
+						this.updateValue(rir.recordDateInMillis, startDateInMillis, values);
 						grid.addRow(sdf.format(rir.cal.getTime()), ((PatientRecord) record).getIncident());
 					}
 				}
@@ -136,7 +143,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				if (record instanceof PersonalRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
 					if (rir.isInRange) {
-						this.updateValue(rir.cal, startDateInMillis, values);
+						this.updateValue(rir.recordDateInMillis, startDateInMillis, values);
 						grid.addRow(sdf.format(rir.cal.getTime()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getUnavailableReason());
 					}
 				}
@@ -149,7 +156,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				if (record instanceof PatientRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDayCal, endDayCal);
 					if (rir.isInRange) {
-						this.updateValue(rir.cal, startDateInMillis, values);
+						this.updateValue(rir.recordDateInMillis, startDateInMillis, values);
 						grid.addRow(sdf.format(rir.cal.getTime()), ((PatientRecord) record).getIncident());
 					}
 				}
@@ -205,30 +212,38 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		super.setContent(layout);
 	}
 	
-	private void updateValue(Calendar cal, long startDateInMillis, List<Number> values, Number newValue) {
-		long recordDateInMillis = cal.getTimeInMillis();
-		int index = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
+	private void updateValue(long recordDateInMillis, long startDateInMillis, List<Number> values, Number newValue) {
+		int index = this.getDiffInDays(recordDateInMillis, startDateInMillis);
 		
 		float value = values.get(index).floatValue();
 		value += newValue.floatValue();
 		values.set(index, value);
 	}
 	
-	private void updateValue(Calendar cal, long startDateInMillis, List<Number> values) {
-		this.updateValue(cal, startDateInMillis, values, 1);
+	private void updateValue(long recordDateInMillis, long startDateInMillis, List<Number> values) {
+		this.updateValue(recordDateInMillis, startDateInMillis, values, 1);
 	}
 	
 	private RecordInRange checkIfRecordIsInRange(Record record, Calendar startDayCal, Calendar endDayCal) {
 		RecordInRange result = new RecordInRange();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(record.getDate());
-		if ((cal.compareTo(startDayCal) >= 0) &&
-			(cal.compareTo(endDayCal) <= 0)) {
+		long recordDateInMillis = cal.getTimeInMillis();
+		int index = this.getDiffInDays(recordDateInMillis, startDayCal.getTimeInMillis());
+		int maxIndex = this.getDiffInDays(endDayCal.getTimeInMillis(), startDayCal.getTimeInMillis());
+		if ((index >= 0) &&
+			(index <= maxIndex)) {
 			result.isInRange = true;
 		} else {
 			result.isInRange = false;
 		}
+		result.recordDateInMillis = recordDateInMillis;
 		result.cal = cal;
+		return result;
+	}
+	
+	private int getDiffInDays(long recordDateInMillis, long startDateInMillis) {
+		int result = (int)TimeUnit.DAYS.convert(recordDateInMillis-startDateInMillis, TimeUnit.MILLISECONDS);
 		return result;
 	}
 

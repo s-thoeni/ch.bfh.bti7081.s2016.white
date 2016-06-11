@@ -25,7 +25,7 @@ do
 	echo "INSERT INTO Employee (employeeFirstName, employeeSurName, departmentID, positionID) values(\"$firstname\", \"$surname\", (SELECT departmentID FROM Department WHERE departmentName = \"$dep\"),(SELECT positionID FROM Position WHERE positionName = \"$pos\"));" >> $tmpfile
 done < ./care_302_employee-list.csv
 
-sqlite3 ~/.sne/databases/care.db < $tmpfile
+sqlite3 ~/.sne/databases/dwh.db < $tmpfile
 echo "data for table Employee generated"
 
 rm $tmpfile
@@ -43,7 +43,7 @@ do
 	echo "INSERT INTO Patient (patientFirstName, patientSurName) values(\"$firstname\", \"$surname\");" >> $tmpfile2
 done < ./care_303_patient-list.csv
 
-sqlite3 ~/.sne/databases/care.db < $tmpfile2
+sqlite3 ~/.sne/databases/dwh.db < $tmpfile2
 echo "data for table Patient generated"
 
 rm $tmpfile2
@@ -118,7 +118,7 @@ do
 		for j in {1..31}
 		do
 			# do not creat dates that don't exist
-			if (( (( "$i" == "2" )) && (( "$j" > "28" )) && (( "$y" != "2016")) | (( "$i" == "2" )) && (( "$j" > "29" )) ))
+			if (( (( (( "$i" == "2" )) && (( "$j" > "28" )) && (( "$y" != "2016")) )) || (( (( "$i" == "2" )) && (( "$j" > "29" )) )) ))
 			then
 				continue
 			elif (( (( "$i" == "4" )) || (( "$i" == "6" )) || (( "$i" == "9" ))  || (( "$i" == "11" )) )) && (( "$j" > "30" ))
@@ -177,9 +177,9 @@ done
 echo ";" >> $tmpfile3
 echo ";" >> $tmpfile4
 echo ";" >> $tmpfile5
-sqlite3 ~/.sne/databases/care.db < $tmpfile3
-sqlite3 ~/.sne/databases/care.db < $tmpfile4
-sqlite3 ~/.sne/databases/care.db < $tmpfile5
+sqlite3 ~/.sne/databases/dwh.db < $tmpfile3
+sqlite3 ~/.sne/databases/dwh.db < $tmpfile4
+sqlite3 ~/.sne/databases/dwh.db < $tmpfile5
 echo "data for table Treatment and Incident generated"
 
 rm $tmpfile3

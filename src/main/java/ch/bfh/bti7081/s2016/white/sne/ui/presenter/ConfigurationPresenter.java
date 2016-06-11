@@ -21,7 +21,6 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 public class ConfigurationPresenter implements ConfigurationView.ConfigurationViewListener {
 	private ConfigurationProvider model;
 	private ConfigurationViewImpl view;
-	private VerticalLayout layout;
 	private Configuration config;
 
 	public ConfigurationPresenter(ConfigurationProvider model, ConfigurationViewImpl view) {

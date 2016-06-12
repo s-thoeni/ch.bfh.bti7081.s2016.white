@@ -88,7 +88,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		
 		menuClosed();
 		ReportSelectPresenter rsp = new ReportSelectPresenter(new ReportSelectViewImpl());
-		view.getNavigationManager().navigateTo(rsp.getView());
+		this.view.getNavigationManager().navigateTo(rsp.getView());
 		logger.debug("<-");
 	}
 

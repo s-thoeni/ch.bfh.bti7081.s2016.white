@@ -99,7 +99,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 		logger.debug("<-");
 	}
 
-	public NavigationManager getNatigationManager() {
+	public NavigationManager getNavigationManager() {
 		logger.debug("->");
 		logger.debug("<-");
 		return super.getNavigationManager();

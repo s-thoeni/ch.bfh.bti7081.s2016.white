@@ -81,7 +81,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 		}
 		this.model.setConfig(new Configuration(configuration), user);		
 
-		UI ui = view.getNatigationManager().getUI();
+		UI ui = view.getNavigationManager().getUI();
 		if(ui instanceof MyUI){
 			MyUI sneui = (MyUI) ui;
 			DashboardPresenter db = sneui.getDashboard();
@@ -97,7 +97,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	public void cancelClick() {
 		logger.debug("->");
 		
-		this.view.getNatigationManager().navigateBack();
+		this.view.getNavigationManager().navigateBack();
 		logger.debug("<-");
 	}
 

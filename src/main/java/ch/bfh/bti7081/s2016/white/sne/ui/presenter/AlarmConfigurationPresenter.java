@@ -85,7 +85,7 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 			
 		}
 		this.model.setAlarms(configuration, user);
-		this.view.getNatigationManager().navigateBack();
+		this.view.getNavigationManager().navigateBack();
 		logger.debug("<-");
 	}
 
@@ -93,7 +93,7 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 	public void cancelClick() {
 		logger.debug("->");
 		
-		this.view.getNatigationManager().navigateBack();
+		this.view.getNavigationManager().navigateBack();
 		logger.debug("<-");
 	}
 

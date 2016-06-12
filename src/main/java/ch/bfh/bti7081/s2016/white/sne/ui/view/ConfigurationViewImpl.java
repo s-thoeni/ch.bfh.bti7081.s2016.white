@@ -141,9 +141,9 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 		getNavigationManager().navigateTo(component);
 	}
 
-	public NavigationManager getNatigationManager() {
+	public NavigationManager getNavigationManager() {
 		logger.debug("->");
 		logger.debug("<-");
-		return getNavigationManager();
+		return super.getNavigationManager();
 	}
 }

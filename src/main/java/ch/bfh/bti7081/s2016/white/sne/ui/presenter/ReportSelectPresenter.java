@@ -58,7 +58,7 @@ public class ReportSelectPresenter
 		ReportViewImpl reportView = new ReportViewImpl(reportModel.getReportByTypeAndDatePair(reportType, datePair));
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
-		this.view.getNatigationManager().navigateTo(reportPresenter.getView());
+		this.view.getNavigationManager().navigateTo(reportPresenter.getView());
 		logger.debug("<-");
 	}
 
@@ -77,7 +77,7 @@ public class ReportSelectPresenter
 		ReportViewImpl reportView = new ReportViewImpl(reports);
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
-		this.view.getNatigationManager().navigateTo(reportPresenter.getView());
+		this.view.getNavigationManager().navigateTo(reportPresenter.getView());
 		logger.debug("<-");
 	}
 

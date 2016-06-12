@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
@@ -23,6 +26,11 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
  */
 public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewListener, ReportSelectSet.ReportSelectSetListener {
 
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(ReportSelectPresenter.class);
+	
 	private ReportSelectViewImpl view;
 
 	public ReportSelectPresenter(ReportSelectViewImpl view) {
@@ -32,11 +40,15 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 	}
 
 	public Component getView() {
+		logger.debug("->");
+		logger.debug("<-");
 		return (ReportSelectViewImpl) this.view;
 	}
 
 	@Override
 	public void handleGoClick(ReportType reportType, Date from, Date to) {
+		logger.debug("->");
+		
 		DatePair datePair = new DatePair(from, to);
 
 		ReportProvider reportModel = new ReportProvider();
@@ -44,11 +56,13 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
 		this.view.getNatigationManager().navigateTo(reportPresenter.getView());
-
+		logger.debug("<-");
 	}
 
 	@Override
 	public void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) {
+		logger.debug("->");
+		
 		List<Report> reports = new ArrayList<Report>();
 		
 		ReportProvider reportModel = new ReportProvider();
@@ -61,21 +75,26 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 		
 		this.view.getNatigationManager().navigateTo(reportPresenter.getView());
-		
+		logger.debug("<-");
 	}
 
 	@Override
 	public void handleAddClick() {
+		logger.debug("->");
+		
 		int i = view.getReportSelectSetImpl().size();
 		ReportSelectSetImpl rssi = new ReportSelectSetImpl(false);
 		rssi.setId(String.valueOf(i));
 		view.addReportSelectSet(rssi);
 		((ReportSelectSet) rssi).addListener(id -> handleDeleteClick(rssi));
-
+		logger.debug("<-");
 	}
 
 	@Override
 	public void handleDeleteClick(ReportSelectSetImpl rssi) {
+		logger.debug("->");
+		
 		view.deleteReportSelectSet(rssi);
+		logger.debug("<-");
 	}
 }

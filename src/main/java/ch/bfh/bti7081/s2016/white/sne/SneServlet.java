@@ -24,6 +24,7 @@ public class SneServlet extends TouchKitServlet {
 	@Override
 	protected void servletInitialized() throws ServletException {
 		logger.debug("->");
+		
 		try {
 			super.servletInitialized();
 		} catch (ServletException e) {

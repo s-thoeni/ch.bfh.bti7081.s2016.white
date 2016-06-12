@@ -16,31 +16,33 @@ import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 /**
  * Class implementing database access for alarm configuration
+ * 
  * @author team white
  *
  */
 public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
-	
+
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(AlarmDaoImpl.class);
-	
+
 	private static final String DB_NAME = "conf.db";
 	private static final String SELECT_ALARMS = "SELECT a.reportType, a.alarmTimeFrame, a.comperator, a.errorValue, a.warnValue FROM Alarm AS a INNER JOIN User AS u ON a.userID = u.userID WHERE u.userName == ?";
 	private static final String DELETE_ALARMS = "DELETE FROM Alarm WHERE userID == ?";
 	private static final String INSERT_ALARMS = "INSERT INTO Alarm ( reportType, alarmTimeFrame, comperator, errorValue, warnValue, userId) VALUES (?,?,?,?,?,?)";
 
-	public AlarmDaoImpl() {
+	public AlarmDaoImpl() throws SneException {
 		super();
 	}
 
-	public List<Alarm> getAlarms(User user) {
+	public List<Alarm> getAlarms(User user) throws SneException {
 		logger.debug("->");
-		
+
 		List<Alarm> alarms = new ArrayList<Alarm>();
 
 		Connection con = null;
@@ -52,12 +54,12 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			// get alarms
 			stm = con.prepareStatement(SELECT_ALARMS);
 			stm.setString(1, user.getUserName());
-			
+
 			// log query
 			logger.debug(SELECT_ALARMS);
-			
+
 			rs = stm.executeQuery();
-					
+
 			// parse results
 			while (rs.next()) {
 				ReportType rt = ReportType.valueOf(rs.getString("reportType"));
@@ -76,6 +78,7 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 		} catch (SQLException e) {
 			// log error
 			logger.error("select on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+			throw new SneException("could not retrieve alarms from database! ", e);
 		} finally {
 
 			try {
@@ -83,15 +86,16 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			} catch (SQLException e) {
 				// log error
 				logger.error("failed to close sql-connection \n" + e.getMessage(), e);
+				throw new SneException("could not close database connection! Your data might be in danger! ", e);
 			}
 		}
 		logger.debug("<-");
 		return alarms;
 	}
-	
-	private void deleteAlarms(int userId) {
+
+	private void deleteAlarms(int userId) throws SneException {
 		logger.debug("->");
-		
+
 		Connection con = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -101,30 +105,31 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			con = getConnection();
 			stm = con.prepareStatement(DELETE_ALARMS);
 			stm.setInt(1, userId);
-			
+
 			// log query
 			logger.debug(DELETE_ALARMS);
-			
+
 			stm.execute();
 		} catch (SQLException e) {
 			// log error
 			logger.error("delete on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+			throw new SneException("Could not delete alarms! ", e);
 		} finally {
 			try {
 				close(rs, stm, con);
 			} catch (SQLException e) {
 				// log error
 				logger.error("failed to close sql-connection", e);
+				throw new SneException("Failed to close database connection! Your data might be in danger!", e);
 			}
 		}
 		logger.debug("<-");
 	}
-	 
 
 	@Override
-	public void storeAlarms(List<Alarm> alarms, User user) {
+	public void storeAlarms(List<Alarm> alarms, User user) throws SneException {
 		logger.debug("->");
-		
+
 		Connection con = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -144,20 +149,22 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 				stm.setInt(4, alarm.getErrorValue());
 				stm.setInt(5, alarm.getWarningValue());
 				stm.setInt(6, id);
-				
+
 				// log query
 				logger.debug(INSERT_ALARMS);
-				
+
 				stm.execute();
 			} catch (SQLException e) {
 				// log error
 				logger.error("insert on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+				throw new SneException("Was not able to store alarms! ", e);
 			} finally {
 				try {
 					close(rs, stm, con);
 				} catch (SQLException e) {
 					// log error
 					logger.error("failed to close sql-connection", e);
+					throw new SneException("Failed to close database connection! Your data might be in danger!", e);
 				}
 			}
 		}

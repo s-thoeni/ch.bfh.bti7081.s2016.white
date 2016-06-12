@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.vaadin.thomas.slidemenu.SlideMenu;
-import org.vaadin.thomas.slidemenu.SlideMenuView;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.Popover;
@@ -21,6 +20,7 @@ import com.vaadin.ui.Table;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
+import ch.bfh.bti7081.s2016.white.sne.ui.SlideMenuView;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.SneMenuPresenter;
 
 @SuppressWarnings("serial")
@@ -102,7 +102,11 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 
 		b.addClickListener((ClickEvent event) -> {
 			for (SneMenuListener listener : listeners)
-				listener.showConfiguration();
+				try {
+					listener.showConfiguration();
+				} catch (Exception e) {
+					Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+				}
 		});
 
 		b = new Button("Alarm Configuration");
@@ -111,7 +115,11 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 
 		b.addClickListener((ClickEvent event) -> {
 			for (SneMenuListener listener : listeners)
-				listener.showAlarms();
+				try {
+					listener.showAlarms();
+				} catch (SneException e) {
+					Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+				}
 		});
 		logger.debug("<-");
 	}
@@ -183,9 +191,4 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 		logger.debug("<-");
 	}
 
-	public NavigationManager getNavigationManager() {
-		logger.debug("->");
-		logger.debug("<-");
-		return super.getNavigationManager();
-	}
 }

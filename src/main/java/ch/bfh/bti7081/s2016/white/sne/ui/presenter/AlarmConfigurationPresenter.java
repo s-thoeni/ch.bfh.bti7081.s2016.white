@@ -7,7 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.dao.AlarmDaoImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
@@ -15,6 +17,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.AlarmConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationViewImpl;
@@ -31,7 +34,8 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 	private AlarmConfigurationProvider model;
 	private AlarmConfigurationViewImpl view;
 
-	public AlarmConfigurationPresenter(AlarmConfigurationProvider model, AlarmConfigurationViewImpl view) {
+	public AlarmConfigurationPresenter(AlarmConfigurationProvider model, AlarmConfigurationViewImpl view)
+			throws SneException {
 		this.model = model;
 		this.view = view;
 		
@@ -63,7 +67,7 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 	}
 
 	@Override
-	public void saveClick() {
+	public void saveClick() throws SneException {
 		logger.debug("->");
 		
 		// DUMMY DATA
@@ -85,15 +89,17 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 			
 		}
 		this.model.setAlarms(configuration, user);
-		this.view.getNavigationManager().navigateBack();
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateBack();
+		
 		logger.debug("<-");
 	}
 
 	@Override
 	public void cancelClick() {
 		logger.debug("->");
-		
-		this.view.getNavigationManager().navigateBack();
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateBack();
 		logger.debug("<-");
 	}
 

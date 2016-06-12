@@ -8,7 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
@@ -58,15 +60,17 @@ public class ReportSelectPresenter
 		ReportViewImpl reportView = new ReportViewImpl(reportModel.getReportByTypeAndDatePair(reportType, datePair));
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
-		this.view.getNavigationManager().navigateTo(reportPresenter.getView());
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(reportPresenter.getView());
+		
 		logger.debug("<-");
 	}
 
 	@Override
 	public void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) throws SneException {
 		logger.debug("->");
-		
-		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();		
+
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 
 		ReportProvider reportModel = new ReportProvider();
 
@@ -77,7 +81,9 @@ public class ReportSelectPresenter
 		ReportViewImpl reportView = new ReportViewImpl(reports);
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
-		this.view.getNavigationManager().navigateTo(reportPresenter.getView());
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(reportPresenter.getView());
+		
 		logger.debug("<-");
 	}
 

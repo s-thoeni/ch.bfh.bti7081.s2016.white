@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
 import com.vaadin.ui.Component;
 
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
 /**
@@ -19,7 +20,7 @@ public interface DashboardView {
 	 * @author thons1
 	 */
 	public interface DashboardViewListener {
-		void tileClick(String id);
+		void tileClick(String id) throws SneException;
 	}
 
 	/**
@@ -35,13 +36,6 @@ public interface DashboardView {
 	 * @param tile
 	 */
 	void addTile(TileComponentImpl tile);
-
-	/**
-	 * Navigate to a different component.
-	 * 
-	 * @param component
-	 */
-	public void navigateTo(Component component);
 
 	/**
 	 * remove all tiles currently displayed. This does not have an effect on the

@@ -15,6 +15,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 /**
  * Loads and saves the configuration of the user.
@@ -33,7 +34,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 	private static final String DELETE_CONFIG = "DELETE FROM Configuration WHERE userID == ?";
 	private static final String INSERT_CONFIG = "INSERT INTO CONFIGURATION ( reportType, reportTimeFrame, userId) VALUES (?, ?, ?)";
 	
-	public ConfigurationDAOImpl() {
+	public ConfigurationDAOImpl() throws SneException {
 		super();
 	}
 
@@ -45,7 +46,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 	}
 
 	@Override
-	public Configuration getConfig(User user) {
+	public Configuration getConfig(User user) throws SneException {
 		logger.debug("->");
 		Configuration config = new Configuration();
 		List<ReportConfig> reports = new ArrayList<ReportConfig>();
@@ -75,6 +76,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		} catch (SQLException e) {
 			// log error
 			logger.error("select on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+			throw new SneException("Was not able to retrieve user config", e);
 		} finally {
 
 			try {
@@ -82,6 +84,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 			} catch (SQLException e) {
 				// log error
 				logger.error("failed to close sql-connection \n" + e.getMessage(), e);
+				throw new SneException("Failed to close database connection! Your data might be in danger!", e);
 			}
 		}
 
@@ -91,7 +94,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		return config;
 	}
 	
-	private void deleteConfig(int userId) {
+	private void deleteConfig(int userId) throws SneException {
 		logger.debug("->");
 		
 		Connection con = null;
@@ -111,19 +114,21 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		} catch (SQLException e) {
 			// log error
 			logger.error("delete on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+			throw new SneException("failed to delete current config", e);
 		} finally {
 			try {
 				close(rs, stm, con);
 			} catch (SQLException e) {
 				// log error
 				logger.error("failed to close sql-connection \n" + e.getMessage(), e);
+				throw new SneException("Failed to close database connection! Your data might be in danger!", e);
 			}
 		}
 		logger.debug("<-");
 	}
 
 	@Override
-	public void setConfig(List<ReportConfig> reports, User user) {		
+	public void setConfig(List<ReportConfig> reports, User user) throws SneException {		
 		logger.debug("->");
 		
 		Connection con = null;
@@ -152,6 +157,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 			} catch (SQLException e) {
 				// log error
 				logger.error("insert on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+				throw new SneException("Failed to write user config", e);
 			} finally {
 				try {
 					close(rs, stm, con);

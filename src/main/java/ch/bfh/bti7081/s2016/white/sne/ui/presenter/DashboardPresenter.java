@@ -6,10 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardView;
@@ -108,13 +111,16 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 	}
 
 	@Override
-	public void tileClick(String id) {
+	public void tileClick(String id) throws SneException {
 		logger.debug("->");
 
 		ReportProvider reportModel = new ReportProvider();
 		ReportViewImpl reportView = new ReportViewImpl(model.getReportByName(id));
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
-		this.view.navigateTo(reportPresenter.getView());
+		
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(reportPresenter.getView());
+
 		logger.debug("<-");
 	}
 

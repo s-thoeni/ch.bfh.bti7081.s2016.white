@@ -50,10 +50,12 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	
 	public ReportViewImpl(List<Report<? extends Record>> reports) {
 		// TODO(jan): implement this constructor
-		
+		super();
+		this.setContent(null);
 	}
 	
 	public ReportViewImpl(Report<? extends Record> report) {
+		super();
 		this.getNavigationBar().setCaption(report.getName());
 		
 		
@@ -232,7 +234,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			layout.addTab(gridLayout, "Records", FontAwesome.TABLE);
 		}
 		
-		super.setContent(layout);
+		this.setContent(layout);
 	}
 	
 	private void updateValue(List<Number> values, int index, Number newValue) {

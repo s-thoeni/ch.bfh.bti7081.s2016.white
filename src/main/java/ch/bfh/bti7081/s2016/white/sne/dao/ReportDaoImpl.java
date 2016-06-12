@@ -41,7 +41,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	private static final String SELECT_PATIENT_COUNT = "";
 	private static final String SELECT_FINANCE = "SELECT journalID, journalDate, effort, return, cashFlow FROM Journal WHERE journalDate >= ? AND journalDate <= ?";
 
-	public ReportDaoImpl() {
+	public ReportDaoImpl() throws SneException {
 		super();
 	}
 
@@ -106,7 +106,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PersonalRecord> getAbsentEmployees(Date from, Date to) {
+	public Report<PersonalRecord> getAbsentEmployees(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<PersonalRecord> result = new Report<PersonalRecord>("Abwesendes Personal");
@@ -166,7 +166,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PatientRecord> getIncidents(Date from, Date to) {
+	public Report<PatientRecord> getIncidents(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<PatientRecord> result = new Report<PatientRecord>("Notfälle");
@@ -219,7 +219,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PatientRecord> getPatientCount(Date from, Date to) {
+	public Report<PatientRecord> getPatientCount(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<PatientRecord> result = new Report<PatientRecord>("Aktuelle Patientanzahl");
@@ -269,9 +269,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	 * Records in a Report, report will only contain information about effort
 	 * 
 	 * @return Report without type, but containing FinancialRecords
+	 * @throws SneException 
 	 */
 	@Override
-	public Report<FinancialRecord> getEffort(Date from, Date to) {
+	public Report<FinancialRecord> getEffort(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Aufwand");
@@ -337,9 +338,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	 * Records in a Report, report will only contain information about return
 	 * 
 	 * @return Report without type, but containing FinancialRecords
+	 * @throws SneException 
 	 */
 	@Override
-	public Report<FinancialRecord> getReturn(Date from, Date to) {
+	public Report<FinancialRecord> getReturn(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Ertrag");
@@ -404,9 +406,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	 * Records in a Report, report will only contain information about cash-flow
 	 * 
 	 * @return Report without type, but containing FinancialRecords
+	 * @throws SneException 
 	 */
 	@Override
-	public Report<FinancialRecord> getCashFlow(Date from, Date to) {
+	public Report<FinancialRecord> getCashFlow(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Cash Flow");

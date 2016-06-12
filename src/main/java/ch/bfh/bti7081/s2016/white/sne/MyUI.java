@@ -30,9 +30,12 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
 @Theme("mytheme")
 public class MyUI extends UI {
 
-	private DashboardPresenter db;
-
+	/**
+	 * Logger for this class
+	 */
 	private static final Logger logger = LogManager.getLogger(MyUI.class);
+	
+	private DashboardPresenter db;
 
 	static {
 		SLF4JBridgeHandler.install();
@@ -40,6 +43,7 @@ public class MyUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
+		logger.debug("->");
 		logger.info("Initializing UI");
 
 		final NavigationManager layout = new NavigationManager();
@@ -57,9 +61,12 @@ public class MyUI extends UI {
 		db = new DashboardPresenter(provider, view);
 		logger.info("Navigating to dashbord");
 		layout.navigateTo(db.getView());
+		logger.debug("<-");
 	}
 
 	public DashboardPresenter getDashboard() {
+		logger.debug("->");
+		logger.debug("<-");
 		return db;
 	}
 

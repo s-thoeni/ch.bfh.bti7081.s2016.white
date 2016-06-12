@@ -13,6 +13,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ReportProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportSelectView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ReportSelectViewImpl;
@@ -25,13 +26,14 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
  * @author mcdizzu
  *
  */
-public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewListener, ReportSelectSet.ReportSelectSetListener {
+public class ReportSelectPresenter
+		implements ReportSelectView.ReportSelectViewListener, ReportSelectSet.ReportSelectSetListener {
 
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ReportSelectPresenter.class);
-	
+
 	private ReportSelectViewImpl view;
 
 	public ReportSelectPresenter(ReportSelectViewImpl view) {
@@ -47,9 +49,9 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 	}
 
 	@Override
-	public void handleGoClick(ReportType reportType, Date from, Date to) {
+	public void handleGoClick(ReportType reportType, Date from, Date to) throws SneException {
 		logger.debug("->");
-		
+
 		DatePair datePair = new DatePair(from, to);
 
 		ReportProvider reportModel = new ReportProvider();
@@ -61,20 +63,20 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 	}
 
 	@Override
-	public void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) {
+	public void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) throws SneException {
 		logger.debug("->");
 		
-		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
-		
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();		
+
 		ReportProvider reportModel = new ReportProvider();
-		
-		for(ReportSelectSetImpl rssi : reportSelectSets) {
+
+		for (ReportSelectSetImpl rssi : reportSelectSets) {
 			DatePair datePair = new DatePair(rssi.getFromDate(), rssi.getToDate());
 			reports.add(reportModel.getReportByTypeAndDatePair(rssi.getReportType(), datePair));
 		}
 		ReportViewImpl reportView = new ReportViewImpl(reports);
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
-		
+
 		this.view.getNatigationManager().navigateTo(reportPresenter.getView());
 		logger.debug("<-");
 	}
@@ -82,7 +84,7 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 	@Override
 	public void handleAddClick() {
 		logger.debug("->");
-		
+
 		int i = view.getReportSelectSetImpl().size();
 		ReportSelectSetImpl rssi = new ReportSelectSetImpl(false);
 		rssi.setId(String.valueOf(i));
@@ -94,7 +96,7 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 	@Override
 	public void handleDeleteClick(ReportSelectSetImpl rssi) {
 		logger.debug("->");
-		
+
 		view.deleteReportSelectSet(rssi);
 		logger.debug("<-");
 	}

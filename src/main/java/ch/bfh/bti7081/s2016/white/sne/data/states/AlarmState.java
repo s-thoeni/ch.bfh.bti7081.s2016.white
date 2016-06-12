@@ -1,6 +1,8 @@
 package ch.bfh.bti7081.s2016.white.sne.data.states;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
+
 /**
  * Interface for State Pattern
  * 
@@ -15,12 +17,12 @@ public interface AlarmState {
 	 * @return Object[] (mainly Strings)
 	 */
 	public Object[] visualizeAlarm(Alarm alarm);
-	
-	
+
 	/**
 	 * Handles Statechanges
 	 * 
 	 * @param alarm
+	 * @throws SneException
 	 */
-	public void check(Alarm alarm);
+	public void check(Alarm alarm) throws SneException;
 }

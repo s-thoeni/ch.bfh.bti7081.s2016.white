@@ -1,8 +1,12 @@
 package ch.bfh.bti7081.s2016.white.sne.data.states;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 /**
  * NotCheckedState of State Pattern
  * 
@@ -11,6 +15,11 @@ import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
  */
 public class AlarmNotCheckedState implements AlarmState {
 
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(AlarmNotCheckedState.class);
+	
 	@Override
 	/**
 	 * Generate row for use in a Vaadin Table
@@ -19,6 +28,8 @@ public class AlarmNotCheckedState implements AlarmState {
 	 * @return Object[] (mainly Strings)
 	 */
 	public Object[] visualizeAlarm(Alarm alarm) {
+		logger.debug("->");
+		logger.debug("<-");
 		// no output when unchecked
 		return null;
 	}
@@ -29,7 +40,9 @@ public class AlarmNotCheckedState implements AlarmState {
 	 * 
 	 * @param alarm
 	 */
-	public void check(Alarm alarm){
+	public void check(Alarm alarm) throws SneException{
+		logger.debug("->");
+		
 		ReportFacade repFac = new ReportFacadeImpl();
 		alarm.setAlarmReport(repFac.getReport(alarm.getAlarmReportConfig(), true));
 		
@@ -41,10 +54,13 @@ public class AlarmNotCheckedState implements AlarmState {
 		} else {
 			alarm.setAlarmState(new AlarmOkState());
 		}
+		logger.debug("<-");
 	}
 	
 	@Override
 	public String toString() {
+		logger.debug("->");
+		logger.debug("<-");
 		return "NotChecked";
 	}
 

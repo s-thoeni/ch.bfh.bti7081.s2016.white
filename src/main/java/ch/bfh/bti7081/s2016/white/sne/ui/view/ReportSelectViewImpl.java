@@ -10,9 +10,11 @@ import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
 
@@ -27,7 +29,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ConfigSetImpl.class);
-	
+
 	private VerticalLayout root;
 	private VerticalLayout container;
 
@@ -39,36 +41,42 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 		this.root.setSpacing(true);
 		this.root.setMargin(true);
 		this.reportSelectSet = new ArrayList<ReportSelectSetImpl>();
-		
+
 		this.container = new VerticalLayout();
 		this.container.setSpacing(true);
 		this.container.setMargin(true);
 		this.root.addComponent(this.container);
-		
+
 		// first report select set
-		ReportSelectSetImpl rssi = new ReportSelectSetImpl(true); 
+		ReportSelectSetImpl rssi = new ReportSelectSetImpl(true);
 		this.reportSelectSet.add(rssi);
 		this.container.addComponent(rssi);
-		
+
 		// add button
 		Button addBtn = new Button("+");
 		addBtn.setHeight("50px");
 		addBtn.setWidth("50px");
 
 		addBtn.addClickListener(e -> {
-			for (ReportSelectViewListener listener : listeners)				
+			for (ReportSelectViewListener listener : listeners)
 				listener.handleAddClick();
 		});
 		this.root.addComponent(addBtn);
-		
-		//go button
-		// TODO : Errorhandling...
+
+		// go button
 		Button goBtn = new Button("Go");
 		goBtn.addClickListener(e -> {
 			for (ReportSelectViewListener listener : listeners)
-				listener.handleGoClick(this.reportSelectSet);
-				
-				//listener.handleGoClick((ReportType) this.reportSelectSet.get(0).getReportType(), this.reportSelectSet.get(0).getFromDate(), this.reportSelectSet.get(0).getToDate());
+				try {
+					listener.handleGoClick(this.reportSelectSet);
+				} catch (SneException ex) {
+					Notification.show(ex.getMessage(), Notification.Type.ERROR_MESSAGE);
+				}
+
+			// listener.handleGoClick((ReportType)
+			// this.reportSelectSet.get(0).getReportType(),
+			// this.reportSelectSet.get(0).getFromDate(),
+			// this.reportSelectSet.get(0).getToDate());
 		});
 		this.root.addComponent(goBtn);
 
@@ -78,7 +86,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 	@Override
 	public void addListener(ReportSelectViewListener listener) {
 		logger.debug("->");
-		
+
 		this.listeners.add(listener);
 		logger.debug("<-");
 	}
@@ -86,7 +94,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 	@Override
 	public void navigateTo(Component component) {
 		logger.debug("->");
-		
+
 		getNavigationManager().navigateTo(component);
 		logger.debug("<-");
 	}
@@ -107,7 +115,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 	@Override
 	public void addReportSelectSet(ReportSelectSetImpl rssi) {
 		logger.debug("->");
-		
+
 		this.reportSelectSet.add(rssi);
 		this.container.addComponent(rssi);
 		logger.debug("<-");
@@ -116,7 +124,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 	@Override
 	public void deleteReportSelectSet(ReportSelectSetImpl rssi) {
 		logger.debug("->");
-		
+
 		this.reportSelectSet.remove(rssi);
 		this.container.removeComponent(rssi);
 		logger.debug("<-");

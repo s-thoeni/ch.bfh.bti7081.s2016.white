@@ -9,6 +9,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 public class ReportProvider {
 
@@ -23,16 +24,16 @@ public class ReportProvider {
 		this.facade = new ReportFacadeImpl();
 	}
 	
-	public Report getReportByTypeAndTimeFrame(ReportType reportType, ReportTimeframe timeFrame) {
+	public Report getReportByTypeAndTimeFrame(ReportType reportType, ReportTimeframe timeFrame) throws SneException {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.facade.getReport(reportType, timeFrame);
 	}
 	
-	public Report getReportByTypeAndDatePair(ReportType reportType, DatePair datePair) {
+	public Report getReportByTypeAndDatePair(ReportType reportType, DatePair datePair) throws SneException {
 		logger.debug("->");
 		logger.debug("<-");
-		return this.facade.getReport(reportType, datePair);
+		return this.facade.getReport(reportType, datePair.getFrom(), datePair.getTo());
 	}
 
 }

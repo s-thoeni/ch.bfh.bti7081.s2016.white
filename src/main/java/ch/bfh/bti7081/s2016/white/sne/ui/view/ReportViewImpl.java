@@ -40,19 +40,86 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	}
 	
 	public ReportViewImpl(List<Report<? extends Record>> reports) {
-		// TODO(jan): implement this constructor
+		this.getNavigationBar().setCaption("Report comparison");
 		
+		int globalDiffInDays = 0;
+		for (Report<? extends Record> report : reports) {
+			Calendar startDateCal = Calendar.getInstance();
+			Calendar endDateCal = Calendar.getInstance();
+			startDateCal.setTime(report.getFrom());
+			endDateCal.setTime(report.getTo());
+			this.setInsignificantCalendarFieldsToMin(startDateCal);
+			this.setInsignificantCalendarFieldsToMax(endDateCal);
+			long startDateInMillis = startDateCal.getTimeInMillis();
+			long endDateInMillis = endDateCal.getTimeInMillis();
+			int potentialDiffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
+			if (potentialDiffInDays > globalDiffInDays) {
+				globalDiffInDays = potentialDiffInDays;
+			}
+		}
+
+		TabBarView layout = new TabBarView();
+		XAxis xAxis = new XAxis();
+
+		Chart lineChart = new Chart(ChartType.LINE);
+		lineChart.setHeight(50, Unit.PERCENTAGE);
+		Configuration lineChartConf = lineChart.getConfiguration();
+		lineChartConf.setTitle("Report comparison");
+		lineChartConf.addxAxis(xAxis);
+		
+		/*
+		 * Initializing the values and categories list. For every day in the reports
+		 * timespan an entry is added to the values list and a category with the
+		 * formated day is added to the categories list.
+		 */
+		for (int i = 0; i <= globalDiffInDays; ++i) {
+			xAxis.addCategory(String.valueOf(i));
+		}
+		
+		for (Report<? extends Record> report : reports) {
+			ListSeries lineChartSeries = new ListSeries(report.getName());
+			this.createChartsFromReport(report, lineChartSeries, null, null);	
+			lineChartConf.addSeries(lineChartSeries);
+		}
+		
+		VerticalLayout lineChartLayout = new VerticalLayout();
+		lineChartLayout.addComponent(lineChart);
+		layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
+		
+		super.setContent(layout);
 	}
 	
 	public ReportViewImpl(Report<? extends Record> report) {
 		this.getNavigationBar().setCaption(report.getName());
-		
-		Grid grid = new Grid();
-		grid.setWidth(100, Unit.PERCENTAGE);
-		grid.setHeight(50, Unit.PERCENTAGE);
-		grid.addColumn("Date", String.class);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+
+		Chart lineChart = null;
+		Configuration lineChartConf = null;
+		ListSeries lineChartSeries = new ListSeries();
+		XAxis xAxis = new XAxis();
+		if(report.getType().getReportStyles().contains(ReportStyle.LINE_GRAPH)){
+			lineChart = new Chart(ChartType.LINE);
+			lineChart.setHeight(50, Unit.PERCENTAGE);
+			lineChartConf = lineChart.getConfiguration();
+			lineChartConf.setTitle(report.getName());
+		}
+
+		Chart pieChart = null;
+		Configuration pieChartConf = null;
+		DataSeries pieChartSeries = new DataSeries(report.getName());
+		if(report.getType().getReportStyles().contains(ReportStyle.PIE_CHART)){
+			pieChart = new Chart(ChartType.PIE);
+			pieChart.setHeight(50, Unit.PERCENTAGE);
+			pieChartConf = pieChart.getConfiguration();
+			pieChartConf.setTitle(report.getName());
+		}
+
+		Grid grid = null;
+		if(report.getType().getReportStyles().contains(ReportStyle.TABULAR)){
+			grid = new Grid();
+			grid.setWidth(100, Unit.PERCENTAGE);
+			grid.setHeight(50, Unit.PERCENTAGE);
+			grid.addColumn("Date", String.class);
+		}
 
 		Calendar startDayCal = Calendar.getInstance();
 		startDayCal.setTime(report.getFrom());
@@ -63,161 +130,228 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		endDayCal.setTime(report.getTo());
 		this.setInsignificantCalendarFieldsToMax(endDayCal);
 		long endDateInMillis = endDayCal.getTimeInMillis();
-
-		List<Number> values = new ArrayList<Number>();
-
-		XAxis xAxis = new XAxis();
 		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(report.getFrom());
+		this.setInsignificantCalendarFieldsToMin(calendar);
+		int diffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+		
+		for (int i = 0; i <= diffInDays; ++i) {
+			xAxis.addCategory(sdf.format(calendar.getTime()));
+			calendar.add(1, Calendar.DAY_OF_YEAR);
+		}	
+		
+		this.createChartsFromReport(report, lineChartSeries, pieChartSeries, grid);
+		
+		TabBarView layout = new TabBarView();
+		if (lineChart != null && lineChartConf != null) {
+			lineChartConf.addSeries(lineChartSeries);
+			lineChartConf.addxAxis(xAxis);
+			
+			VerticalLayout lineChartLayout = new VerticalLayout();
+			lineChartLayout.addComponent(lineChart);
+			layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
+		}
+
+		if (pieChart != null && pieChartConf != null) {
+			pieChartConf.addSeries(pieChartSeries);
+			
+			VerticalLayout pieChartLayout = new VerticalLayout();
+			pieChartLayout.addComponent(pieChart);
+			layout.addTab(pieChartLayout, "Piechart", FontAwesome.PIE_CHART);
+		}
+		
+		if (grid != null) {
+			VerticalLayout gridLayout = new VerticalLayout();
+			gridLayout.addComponent(grid);
+			gridLayout.setSpacing(false);
+			layout.addTab(gridLayout, "Records", FontAwesome.TABLE);
+		}
+		
+		super.setContent(layout);
+	}
+	
+	private void createChartsFromReport(Report<? extends Record> report, ListSeries lineChartSeries, DataSeries pieChartSeries, Grid grid) {
 		/*
 		 * Initializing the values and categories list. For every day in the reports
 		 * timespan an entry is added to the values list and a category with the
 		 * formated day is added to the categories list.
 		 */
+		Calendar startDayCal = Calendar.getInstance();
+		startDayCal.setTime(report.getFrom());
+		this.setInsignificantCalendarFieldsToMin(startDayCal);
+		long startDateInMillis = startDayCal.getTimeInMillis();
+		
+		Calendar endDayCal = Calendar.getInstance();
+		endDayCal.setTime(report.getTo());
+		this.setInsignificantCalendarFieldsToMax(endDayCal);
+		long endDateInMillis = endDayCal.getTimeInMillis();
+		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(report.getFrom());
 		this.setInsignificantCalendarFieldsToMin(calendar);
 		int diffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
-		for (int i = 0; i <= diffInDays; ++i) {
-			values.add(0);
-			xAxis.addCategory(sdf.format(calendar.getTime()));
-			calendar.add(Calendar.DAY_OF_YEAR, 1);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
+		
+		List<Number> lineChartValues = null;
+		if (lineChartSeries != null) {
+			lineChartValues = new ArrayList<Number>();
+			for (int i = 0; i <= diffInDays; ++i) {
+				lineChartValues.add(0);
+				calendar.add(Calendar.DAY_OF_YEAR, 1);
+			}
 		}
 		
-		List<Number> pieChartValues = new ArrayList<Number>();
-		
-		String seriesIndicator = report.getType().getSeriesIndicator();
+		List<Number> pieChartValues = null;
+		if (pieChartSeries != null) {
+			pieChartValues = new ArrayList<Number>();
+		}
 		
 		switch (report.getType()) {
 		case EFFORT:
-			grid.addColumn("Effort", String.class);
+			if (grid != null) {
+				grid.addColumn("Effort", String.class);
+			}
+			
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
-						this.updateValue(values, rir.index, ((FinancialRecord) record).getEffort());
-						grid.addRow(sdf.format(record.getDate()), String.valueOf(((FinancialRecord) record).getEffort()));
+						if (lineChartValues != null) {
+							this.updateValue(lineChartValues, rir.index, ((FinancialRecord) record).getEffort());
+						}
+						
+						if (grid != null) {
+							grid.addRow(sdf.format(record.getDate()), String.valueOf(((FinancialRecord) record).getEffort()));
+						}
 					}
 				}
 			}
 			break;
 		case CASHFLOW:
-			grid.addColumn("Cashflow", String.class);
+			if (grid != null) {
+				grid.addColumn("Cashflow", String.class);
+			}
+			
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
-						this.updateValue(values, rir.index, ((FinancialRecord) record).getCashFlow());
-						grid.addRow(sdf.format(record.getDate()), String.valueOf(((FinancialRecord) record).getCashFlow()));
+						if (lineChartValues != null) {
+							this.updateValue(lineChartValues, rir.index, ((FinancialRecord) record).getCashFlow());
+						}
+
+						if (grid != null) {
+							grid.addRow(sdf.format(record.getDate()), String.valueOf(((FinancialRecord) record).getCashFlow()));
+						}
 					}
 				}
 			}
 			break;
 		case AVAILABLE_EMPLOYEES:
-			grid.addColumn("Employee", String.class);
+			if (grid != null) {
+				grid.addColumn("Employee", String.class);
+			}
+			
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
-						this.updateValue(values, rir.index);
-						grid.addRow(sdf.format(record.getDate()), ((PersonalRecord) record).getPersonName());
+						if (lineChartValues != null) {
+							this.updateValue(lineChartValues, rir.index);
+						}
+
+						if (grid != null) {
+							grid.addRow(sdf.format(record.getDate()), ((PersonalRecord) record).getPersonName());
+						}
 					}
 				}
 			}
 			break;
 		case PATIENTS:
-			grid.addColumn("Patient", String.class);
+			if (grid != null) {
+				grid.addColumn("Patient", String.class);
+			}
+			
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
-						this.updateValue(values, rir.index);
-						grid.addRow(sdf.format(record.getDate()), ((PatientRecord) record).getIncident());
+						if (lineChartValues != null) {
+							this.updateValue(lineChartValues, rir.index);
+						}
+
+						if (grid != null) {
+							grid.addRow(sdf.format(record.getDate()), ((PatientRecord) record).getIncident());
+						}
 					}
 				}
 			}
 			break;
 		case ABSENT_EMPLOYEES:
-			grid.addColumn("Employee", String.class);
-			grid.addColumn("Reason", String.class);
+			if (grid != null) {
+				grid.addColumn("Employee", String.class);
+				grid.addColumn("Reason", String.class);
+			}
 			
-			for (AbsenceReason reason : AbsenceReason.values()) {
-				pieChartValues.add(reason.getDbID());
+			if (pieChartValues != null) {
+				for (AbsenceReason reason : AbsenceReason.values()) {
+					pieChartValues.add(reason.getDbID());
+				}
 			}
 			
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
-						this.updateValue(values, rir.index);
-						this.updateValue(pieChartValues, ((PersonalRecord) record).getAbsenceReason().getDbID()-1);
-						grid.addRow(sdf.format(record.getDate()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getAbsenceReason().toString());
+						if (lineChartValues != null) {
+							this.updateValue(lineChartValues, rir.index);
+						}
+						
+						if (pieChartValues != null) {
+							this.updateValue(pieChartValues, ((PersonalRecord) record).getAbsenceReason().getDbID()-1);
+						}
+						
+						if (grid != null) {
+							grid.addRow(sdf.format(record.getDate()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getAbsenceReason().toString());
+						}
 					}
+				}
+			}
+
+			if (pieChartValues != null) {
+				for (int i = 0; i < AbsenceReason.values().length; ++i) {
+					pieChartSeries.add(new DataSeriesItem(AbsenceReason.values()[i].toString(), pieChartValues.get(i)));
 				}
 			}
 			break;
 		case INCIDENTS:
 		default:
-			grid.addColumn("Incident", String.class);
+			if (grid != null) {
+				grid.addColumn("Incident", String.class);
+			}
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
-						this.updateValue(values, rir.index);
-						grid.addRow(sdf.format(record.getDate()), ((PatientRecord) record).getIncident());
+						if (lineChartValues != null) {
+							this.updateValue(lineChartValues, rir.index);
+						}
+
+						if (grid != null) {
+							grid.addRow(sdf.format(record.getDate()), ((PatientRecord) record).getIncident());
+						}
 					}
 				}
 			}
 		}
 		
-		TabBarView layout = new TabBarView();
-		
-		if(report.getType().getReportStyles().contains(ReportStyle.LINE_GRAPH)){
-			Chart chart = new Chart(ChartType.LINE);
-			chart.setHeight(50, Unit.PERCENTAGE);
-
-			Configuration conf = chart.getConfiguration();
-			conf.setTitle(report.getName());
-
-			ListSeries series = new ListSeries(seriesIndicator);
-			series.setData(values);
-			conf.addSeries(series);
-			
-			conf.addxAxis(xAxis);
-			
-			VerticalLayout lineChartLayout = new VerticalLayout();
-			lineChartLayout.addComponent(chart);
-			
-			layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
+		if (lineChartSeries != null) {
+			lineChartSeries.setData(lineChartValues);
 		}
-		
-		if(report.getType().getReportStyles().contains(ReportStyle.PIE_CHART)){
-			Chart chart = new Chart(ChartType.PIE);
-			chart.setHeight(50, Unit.PERCENTAGE);
-
-			Configuration conf = chart.getConfiguration();
-			conf.setTitle(report.getName());
-
-			DataSeries series = new DataSeries(seriesIndicator);
-			for (int i = 0; i < AbsenceReason.values().length; ++i) {
-				series.add(new DataSeriesItem(AbsenceReason.values()[i].toString(), pieChartValues.get(i)));
-			}
-			conf.addSeries(series);
-			
-			VerticalLayout pieChartLayout = new VerticalLayout();
-			pieChartLayout.addComponent(chart);
-			
-			layout.addTab(pieChartLayout, "Piechart", FontAwesome.PIE_CHART);
-		}
-		
-		if(report.getType().getReportStyles().contains(ReportStyle.TABULAR)){
-			VerticalLayout gridLayout = new VerticalLayout();
-			gridLayout.addComponent(grid);
-			gridLayout.setSpacing(false);
-		
-			layout.addTab(gridLayout, "Records", FontAwesome.TABLE);
-		}
-		
-		super.setContent(layout);
 	}
 	
 	private void updateValue(List<Number> values, int index, Number newValue) {

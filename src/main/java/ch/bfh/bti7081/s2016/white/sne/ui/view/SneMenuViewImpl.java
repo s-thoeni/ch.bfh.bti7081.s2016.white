@@ -89,7 +89,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 		l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
 		getMenu().addComponent(l);
 
-		b = new Button("configure Dashboard");
+		b = new Button("Dashboard Configuration");
 		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
 		getMenu().addComponent(b);
 
@@ -98,7 +98,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 				listener.showConfiguration();
 		});
 		
-		b = new Button("Alarms");
+		b = new Button("Alarm Configuration");
 		b.addStyleName(SlideMenu.STYLENAME_BUTTON);
 		getMenu().addComponent(b);
 

@@ -71,8 +71,8 @@ public class TileComponentImpl extends CustomComponent implements TileComponent{
 		//this id will be returned when event is triggered
 		container.setId(id);
 		container.addComponent(reportName, "left: 5px; top: 7px");
-		container.addComponent(reportSummary, "right: 10px; bottom: 20px");
-		container.addComponent(timeframe, "right: 10px; top: 7px");
+		container.addComponent(reportSummary, "right: 10px; top: 7px");
+		container.addComponent(timeframe, "right: 10px; bottom: 10px");
 		
 		// used later on
 		container.addLayoutClickListener(e -> tileClicked(e));

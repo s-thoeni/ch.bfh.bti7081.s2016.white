@@ -56,7 +56,7 @@ abstract class AbstractDAO {
 			connection = DriverManager.getConnection("jdbc:sqlite:db/" + getDbName());
 		} catch (SQLException up) {
 			// log error
-			logger.error("Was not able to open connection \n" + up.getStackTrace(), up);
+			logger.error("Was not able to open connection \n" + up.getMessage(), up);
 			
 			throw up;
 		}
@@ -83,7 +83,7 @@ abstract class AbstractDAO {
 			con.close();
 		} catch (SQLException up) {
 			// log error
-			logger.error("Was not able to close all resources \n" + up.getStackTrace(), up);
+			logger.error("Was not able to close all resources \n" + up.getMessage(), up);
 			
 			throw up;
 		}

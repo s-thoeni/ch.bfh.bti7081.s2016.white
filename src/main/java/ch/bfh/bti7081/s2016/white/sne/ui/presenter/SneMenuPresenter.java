@@ -53,19 +53,12 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 
 	@Override
 	public void showConfiguration() {
-		// TODO automate with the nav listener
 		menuClosed();
 		ConfigurationProvider prov = new ConfigurationProvider(new User(USER));
 		ConfigurationViewImpl view = new ConfigurationViewImpl();
 		ConfigurationPresenter cv = new ConfigurationPresenter(prov, view);
-		// Only this button actually does something in the menu. Here we
-		// navigate to a dummy view.
 
-		NavigationManager nm = view.getNavigationManager();
-		if (nm == null) {
-			nm = new NavigationManager();
-		}
-		nm.navigateTo(cv.getView());
+		this.view.getNavigationManager().navigateTo(cv.getView());
 	}
 
 	@Override
@@ -78,13 +71,10 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 
 	@Override
 	public void showAlarms() {
-		// TODO automate with the nav listener
 		menuClosed();
 		AlarmConfigurationProvider prov = new AlarmConfigurationProvider(new User(USER));
 		AlarmConfigurationViewImpl view = new AlarmConfigurationViewImpl();
 		AlarmConfigurationPresenter cv = new AlarmConfigurationPresenter(prov, view);
-		// Only this button actually does something in the menu. Here we
-		// navigate to a dummy view.
 
 		this.view.getNavigationManager().navigateTo(cv.getView());
 

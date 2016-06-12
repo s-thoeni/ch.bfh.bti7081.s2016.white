@@ -32,13 +32,14 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 	 */
 	private static final Logger logger = LogManager.getLogger(SneMenuPresenter.class);
 
-	private static final String USER = "lucas.wirtz";
 	private SneMenuViewImpl view;
 
-	public SneMenuPresenter(SneMenuViewImpl view) {
+	private User user;
+	
+	public SneMenuPresenter(SneMenuViewImpl view, User user) {
 		this.view = view;
 		this.view.addListener(this);
-
+		this.user = user;
 	}
 
 	public Component getView() {
@@ -80,7 +81,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		logger.debug("->");
 		
 		menuClosed();
-		ConfigurationProvider prov = new ConfigurationProvider(new User(USER));
+		ConfigurationProvider prov = new ConfigurationProvider(user);
 		ConfigurationViewImpl view = new ConfigurationViewImpl();
 		ConfigurationPresenter cv = new ConfigurationPresenter(prov, view);
 
@@ -108,7 +109,7 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		logger.debug("->");
 		
 		menuClosed();
-		AlarmConfigurationProvider prov = new AlarmConfigurationProvider(new User(USER));
+		AlarmConfigurationProvider prov = new AlarmConfigurationProvider(user);
 		AlarmConfigurationViewImpl view = new AlarmConfigurationViewImpl();
 		AlarmConfigurationPresenter cv = new AlarmConfigurationPresenter(prov, view);
 

@@ -70,9 +70,6 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	public void saveClick() throws SneException {
 		logger.debug("->");
 		
-		// DUMMY DATA
-		// FIXME: get user from elsewhere... where is it stored?
-		User user = new User("lucas.wirtz");
 		List<ReportConfig> configuration = new ArrayList<ReportConfig>();
 
 		for (ConfigSetImpl conf : this.view.getConfigSets()) {
@@ -80,7 +77,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 				configuration.add(new ReportConfig(conf.getReportType(), conf.getReportTimeframe()));
 			}
 		}
-		this.model.setConfig(new Configuration(configuration), user);		
+		this.model.setConfig(new Configuration(configuration), model.getUser());		
 
 		UI ui = UI.getCurrent();
 		if(ui instanceof MyUI){

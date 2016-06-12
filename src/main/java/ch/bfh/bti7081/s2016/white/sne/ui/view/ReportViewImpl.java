@@ -36,6 +36,10 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		int index;
 	}
 	
+	public ReportViewImpl(List<Report> reports) {
+		this(reports.get(0));
+	}
+	
 	public ReportViewImpl(Report<? extends Record> report) {
 		this.getNavigationBar().setCaption(report.getName());
 		

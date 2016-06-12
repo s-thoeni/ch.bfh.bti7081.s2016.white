@@ -1,10 +1,12 @@
 package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
 import java.util.Date;
+import java.util.List;
 
 import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
 
 /**
  * 
@@ -14,9 +16,17 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 public interface ReportSelectView {
 	
 	public interface ReportSelectViewListener {
-		void go(ReportType reportType, Date from, Date to);
+		void handleGoClick(ReportType reportType, Date from, Date to);
+		void handleGoClick(List<ReportSelectSetImpl> reportSelectSets);
+		void handleAddClick();
 		
 	}
+	
+	public List<ReportSelectSetImpl>  getReportSelectSetImpl();
+	
+	public void addReportSelectSet(ReportSelectSetImpl rssi);
+	
+	public void deleteReportSelectSet(ReportSelectSetImpl rssi);
 		
 	public void addListener(ReportSelectViewListener listener);
 	

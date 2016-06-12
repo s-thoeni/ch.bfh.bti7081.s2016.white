@@ -3,15 +3,14 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vaadin.addon.touchkit.ui.DatePicker;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
 
 /**
  * 
@@ -20,47 +19,49 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
  */
 public class ReportSelectViewImpl extends NavigationView implements ReportSelectView {
 
-	private FormLayout root;
+	private VerticalLayout root;
+	private VerticalLayout container;
 
 	private List<ReportSelectViewListener> listeners = new ArrayList<ReportSelectViewListener>();
+	private List<ReportSelectSetImpl> reportSelectSet;
 
 	public ReportSelectViewImpl() {
-		this.root = new FormLayout();
+		this.root = new VerticalLayout();
 		this.root.setSpacing(true);
 		this.root.setMargin(true);
-
+		this.reportSelectSet = new ArrayList<ReportSelectSetImpl>();
 		
-		// TODO: make a components out of the report + from&to selection
-		// report selection
-		NativeSelect reportSelect = new NativeSelect("Report: ");
-		ReportType[] types = ReportType.values();
-		for (ReportType type : types) {
-			reportSelect.addItem(type);
-		}
-		reportSelect.setNullSelectionAllowed(true);
-		reportSelect.setStyleName("configselect");
-
-		this.root.addComponent(reportSelect);
-
-		// from
-		//DateField from = new DateField("From: ");
-		DatePicker from = new DatePicker("From: ");
-		this.root.addComponent(from);
+		this.container = new VerticalLayout();
+		this.container.setSpacing(true);
+		this.container.setMargin(true);
+		this.root.addComponent(this.container);
 		
-		// to
-		DatePicker to = new DatePicker("To: ");
-		this.root.addComponent(to);
+		// first report select set
+		ReportSelectSetImpl rssi = new ReportSelectSetImpl(true); 
+		this.reportSelectSet.add(rssi);
+		this.container.addComponent(rssi);
+		
+		// add button
+		Button addBtn = new Button("+");
+		addBtn.setHeight("50px");
+		addBtn.setWidth("50px");
+
+		addBtn.addClickListener(e -> {
+			for (ReportSelectViewListener listener : listeners)				
+				listener.handleAddClick();
+		});
+		this.root.addComponent(addBtn);
 		
 		//go button
-		
 		// TODO : Errorhandling...
-		Button go = new Button("Go");
-		go.addClickListener((ClickEvent event) -> {
+		Button goBtn = new Button("Go");
+		goBtn.addClickListener(e -> {
 			for (ReportSelectViewListener listener : listeners)
-				listener.go((ReportType) reportSelect.getValue(), from.getValue(), to.getValue());
+				listener.handleGoClick(this.reportSelectSet);
+				
+				//listener.handleGoClick((ReportType) this.reportSelectSet.get(0).getReportType(), this.reportSelectSet.get(0).getFromDate(), this.reportSelectSet.get(0).getToDate());
 		});
-		
-		this.root.addComponent(go);
+		this.root.addComponent(goBtn);
 
 		this.setContent(root);
 	}
@@ -73,7 +74,28 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 	@Override
 	public void navigateTo(Component component) {
 		getNavigationManager().navigateTo(component);
+	}
+
+	public NavigationManager getNatigationManager() {
+		return super.getNavigationManager();
 		
 	}
 
+	@Override
+	public List<ReportSelectSetImpl> getReportSelectSetImpl() {
+		return this.reportSelectSet;
+	}
+
+	@Override
+	public void addReportSelectSet(ReportSelectSetImpl rssi) {
+		this.reportSelectSet.add(rssi);
+		this.container.addComponent(rssi);
+	}
+
+	@Override
+	public void deleteReportSelectSet(ReportSelectSetImpl rssi) {
+		this.reportSelectSet.remove(rssi);
+		this.container.removeComponent(rssi);
+		
+	}
 }

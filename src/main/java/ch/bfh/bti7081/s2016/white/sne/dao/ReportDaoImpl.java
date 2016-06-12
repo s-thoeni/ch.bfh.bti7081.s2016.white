@@ -17,6 +17,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.FinancialRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 /**
  * Loads and saves the configuration of the user.
@@ -29,7 +30,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ReportDaoImpl.class);
-	
+
 	private static final String DB_NAME = "dwh.db";
 	private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -44,9 +45,9 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PersonalRecord> getAvailableEmployee(Date from, Date to) {
+	public Report<PersonalRecord> getAvailableEmployee(Date from, Date to) throws SneException {
 		logger.debug("->");
-		
+
 		Report<PersonalRecord> result = new Report<PersonalRecord>("Anwesendes Personal");
 		List<PersonalRecord> records = new ArrayList<PersonalRecord>();
 
@@ -60,10 +61,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_AVAILABLE_EMPLOYEES);
 			stm.setString(1, sdf.format(from));
 			stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_AVAILABLE_EMPLOYEES);
-			
+
 			rs = stm.executeQuery();
 
 			// parse results
@@ -85,12 +86,16 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		} catch (SQLException e) {
 			// log error
 			logger.error("select on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+
+			throw new SneException("Error retrieving report data from database! ", e);
 		} finally {
 			try {
 				close(rs, stm, con);
 			} catch (SQLException e) {
 				// log error
 				logger.error("failed to close sql-connection \n" + e.getMessage(), e);
+
+				throw new SneException("Error closing database connection, your data might be in danger! ", e);
 			}
 		}
 
@@ -102,7 +107,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	@Override
 	public Report<PersonalRecord> getSickLeaves(Date from, Date to) {
 		logger.debug("->");
-		
+
 		Report<PersonalRecord> result = new Report<PersonalRecord>("Abwesendes Personal");
 		List<PersonalRecord> records = new ArrayList<PersonalRecord>();
 
@@ -117,10 +122,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_SICK_LEAVES);
 			// stm.setString(1, sdf.format(from));
 			// stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_SICK_LEAVES);
-			
+
 			rs = stm.executeQuery();
 
 			// parse results
@@ -161,7 +166,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	@Override
 	public Report<PatientRecord> getIncidents(Date from, Date to) {
 		logger.debug("->");
-		
+
 		Report<PatientRecord> result = new Report<PatientRecord>("Notfälle");
 		List<PatientRecord> records = new ArrayList<PatientRecord>();
 
@@ -175,12 +180,12 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_INCIDENTS);
 			stm.setString(1, sdf.format(from));
 			stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_INCIDENTS);
-			
+
 			rs = stm.executeQuery();
-			
+
 			// parse results
 			while (rs.next()) {
 				PatientRecord record = new PatientRecord();
@@ -214,7 +219,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	@Override
 	public Report<PatientRecord> getPatientCount(Date from, Date to) {
 		logger.debug("->");
-		
+
 		Report<PatientRecord> result = new Report<PatientRecord>("Aktuelle Patientanzahl");
 		List<PatientRecord> records = new ArrayList<PatientRecord>();
 
@@ -229,7 +234,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_PATIENT_COUNT);
 			// stm.setString(1, sdf.format(from));
 			// stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_PATIENT_COUNT);
 			rs = stm.executeQuery();
@@ -266,7 +271,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	@Override
 	public Report<FinancialRecord> getEffort(Date from, Date to) {
 		logger.debug("->");
-		
+
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Aufwand");
 		List<FinancialRecord> records = new ArrayList<FinancialRecord>();
 
@@ -280,10 +285,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_FINANCE);
 			stm.setString(1, sdf.format(from));
 			stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_FINANCE);
-			
+
 			rs = stm.executeQuery();
 
 			// parse results
@@ -334,7 +339,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	@Override
 	public Report<FinancialRecord> getReturn(Date from, Date to) {
 		logger.debug("->");
-		
+
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Ertrag");
 		List<FinancialRecord> records = new ArrayList<FinancialRecord>();
 
@@ -348,10 +353,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_FINANCE);
 			stm.setString(1, sdf.format(from));
 			stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_FINANCE);
-			
+
 			rs = stm.executeQuery();
 
 			// parse results
@@ -401,7 +406,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	@Override
 	public Report<FinancialRecord> getCashFlow(Date from, Date to) {
 		logger.debug("->");
-		
+
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Cash Flow");
 		List<FinancialRecord> records = new ArrayList<FinancialRecord>();
 
@@ -415,10 +420,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			stm = con.prepareStatement(SELECT_FINANCE);
 			stm.setString(1, sdf.format(from));
 			stm.setString(2, sdf.format(to));
-			
+
 			// log query
 			logger.debug(SELECT_FINANCE);
-						
+
 			rs = stm.executeQuery();
 
 			// parse results

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 /**
  * NotCheckedState of State Pattern
  * 
@@ -39,7 +40,7 @@ public class AlarmNotCheckedState implements AlarmState {
 	 * 
 	 * @param alarm
 	 */
-	public void check(Alarm alarm){
+	public void check(Alarm alarm) throws SneException{
 		logger.debug("->");
 		
 		ReportFacade repFac = new ReportFacadeImpl();

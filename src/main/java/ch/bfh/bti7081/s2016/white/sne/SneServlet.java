@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.vaadin.addon.touchkit.server.TouchKitServlet;
 import com.vaadin.addon.touchkit.settings.TouchKitSettings;
+import com.vaadin.ui.Notification;
 
 public class SneServlet extends TouchKitServlet {
 
@@ -14,24 +15,27 @@ public class SneServlet extends TouchKitServlet {
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(SneServlet.class);
-	
+
 	/**
 	 * Class serial ID
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
-    protected void servletInitialized() throws ServletException {
+	protected void servletInitialized() throws ServletException {
 		logger.debug("->");
 		try {
 			super.servletInitialized();
 		} catch (ServletException e) {
 			// log error
 			logger.error("Servlet initlalization failed \n" + e.getStackTrace(), e);
+			Notification.show("Error occured during initializing process! Sorry.", Notification.Type.ERROR_MESSAGE);
 			throw e;
 		}
-				
-        TouchKitSettings s = getTouchKitSettings();
-        logger.debug("<-");
-    }
+
+		// If we want to be a bit more mobile we should add some of those:
+		// TouchKitSettings s = getTouchKitSettings();
+
+		logger.debug("<-");
+	}
 }

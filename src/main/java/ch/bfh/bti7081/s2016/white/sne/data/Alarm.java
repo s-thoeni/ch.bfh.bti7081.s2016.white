@@ -4,28 +4,29 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.Operator;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmNotCheckedState;
 import ch.bfh.bti7081.s2016.white.sne.data.states.AlarmState;
 
 /**
  * Class representing alarm
+ * 
  * @author team white
  *
  */
 public class Alarm {
-	
+
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(Alarm.class);
-	
+
 	private ReportConfig alarmReportConfig;
 	private Report alarmReport;
 	private Operator operator;
 	private int errorValue;
 	private int warningValue;
 	private AlarmState alarmState;
-	
 
 	public Alarm(ReportConfig alarmReportConfig, int errorValue, int warningValue, Operator operator) {
 		this.alarmReportConfig = alarmReportConfig;
@@ -35,15 +36,14 @@ public class Alarm {
 		this.alarmState = new AlarmNotCheckedState();
 	}
 
-	
-	public Object[] visualizeAlarm(){
+	public Object[] visualizeAlarm() throws SneException {
 		logger.debug("->");
-		
+
 		this.alarmState.check(this);
 		logger.debug("<-");
 		return this.alarmState.visualizeAlarm(this);
 	}
-	
+
 	public Report getAlarmReport() {
 		logger.debug("->");
 		logger.debug("<-");
@@ -109,10 +109,17 @@ public class Alarm {
 		logger.debug("<-");
 		this.alarmState = alarmState;
 	}
-	
-	public String getAlarmStateString(){
+
+	public String getAlarmStateString() {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.alarmState.toString();
+	}
+
+	@Override
+	public String toString() {
+		return "Alarm [alarmReportConfig=" + alarmReportConfig + ", alarmReport=" + alarmReport + ", operator="
+				+ operator + ", errorValue=" + errorValue + ", warningValue=" + warningValue + ", alarmState="
+				+ alarmState + "]";
 	}
 }

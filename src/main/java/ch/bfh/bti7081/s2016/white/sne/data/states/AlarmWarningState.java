@@ -10,6 +10,7 @@ import com.vaadin.ui.Label;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 /**
  * WarningState of State Pattern
  * 
@@ -45,7 +46,7 @@ public class AlarmWarningState implements AlarmState {
 	 * 
 	 * @param alarm
 	 */
-	public void check(Alarm alarm){
+	public void check(Alarm alarm) throws SneException{
 		logger.debug("->");
 		
 		ReportFacade repFac = new ReportFacadeImpl();

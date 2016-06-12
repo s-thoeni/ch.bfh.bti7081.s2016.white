@@ -4,22 +4,49 @@ import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
-public interface DashboardView {	   
+/**
+ * Displays Tiles and triggers tileClick event when one of the tiles has been
+ * clicked.
+ * 
+ * @author thons1
+ */
+public interface DashboardView {
 
-    public interface DashboardViewListener {
-        void tileClick(String id);
-    }
-    
-    public void addListener(DashboardViewListener listener);
+	/**
+	 * The listener which can be used to retrieve aforementioned tileClick
+	 * event. The event consists of the id from the tile.
+	 * 
+	 * @author thons1
+	 */
+	public interface DashboardViewListener {
+		void tileClick(String id);
+	}
+
+	/**
+	 * Add a new listener to be used to evaluate tileClick events.
+	 * 
+	 * @param listener
+	 */
+	public void addListener(DashboardViewListener listener);
 
 	/**
 	 * Add a TileComponent and register listener
+	 * 
 	 * @param tile
 	 */
 	void addTile(TileComponentImpl tile);
 
+	/**
+	 * Navigate to a different component.
+	 * 
+	 * @param component
+	 */
 	public void navigateTo(Component component);
 
+	/**
+	 * remove all tiles currently displayed. This does not have an effect on the
+	 * persisted data nor the configuration.
+	 */
 	public void removeAll();
 
 }

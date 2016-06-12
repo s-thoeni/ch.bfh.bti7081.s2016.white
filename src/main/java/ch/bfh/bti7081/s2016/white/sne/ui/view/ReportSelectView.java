@@ -6,6 +6,7 @@ import java.util.List;
 import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
 
 /**
@@ -16,8 +17,9 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
 public interface ReportSelectView {
 	
 	public interface ReportSelectViewListener {
-		void handleGoClick(ReportType reportType, Date from, Date to);
-		void handleGoClick(List<ReportSelectSetImpl> reportSelectSets);
+		void handleGoClick(ReportType reportType, Date from, Date to) throws SneException;
+
+		void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) throws SneException;
 		void handleAddClick();
 		
 	}

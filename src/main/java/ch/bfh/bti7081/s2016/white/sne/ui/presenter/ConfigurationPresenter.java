@@ -3,6 +3,9 @@ package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -18,6 +21,12 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
 public class ConfigurationPresenter implements ConfigurationView.ConfigurationViewListener {
+	
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(ConfigurationPresenter.class);
+
 	private ConfigurationProvider model;
 	private ConfigurationViewImpl view;
 	private Configuration config;
@@ -42,6 +51,8 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 
 	@Override
 	public void addClick() {
+		logger.debug("->");
+		
 		int i = 0;
 		for (ConfigSetImpl c : view.getConfigSets()) {
 			i++;
@@ -50,12 +61,14 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 		configSet.setId(String.valueOf(i));
 		view.addConfigSet(configSet);
 		((ConfigSet) configSet).addListener(id -> deleteClick(id));
-
+		
+		logger.debug("<-");
 	}
 
 	@Override
 	public void saveClick() {
-
+		logger.debug("->");
+		
 		// DUMMY DATA
 		// FIXME: get user from elsewhere... where is it stored?
 		User user = new User("lucas.wirtz");
@@ -77,19 +90,26 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 		}else{
 			Notification.show("We could not navigate corretly, please refresh the page manually");
 		}
+		logger.debug("<-");
 	}
 
 	@Override
 	public void cancelClick() {
+		logger.debug("->");
+		
 		this.view.getNatigationManager().navigateBack();
+		logger.debug("<-");
 	}
 
 	public Component getView() {
+		logger.debug("->");
+		logger.debug("<-");
 		return (Component) this.view;
 	}
 
 	@Override
 	public void deleteClick(String id) {
+		logger.debug("->");
 		List<ConfigSetImpl> configSets = view.getConfigSets();
 		
 		for(int i =0; i<configSets.size();i++){
@@ -100,6 +120,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 		for(int i =0; i<configSets.size();i++){
 			configSets.get(i).setId(String.valueOf(i));
 		}
+		logger.debug("<-");
 	}
 
 }

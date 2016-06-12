@@ -3,6 +3,9 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -18,8 +21,14 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
 public class AlarmSetImpl extends CustomComponent implements AlarmSet {
+	
 	/**
-	 * 
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(AlarmSetImpl.class);
+	
+	/**
+	 * Class serial ID
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<AlarmSetListener> listeners;
@@ -102,65 +111,92 @@ public class AlarmSetImpl extends CustomComponent implements AlarmSet {
 		setCompositionRoot(horizontal);
 	}
 
+	/**
+	 * Default constructor
+	 */
 	public AlarmSetImpl() {
 		this(null);
 	}
 
 	@Override
 	public void addListener(AlarmSetListener listener) {
+		logger.debug("->");
+		
 		listeners.add(listener);
-
+		logger.debug("<-");
 	}
 
 	public void handleDeleteClick() {
+		logger.debug("->");
+		
 		for (AlarmSetListener listener : listeners)
 			listener.deleteClick(this.getId());
+		logger.debug("<-");
 	}
 
 	public ReportType getReportType() {
+		logger.debug("->");
+		
 		if (reportSelector.getValue() instanceof ReportType) {
+			logger.debug("<-");
 			return (ReportType) reportSelector.getValue();
 		} else {
+			logger.debug("<-");
 			return null;
 		}
 	}
 
 	public ReportTimeframe getReportTimeframe() {
+		logger.debug("->");
+		
 		if (timeSelector.getValue() instanceof ReportTimeframe) {
+			logger.debug("<-");
 			return (ReportTimeframe) timeSelector.getValue();
 		} else {
+			logger.debug("<-");
 			return null;
 		}
 	}
 
 	public Operator getComparator() {
+		logger.debug("->");
+		
 		if (compSelector.getValue() instanceof Operator) {
+			logger.debug("<-");
 			return (Operator) compSelector.getValue();
 		} else {
+			logger.debug("<-");
 			return null;
 		}
 	}
 
 	public int getWarnValue() {
+		logger.debug("->");
+		
 		String uiValue = warningVal.getValue();
 		try {
 			Integer convertedValue = (Integer) warningVal.getConvertedValue();
+			logger.debug("<-");
 			return convertedValue;
 		} catch (ConversionException e) {
 			Notification.show("Could not convert value: " + uiValue);
+			logger.debug("<-");
 			return 0;
 		}
 	}
 
 	public int getErrorValue() {
+		logger.debug("->");
+		
 		String uiValue = alarmVal.getValue();
 		try {
 			Integer convertedValue = (Integer) alarmVal.getConvertedValue();
+			logger.debug("<-");
 			return convertedValue;
 		} catch (ConversionException e) {
 			Notification.show("Could not convert value: " + uiValue);
+			logger.debug("<-");
 			return 0;
 		}
 	}
-
 }

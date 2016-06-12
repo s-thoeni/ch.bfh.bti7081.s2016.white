@@ -3,6 +3,9 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
@@ -13,8 +16,14 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
 public class ConfigSetImpl extends CustomComponent implements ConfigSet{
+	
 	/**
-	 * 
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(ConfigSetImpl.class);
+	
+	/**
+	 * Class serial ID
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<ConfigSetListener> listeners;
@@ -68,6 +77,9 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 		setCompositionRoot(horizontal);
 	}
 	
+	/**
+	 * Default constructor
+	 */
 	public ConfigSetImpl() {
 		this(null, null);
 	}
@@ -75,30 +87,40 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 
 	@Override
 	public void addListener(ConfigSetListener listener) {
-		listeners.add(listener);
+		logger.debug("->");
 		
+		listeners.add(listener);
+		logger.debug("<-");
 	}
 	
 	public void handleDeleteClick() {
+		logger.debug("->");
+		
 		for(ConfigSetListener listener : listeners)
 			listener.deleteClick(this.getId());
+		logger.debug("<-");
 	}
 	
 	public ReportType getReportType(){
+		logger.debug("->");
 		if(reportSelector.getValue() instanceof ReportType){
+			logger.debug("<-");
 			return (ReportType) reportSelector.getValue();
 		} else{
+			logger.debug("<-");
 			return null;
 		}
 	}
 	
 	public ReportTimeframe getReportTimeframe(){
+		logger.debug("->");
+		
 		if(timeSelector.getValue() instanceof ReportTimeframe){
+			logger.debug("<-");
 			return (ReportTimeframe) timeSelector.getValue();
 		} else{
+			logger.debug("<-");
 			return null;
 		}
 	}
-	
 }
-

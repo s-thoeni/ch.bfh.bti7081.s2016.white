@@ -3,6 +3,9 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Alignment;
@@ -14,7 +17,13 @@ import com.vaadin.ui.VerticalLayout;
 
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
 
-public class AlarmConfigurationViewImpl extends NavigationView implements AlarmConfigurationView{
+public class AlarmConfigurationViewImpl extends NavigationView implements AlarmConfigurationView {
+
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(AlarmConfigurationViewImpl.class);
+
 	private VerticalLayout grid;
 	
 	private List<AlarmSetImpl> alarmSets;
@@ -70,6 +79,8 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 	}
 	
 	private void addTitle() {
+		logger.debug("->");
+		
 		HorizontalLayout horizontal = new HorizontalLayout();
 
 		horizontal.setWidth("100%");
@@ -96,51 +107,76 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		horizontal.setComponentAlignment(hidden, Alignment.MIDDLE_LEFT);
 		
 		grid.addComponent(horizontal);
+		logger.debug("<-");
 	}
 
 	@Override
 	public void addListener(AlarmConfigurationViewListener listener) {
+		logger.debug("->");
+		
 		listeners.add(listener);
+		logger.debug("<-");
 	}
 
 	public void handleAddClick() {
+		logger.debug("->");
+		
 		for(AlarmConfigurationViewListener listener : listeners)
 			listener.addClick();
+		logger.debug("<-");
 	}
 	
 	public void handleClickSave() {
+		logger.debug("->");
+		
 		for(AlarmConfigurationViewListener listener : listeners)
 			listener.saveClick();
+		logger.debug("<-");
 	}
 
 	public void handleClickCancel() {
+		logger.debug("->");
+		
 		for(AlarmConfigurationViewListener listener : listeners)
 			listener.cancelClick();
-		
+		logger.debug("<-");
 	}
 
 	@Override
 	public void addAlarmSet(AlarmSetImpl configSet) {
+		logger.debug("->");
+		
 		alarmSets.add(configSet);
 		grid.addComponent(configSet);
+		logger.debug("<-");
 	}
 
 	@Override
 	public void deleteAlarmSet(AlarmSetImpl configSet) {
+		logger.debug("->");
+		
 		alarmSets.remove(configSet);
 		grid.removeComponent(configSet);
+		logger.debug("<-");
 	}
 	
 	public List<AlarmSetImpl> getAlarmSets() {
+		logger.debug("->");
+		logger.debug("<-");
 		return this.alarmSets;
 	}
 
 	@Override
 	public void navigateTo(Component component) {
+		logger.debug("->");
+		
 		getNavigationManager().navigateTo(component);
+		logger.debug("<-");
 	}
 
 	public NavigationManager getNatigationManager() {
+		logger.debug("->");
+		logger.debug("<-");
 		return getNavigationManager();
 		
 	}

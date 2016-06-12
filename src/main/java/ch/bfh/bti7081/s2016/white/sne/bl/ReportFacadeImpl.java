@@ -19,7 +19,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 public class ReportFacadeImpl implements ReportFacade {
 
 	/**
-	 * Initialize new logger for this class
+	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ReportFacadeImpl.class);
 	
@@ -76,35 +76,35 @@ public class ReportFacadeImpl implements ReportFacade {
 		logger.debug("->");
 		
 		Report<? extends Record> result = null;
-		logger.debug("Switch case");
+		logger.debug("Switch case report type");
 		switch (type){
 		case AVAILABLE_EMPLOYEES:
-			logger.debug("AVAILABLE_EMPLOYEES");
+			logger.debug("type: AVAILABLE_EMPLOYEES");
 			result = dao.getAvailableEmployee(from, to);
 			result.setType(ReportType.AVAILABLE_EMPLOYEES);
 			break;
 		case CASHFLOW:
-			logger.debug("CASHFLOW");
+			logger.debug("type: ASHFLOW");
 			result = dao.getCashFlow(from, to);
 			result.setType(ReportType.CASHFLOW);
 			break;
 		case EFFORT:
-			logger.debug("EFFORT");
+			logger.debug("type: EFFORT");
 			result = dao.getEffort(from, to);
 			result.setType(ReportType.EFFORT);
 			break;
 		case INCIDENTS:
-			logger.debug("INCIDENTS");
+			logger.debug("type: INCIDENTS");
 			result =  dao.getIncidents(from, to);
 			result.setType(ReportType.INCIDENTS);
 			break;
 		case PATIENTS:
-			logger.debug("PATIENTS");
+			logger.debug("type: PATIENTS");
 			result = dao.getPatientCount(from, to);
 			result.setType(ReportType.PATIENTS);
 			break;
 		case SICK_LEAVES:
-			logger.debug("SICK_LEAVES");
+			logger.debug("type: SICK_LEAVES");
 			result = dao.getSickLeaves(from, to);
 			result.setType(ReportType.SICK_LEAVES);
 			break;

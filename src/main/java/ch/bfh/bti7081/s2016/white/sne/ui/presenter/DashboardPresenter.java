@@ -2,6 +2,9 @@ package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.ui.Component;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
@@ -15,6 +18,11 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
 
 public class DashboardPresenter implements DashboardView.DashboardViewListener {
+	
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(DashboardPresenter.class);
 
 	DashboardProvider model;
 	DashboardView view;
@@ -35,17 +43,24 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 	
 	@Override
 	public void tileClick(String id) {
+		logger.debug("->");
+		
 		ReportProvider reportModel = new ReportProvider();
 		ReportViewImpl reportView = new ReportViewImpl(model.getReportByName(id));
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 		this.view.navigateTo(reportPresenter.getView());
+		logger.debug("<-");
 	}
 
 	public Component getView() {
+		logger.debug("->");
+		logger.debug("<-");
 		return (DashboardViewImpl) this.view;
 	}
 
 	public void refresh(Configuration config) {
+		logger.debug("->");
+		
 		model.setReportConfigurations(config.getReports());
 		view.removeAll();
 		List<Report> reports = model.getReports();
@@ -53,6 +68,7 @@ public class DashboardPresenter implements DashboardView.DashboardViewListener {
 		for(Report r: reports){
 			TileComponentImpl tile = new TileComponentImpl(r.getName(), String.valueOf(r.getSummary()), r.getFrom(), r.getTo(), r.getName(), r.getType());
 			view.addTile(tile);
-		}		
+		}
+		logger.debug("<-");
 	}
 }

@@ -3,6 +3,8 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.vaadin.thomas.slidemenu.SlideMenu;
 import org.vaadin.thomas.slidemenu.SlideMenuView;
 
@@ -12,7 +14,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -24,6 +25,11 @@ import ch.bfh.bti7081.s2016.white.sne.ui.presenter.SneMenuPresenter;
 @SuppressWarnings("serial")
 public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(SneMenuViewImpl.class);
+	
 	private static final String USER = "T_Boy!";
 	
 	// Get the user-config: 
@@ -49,7 +55,8 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 	}
 	
 	private void buildMenu() {
-
+		logger.debug("->");
+		
 		// close button
 		final Button close = new Button("close menu");
 		close.setWidth(null);
@@ -106,9 +113,12 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 			for (SneMenuListener listener : listeners)
 				listener.showAlarms();
 		});
+		logger.debug("<-");
 	}
 	
 	private void buildAlarming(){
+		logger.debug("->");
+		
 		boolean hasWarning = false;
 		boolean hasError = false;
 		Table table = new Table("Alarms");
@@ -151,19 +161,26 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView{
 	
 			getNavigationBar().setRightComponent(alarmButton);
 		}
+		logger.debug("<-");
 	}
 
 	public static String getUser() {
+		logger.debug("->");
+		logger.debug("<-");
 		return USER;
 	}
 	
 	@Override
 	public void addListener(SneMenuListener listener) {
+		logger.debug("->");
+		
 		this.listeners.add(listener);
-
+		logger.debug("<-");
 	}
 	
 	 public NavigationManager getNavigationManager() {
+		 logger.debug("->");
+		 logger.debug("<-");
 		 return super.getNavigationManager();
 	 }
 }

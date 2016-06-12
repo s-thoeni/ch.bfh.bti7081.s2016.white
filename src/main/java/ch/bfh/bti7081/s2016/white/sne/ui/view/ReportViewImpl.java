@@ -6,6 +6,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
@@ -25,6 +28,11 @@ import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportStyle;
 
 public class ReportViewImpl extends NavigationView implements ReportView {
+	
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(ReportViewImpl.class);
 	
 	// TODO(jan): Verify that this serialVersionUID makes sense
 	private static final long serialVersionUID = 2L;
@@ -84,8 +92,10 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		
 		String seriesIndicator = report.getType().getSeriesIndicator();
 		
+		logger.debug("switch case report type");
 		switch (report.getType()) {
 		case EFFORT:
+			logger.debug("type: EFFORT");
 			grid.addColumn("Effort", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
@@ -98,6 +108,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case CASHFLOW:
+			logger.debug("type: CASHFLOW");
 			grid.addColumn("Cashflow", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
@@ -110,6 +121,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case AVAILABLE_EMPLOYEES:
+			logger.debug("type: AVAILABLE_EMPLOYEES");
 			grid.addColumn("Employee", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
@@ -122,6 +134,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case PATIENTS:
+			logger.debug("type: PATIENTS");
 			grid.addColumn("Patient", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
@@ -134,6 +147,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case SICK_LEAVES:
+			logger.debug("type: SICK_LEAVES");
 			grid.addColumn("Employee", String.class);
 			grid.addColumn("Reason", String.class);
 			for (Record record : report.getRecords()) {
@@ -147,7 +161,9 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case INCIDENTS:
+			logger.debug("type: INCIDENTS");
 		default:
+			logger.debug("default case");
 			grid.addColumn("Incident", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
@@ -210,16 +226,24 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	}
 	
 	private void updateValue(List<Number> values, int index, Number newValue) {
+		logger.debug("->");
+		
 		float value = values.get(index).floatValue();
 		value += newValue.floatValue();
 		values.set(index, value);
+		logger.debug("<-");
 	}
 	
 	private void updateValue(List<Number> values, int index) {
+		logger.debug("->");
+		
 		this.updateValue(values, index, 1);
+		logger.debug("<-");
 	}
 	
 	private RecordInRange checkIfRecordIsInRange(Record record, long startDateInMillis, int maxIndex) {
+		logger.debug("->");
+		
 		RecordInRange result = new RecordInRange();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(record.getDate());
@@ -233,31 +257,45 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			result.isInRange = false;
 		}
 		result.index = index;
+		logger.debug("<-");
 		return result;
 	}
 	
 	private int getDiffInDays(long recordDateInMillis, long startDateInMillis) {
+		logger.debug("->");
+		
 		long diffInMillis = recordDateInMillis-startDateInMillis;
 		long longResult = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
 		int result = (int)longResult;
+		
+		logger.debug("<-");
 		return result;
 	}
 	
 	private void setInsignificantCalendarFieldsToMax(Calendar cal) {
+		logger.debug("->");
+		
 		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMaximum(Calendar.HOUR_OF_DAY));
 		cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));
 		cal.set(Calendar.SECOND, cal.getActualMaximum(Calendar.SECOND));
 		cal.set(Calendar.MILLISECOND, cal.getActualMaximum(Calendar.MILLISECOND));
+		logger.debug("<-");
 	}
 	
 	private void setInsignificantCalendarFieldsToMin(Calendar cal) {
+		logger.debug("->");
+		
 		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
 		cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));
 		cal.set(Calendar.SECOND, cal.getActualMinimum(Calendar.SECOND));
-		cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));	
+		cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));
+		logger.debug("<-");
 	}
 
 	public void addListener(ReportViewListener listener) {
+		logger.debug("->");
+		
 		this.listeners.add(listener);
+		logger.debug("<-");
 	}
 }

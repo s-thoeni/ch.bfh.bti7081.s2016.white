@@ -3,8 +3,12 @@ package ch.bfh.bti7081.s2016.white.sne.ui.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.ui.Component;
 
+import ch.bfh.bti7081.s2016.white.sne.dao.AlarmDaoImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
@@ -18,6 +22,12 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
 
 public class AlarmConfigurationPresenter implements AlarmConfigurationView.AlarmConfigurationViewListener {
+	
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(AlarmConfigurationPresenter.class);
+	
 	private AlarmConfigurationProvider model;
 	private AlarmConfigurationViewImpl view;
 
@@ -42,17 +52,20 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 
 	@Override
 	public void addClick() {
+		logger.debug("->");
+		
 		int i = view.getAlarmSets().size() -1;
 		AlarmSetImpl alarmSet = new AlarmSetImpl();
 		alarmSet.setId(String.valueOf(i));
 		view.addAlarmSet(alarmSet);
 		((AlarmSet) alarmSet).addListener(id -> deleteClick(id));
-
+		logger.debug("<-");
 	}
 
 	@Override
 	public void saveClick() {
-
+		logger.debug("->");
+		
 		// DUMMY DATA
 		// FIXME: get user from elsewhere... where is it stored?
 		User user = new User("lucas.wirtz");
@@ -73,19 +86,27 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 		}
 		this.model.setAlarms(configuration, user);
 		this.view.getNatigationManager().navigateBack();
+		logger.debug("<-");
 	}
 
 	@Override
 	public void cancelClick() {
+		logger.debug("->");
+		
 		this.view.getNatigationManager().navigateBack();
+		logger.debug("<-");
 	}
 
 	public Component getView() {
+		logger.debug("->");
+		logger.debug("<-");
 		return (Component) this.view;
 	}
 
 	@Override
 	public void deleteClick(String id) {
+		logger.debug("->");
+		
 		List<AlarmSetImpl> alarmSets = view.getAlarmSets();
 		
 		for(int i =0; i<alarmSets.size();i++){
@@ -96,6 +117,7 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 		for(int i =0; i<alarmSets.size();i++){
 			alarmSets.get(i).setId(String.valueOf(i));
 		}
+		logger.debug("<-");
 	}
 
 }

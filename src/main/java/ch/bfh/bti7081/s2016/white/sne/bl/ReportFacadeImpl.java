@@ -103,10 +103,10 @@ public class ReportFacadeImpl implements ReportFacade {
 			result = dao.getPatientCount(from, to);
 			result.setType(ReportType.PATIENTS);
 			break;
-		case SICK_LEAVES:
+		case ABSENT_EMPLOYEES:
 			logger.debug("type: SICK_LEAVES");
-			result = dao.getSickLeaves(from, to);
-			result.setType(ReportType.SICK_LEAVES);
+			result = dao.getAbsentEmployees(from, to);
+			result.setType(ReportType.ABSENT_EMPLOYEES);
 			break;
 		}
 		

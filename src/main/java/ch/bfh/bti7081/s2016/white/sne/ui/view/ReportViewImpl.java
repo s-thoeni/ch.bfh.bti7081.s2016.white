@@ -6,12 +6,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
+import com.vaadin.addon.charts.model.DataSeries;
+import com.vaadin.addon.charts.model.DataSeriesItem;
 import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.XAxis;
 import com.vaadin.addon.touchkit.ui.NavigationView;
@@ -25,14 +24,10 @@ import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.AbsenceReason;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportStyle;
 
 public class ReportViewImpl extends NavigationView implements ReportView {
-	
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = LogManager.getLogger(ReportViewImpl.class);
 	
 	// TODO(jan): Verify that this serialVersionUID makes sense
 	private static final long serialVersionUID = 2L;
@@ -44,8 +39,9 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		int index;
 	}
 	
-	public ReportViewImpl(List<Report> reports) {
-		this(reports.get(0));
+	public ReportViewImpl(List<Report<? extends Record>> reports) {
+		// TODO(jan): implement this constructor
+		
 	}
 	
 	public ReportViewImpl(Report<? extends Record> report) {
@@ -79,10 +75,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		 */
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(report.getFrom());
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
-		calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
+		this.setInsignificantCalendarFieldsToMin(calendar);
 		int diffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
 		for (int i = 0; i <= diffInDays; ++i) {
 			values.add(0);
@@ -90,12 +83,12 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
 		}
 		
+		List<Number> pieChartValues = new ArrayList<Number>();
+		
 		String seriesIndicator = report.getType().getSeriesIndicator();
 		
-		logger.debug("switch case report type");
 		switch (report.getType()) {
 		case EFFORT:
-			logger.debug("type: EFFORT");
 			grid.addColumn("Effort", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
@@ -108,7 +101,6 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case CASHFLOW:
-			logger.debug("type: CASHFLOW");
 			grid.addColumn("Cashflow", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof FinancialRecord) {
@@ -121,7 +113,6 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case AVAILABLE_EMPLOYEES:
-			logger.debug("type: AVAILABLE_EMPLOYEES");
 			grid.addColumn("Employee", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
@@ -134,7 +125,6 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 			break;
 		case PATIENTS:
-			logger.debug("type: PATIENTS");
 			grid.addColumn("Patient", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
@@ -146,24 +136,27 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				}
 			}
 			break;
-		case SICK_LEAVES:
-			logger.debug("type: SICK_LEAVES");
+		case ABSENT_EMPLOYEES:
 			grid.addColumn("Employee", String.class);
 			grid.addColumn("Reason", String.class);
+			
+			for (AbsenceReason reason : AbsenceReason.values()) {
+				pieChartValues.add(reason.getDbID());
+			}
+			
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
 					if (rir.isInRange) {
 						this.updateValue(values, rir.index);
-						grid.addRow(sdf.format(record.getDate()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getUnavailableReason());
+						this.updateValue(pieChartValues, ((PersonalRecord) record).getAbsenceReason().getDbID()-1);
+						grid.addRow(sdf.format(record.getDate()), ((PersonalRecord) record).getPersonName(), ((PersonalRecord) record).getAbsenceReason().toString());
 					}
 				}
 			}
 			break;
 		case INCIDENTS:
-			logger.debug("type: INCIDENTS");
 		default:
-			logger.debug("default case");
 			grid.addColumn("Incident", String.class);
 			for (Record record : report.getRecords()) {
 				if (record instanceof PatientRecord) {
@@ -204,8 +197,10 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			Configuration conf = chart.getConfiguration();
 			conf.setTitle(report.getName());
 
-			ListSeries series = new ListSeries(seriesIndicator);
-			series.setData(values);
+			DataSeries series = new DataSeries(seriesIndicator);
+			for (int i = 0; i < AbsenceReason.values().length; ++i) {
+				series.add(new DataSeriesItem(AbsenceReason.values()[i].toString(), pieChartValues.get(i)));
+			}
 			conf.addSeries(series);
 			
 			VerticalLayout pieChartLayout = new VerticalLayout();
@@ -226,24 +221,16 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	}
 	
 	private void updateValue(List<Number> values, int index, Number newValue) {
-		logger.debug("->");
-		
 		float value = values.get(index).floatValue();
 		value += newValue.floatValue();
 		values.set(index, value);
-		logger.debug("<-");
 	}
 	
 	private void updateValue(List<Number> values, int index) {
-		logger.debug("->");
-		
 		this.updateValue(values, index, 1);
-		logger.debug("<-");
 	}
 	
 	private RecordInRange checkIfRecordIsInRange(Record record, long startDateInMillis, int maxIndex) {
-		logger.debug("->");
-		
 		RecordInRange result = new RecordInRange();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(record.getDate());
@@ -257,45 +244,31 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			result.isInRange = false;
 		}
 		result.index = index;
-		logger.debug("<-");
 		return result;
 	}
 	
 	private int getDiffInDays(long recordDateInMillis, long startDateInMillis) {
-		logger.debug("->");
-		
 		long diffInMillis = recordDateInMillis-startDateInMillis;
 		long longResult = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
 		int result = (int)longResult;
-		
-		logger.debug("<-");
 		return result;
 	}
 	
 	private void setInsignificantCalendarFieldsToMax(Calendar cal) {
-		logger.debug("->");
-		
 		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMaximum(Calendar.HOUR_OF_DAY));
 		cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));
 		cal.set(Calendar.SECOND, cal.getActualMaximum(Calendar.SECOND));
 		cal.set(Calendar.MILLISECOND, cal.getActualMaximum(Calendar.MILLISECOND));
-		logger.debug("<-");
 	}
 	
 	private void setInsignificantCalendarFieldsToMin(Calendar cal) {
-		logger.debug("->");
-		
 		cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
 		cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));
 		cal.set(Calendar.SECOND, cal.getActualMinimum(Calendar.SECOND));
-		cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));
-		logger.debug("<-");
+		cal.set(Calendar.MILLISECOND, cal.getActualMinimum(Calendar.MILLISECOND));	
 	}
 
 	public void addListener(ReportViewListener listener) {
-		logger.debug("->");
-		
 		this.listeners.add(listener);
-		logger.debug("<-");
 	}
 }

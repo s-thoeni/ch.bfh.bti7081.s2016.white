@@ -10,7 +10,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.Report;
 public interface ReportDao {
 	public Report<PersonalRecord> getAvailableEmployee(Date from, Date to);
 	
-	public Report<PersonalRecord> getSickLeaves(Date from, Date to);
+	public Report<PersonalRecord> getAbsentEmployees(Date from, Date to);
 	
 	public Report<PatientRecord> getIncidents(Date from, Date to);
 	

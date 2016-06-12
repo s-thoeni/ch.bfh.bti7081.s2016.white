@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.vaadin.ui.Component;
 
+import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
@@ -63,7 +64,7 @@ public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewL
 	public void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) {
 		logger.debug("->");
 		
-		List<Report> reports = new ArrayList<Report>();
+		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 		
 		ReportProvider reportModel = new ReportProvider();
 		

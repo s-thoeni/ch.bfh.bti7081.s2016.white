@@ -17,6 +17,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.FinancialRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.AbsenceReason;
 
 /**
  * Loads and saves the configuration of the user.
@@ -33,8 +34,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	private static final String DB_NAME = "dwh.db";
 	private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-	private static final String SELECT_AVAILABLE_EMPLOYEES = "SELECT e.employeeFirstName, e.employeeSurName, t.treatmentDate FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID == e.employeeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
-	private static final String SELECT_SICK_LEAVES = "";
+	private static final String SELECT_AVAILABLE_EMPLOYEES = "SELECT e.employeeFirstName, e.employeeSurName, t.treatmentDate FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID=e.employeeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
+	private static final String SELECT_ABSENCES = "SELECT e.employeeFirstName, e.employeeSurName, a.absenceDate, ar.reasonID FROM Absence AS a INNER JOIN Employee AS e ON a.employeeID=e.employeeID INNER JOIN AbsenceReason AS ar ON a.absenceReason=ar.reasonID WHERE a.absenceDate >= ? AND a.absenceDate <= ?";
 	private static final String SELECT_INCIDENTS = "SELECT i.incidentId, t.treatmentId, i.description, t.treatmentDate FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
 	private static final String SELECT_PATIENT_COUNT = "";
 	private static final String SELECT_FINANCE = "SELECT journalID, journalDate, effort, return, cashFlow FROM Journal WHERE journalDate >= ? AND journalDate <= ?";
@@ -100,7 +101,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PersonalRecord> getSickLeaves(Date from, Date to) {
+	public Report<PersonalRecord> getAbsentEmployees(Date from, Date to) {
 		logger.debug("->");
 		
 		Report<PersonalRecord> result = new Report<PersonalRecord>("Abwesendes Personal");
@@ -112,14 +113,14 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 
 		try {
 			con = getConnection();
+			
 			// get data
-			// TODO sql statement
-			stm = con.prepareStatement(SELECT_SICK_LEAVES);
-			// stm.setString(1, sdf.format(from));
-			// stm.setString(2, sdf.format(to));
+			stm = con.prepareStatement(SELECT_ABSENCES);
+			stm.setString(1, sdf.format(from));
+			stm.setString(2, sdf.format(to));
 			
 			// log query
-			logger.debug(SELECT_SICK_LEAVES);
+			logger.debug(SELECT_ABSENCES);
 			
 			rs = stm.executeQuery();
 
@@ -131,9 +132,10 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 				record.setAvailable(true);
 				record.setSummary(1);
 				record.setPersonName(rs.getString("employeeSurName") + " " + rs.getString("employeeFirstName"));
+				record.setAbsenceReason(AbsenceReason.values()[rs.getInt("reasonID")-1]);
 
 				try {
-					record.setDate(sdf.parse(rs.getString("treatmentDate")));
+					record.setDate(sdf.parse(rs.getString("absenceDate")));
 					records.add(record);
 				} catch (ParseException pe) {
 					// log error
@@ -465,7 +467,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	public String getDbName() {
 		logger.debug("->");
 		logger.debug("<-");
-		return this.DB_NAME;
+		return ReportDaoImpl.DB_NAME;
 	}
 
 }

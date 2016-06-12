@@ -1,8 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
-import com.vaadin.ui.Grid;
-
-import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.AbsenceReason;
 
 /**
  * Class representing information from human resource data sources
@@ -25,7 +23,7 @@ public class PersonalRecord extends Record {
 	 * Reason why employee is absent. Only used when variable
 	 * "available" is set to false.
 	 */
-	private String unavailableReason;
+	private AbsenceReason absenceReason;
 
 	public String getPersonName() {
 		return this.personName;
@@ -43,12 +41,12 @@ public class PersonalRecord extends Record {
 		this.available = available;
 	}
 
-	public String getUnavailableReason() {
-		return this.unavailableReason;
+	public AbsenceReason getAbsenceReason() {
+		return this.absenceReason;
 	}
 
-	public void setUnavailableReason(String unavailableReason) {
-		this.unavailableReason = unavailableReason;
+	public void setAbsenceReason(AbsenceReason absenceReason) {
+		this.absenceReason = absenceReason;
 	}
 
 }

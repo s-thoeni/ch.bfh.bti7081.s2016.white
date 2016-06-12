@@ -22,13 +22,28 @@ public enum ReportType {
 		this.seriesIndicator = seriesIndicator;
 	}
 
+	/**
+	 * list of available report styles for specific report type
+	 */
 	private final List<ReportStyle> reportStyles;
+	
+	/**
+	 * Friendly name
+	 */
 	private String seriesIndicator;
 	
+	/**
+	 * Returns available report styles of ENUM
+	 * @return list of report styles
+	 */
 	public List<ReportStyle> getReportStyles(){
 		return this.reportStyles;
 	}
 	
+	/**
+	 * Returns friendly name
+	 * @return seriesIndicator as string
+	 */
 	public String getSeriesIndicator() {
 		return this.seriesIndicator;
 	}

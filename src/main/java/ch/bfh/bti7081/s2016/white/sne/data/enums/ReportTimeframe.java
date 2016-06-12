@@ -3,6 +3,11 @@ package ch.bfh.bti7081.s2016.white.sne.data.enums;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * ENUM for predefined time ranges
+ * @author team white
+ *
+ */
 public enum ReportTimeframe {
 YESTERDAY{
 	@Override

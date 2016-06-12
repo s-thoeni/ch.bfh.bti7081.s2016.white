@@ -18,22 +18,43 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 /**
- * Loads and saves the configuration of the user.
+ * Loads and saves the configuration of the user in database.
  * 
  * @author mcdizzu
- *
+ * 
  */
 public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDAO {
+	
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ConfigurationDAOImpl.class);
 	
+	/**
+	 * database name as constant
+	 */
 	private static final String DB_NAME = "conf.db";
+	
+	/**
+	 * SQL query for getting configuration of specified user from database
+	 */
 	private static final String SELECT_CONFIG = "SELECT c.tileNumber, c.reportType, c.reportTimeFrame FROM Configuration AS c INNER JOIN User AS u ON c.userID = u.userID WHERE u.userName == ?";
+	
+	/**
+	 * SQL query for deleting configuration of specified user from database
+	 */
 	private static final String DELETE_CONFIG = "DELETE FROM Configuration WHERE userID == ?";
+	
+	/**
+	 * SQL query for storing configuration of specified user from database
+	 */
 	private static final String INSERT_CONFIG = "INSERT INTO CONFIGURATION ( reportType, reportTimeFrame, userId) VALUES (?, ?, ?)";
 	
+	/**
+	 * Default constructor
+	 * 
+	 * @throws SneException
+	 */
 	public ConfigurationDAOImpl() throws SneException {
 		super();
 	}
@@ -94,6 +115,12 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		return config;
 	}
 	
+	/**
+	 * Deletes configuration of specified user from database.
+	 * 
+	 * @param userId as int
+	 * @throws SneException
+	 */
 	private void deleteConfig(int userId) throws SneException {
 		logger.debug("->");
 		

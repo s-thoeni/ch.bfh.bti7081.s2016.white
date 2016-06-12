@@ -25,6 +25,9 @@ abstract class AbstractDAO {
 	 */
 	private static final Logger logger = LogManager.getLogger(AbstractDAO.class);
 
+	/**
+	 * SQL query for getting user-id of specified user from database
+	 */
 	private static final String SELECT_USER_ID = "SELECT userID FROM User WHERE userName == ?";
 
 	/**
@@ -54,6 +57,7 @@ abstract class AbstractDAO {
 	 * Establishes connection to SQL database.
 	 * 
 	 * @return Connection to database
+	 * @throws SQLException
 	 * @throws SneException
 	 */
 	protected Connection getConnection() throws SQLException, SneException {

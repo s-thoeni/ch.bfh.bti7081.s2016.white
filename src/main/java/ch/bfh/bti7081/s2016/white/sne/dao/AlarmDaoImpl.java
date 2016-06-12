@@ -31,11 +31,31 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 	 */
 	private static final Logger logger = LogManager.getLogger(AlarmDaoImpl.class);
 
+	/**
+	 * database name as constant
+	 */
 	private static final String DB_NAME = "conf.db";
+	
+	/**
+	 * SQL query for getting alarms of specified user from database
+	 */
 	private static final String SELECT_ALARMS = "SELECT a.reportType, a.alarmTimeFrame, a.comperator, a.errorValue, a.warnValue FROM Alarm AS a INNER JOIN User AS u ON a.userID = u.userID WHERE u.userName == ?";
+	
+	/**
+	 * SQL query for deleting alarms of specified user from database
+	 */
 	private static final String DELETE_ALARMS = "DELETE FROM Alarm WHERE userID == ?";
+	
+	/**
+	 * SQL query for storing alarms of specified user in database
+	 */
 	private static final String INSERT_ALARMS = "INSERT INTO Alarm ( reportType, alarmTimeFrame, comperator, errorValue, warnValue, userId) VALUES (?,?,?,?,?,?)";
 
+	/**
+	 * Default constructor
+	 * 
+	 * @throws SneException
+	 */
 	public AlarmDaoImpl() throws SneException {
 		super();
 	}
@@ -92,7 +112,13 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 		logger.debug("<-");
 		return alarms;
 	}
-
+	
+	/**
+	 * Delete all set alarms of given user from database
+	 * 
+	 * @param userId as int
+	 * @throws SneException
+	 */
 	private void deleteAlarms(int userId) throws SneException {
 		logger.debug("->");
 

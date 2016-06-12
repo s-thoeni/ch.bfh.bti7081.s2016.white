@@ -1,5 +1,8 @@
 package ch.bfh.bti7081.s2016.white.sne.data.states;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
@@ -11,6 +14,11 @@ import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
  */
 public class AlarmOkState implements AlarmState {
 
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(AlarmOkState.class);
+	
 	@Override
 	/**
 	 * Generate row for use in a Vaadin Table
@@ -19,6 +27,8 @@ public class AlarmOkState implements AlarmState {
 	 * @return Object[] (mainly Strings)
 	 */
 	public Object[] visualizeAlarm(Alarm alarm) {
+		logger.debug("->");
+		logger.debug("<-");
 		return null;
 	}
 	
@@ -29,6 +39,8 @@ public class AlarmOkState implements AlarmState {
 	 * @param alarm
 	 */
 	public void check(Alarm alarm){
+		logger.debug("->");
+		
 		ReportFacade repFac = new ReportFacadeImpl();
 		alarm.setAlarmReport(repFac.getReport(alarm.getAlarmReportConfig(), true));
 		
@@ -40,10 +52,13 @@ public class AlarmOkState implements AlarmState {
 		} else {
 			alarm.setAlarmState(new AlarmOkState());
 		}
+		logger.debug("<-");
 	}
 	
 	@Override
 	public String toString() {
+		logger.debug("->");
+		logger.debug("<-");
 		return "Ok";
 	}
 

@@ -65,7 +65,13 @@ public class User {
 		logger.debug("<-");
 	}
 	
+	/**
+	 * Returns user's password
+	 * @return password as string
+	 */
 	public String getPassword() {
+		logger.debug("->");
+		logger.debug("<-");
 		return this.password;
 	}
 }

@@ -22,11 +22,24 @@ import com.vaadin.ui.Button.ClickListener;
  */
 public class SlideMenuView extends NavigationView implements NavigationListener {
 
+	/**
+	 * Class serial ID
+	 */
 	private static final long serialVersionUID = 3952898936850021537L;
 
+	/**
+	 * Thomas' Slide menu
+	 */
 	protected SlideMenu menu = new SlideMenu();
+	
+	/**
+	 * Menu button
+	 */
 	protected Button menuButton;
 
+	/**
+	 * Constructs a SlideMenuView
+	 */
 	public SlideMenuView() {
 
 		menuButton = new Button();
@@ -53,6 +66,10 @@ public class SlideMenuView extends NavigationView implements NavigationListener 
 		}
 	}
 
+	/**
+	 * Returns the menu
+	 * @return SlideMenu
+	 */
 	public SlideMenu getMenu() {
 		return menu;
 	}

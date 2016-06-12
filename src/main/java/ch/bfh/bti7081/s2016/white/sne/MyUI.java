@@ -72,6 +72,7 @@ public class MyUI extends UI {
 			
 			getNavigationManager().navigateTo(db.getView());
 		} catch (SneException e) {
+			logger.error(e.getMessage(), e);
 			Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
 		}
 
@@ -85,12 +86,18 @@ public class MyUI extends UI {
 	}
 
 	public NavigationManager getNavigationManager() {
+		logger.debug("->");
+		
 		System.out.println(this.navigationManager.getCurrentComponent());
+		logger.debug("<-");
 		return this.navigationManager;
 	}
 
 	public void setNavigationManager(NavigationManager navigationManager) {
+		logger.debug("->");
+		
 		this.navigationManager = navigationManager;
+		logger.debug("<-");
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

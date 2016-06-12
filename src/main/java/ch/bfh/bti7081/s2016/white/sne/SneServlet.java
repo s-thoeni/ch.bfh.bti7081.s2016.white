@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vaadin.addon.touchkit.server.TouchKitServlet;
-import com.vaadin.addon.touchkit.settings.TouchKitSettings;
 import com.vaadin.ui.Notification;
 
 public class SneServlet extends TouchKitServlet {

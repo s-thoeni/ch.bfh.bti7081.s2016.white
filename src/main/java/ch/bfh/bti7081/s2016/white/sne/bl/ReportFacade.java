@@ -6,7 +6,6 @@ import java.util.List;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;

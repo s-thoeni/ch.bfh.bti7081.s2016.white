@@ -1,7 +1,5 @@
 package ch.bfh.bti7081.s2016.white.sne.data.exceptions;
 
-import java.sql.SQLException;
-
 /**
  * All exceptions that are expected to be handled and displayed to the user
  * should be mapped into a SneException.
@@ -24,15 +22,29 @@ public class SneException extends Exception {
 	 */
 	private String message;
 
+	/**
+	 * Constructs a SneException. It is required to specify an error message
+	 * (fortunately not a too technical one) and an other exception.
+	 * 
+	 * @param message - String
+	 * @param e - Exception
+	 */
 	public SneException(String message, Exception e) {
 		super(e);
 		this.message = message;
 	}
 
+	/**
+	 * Returns the error message
+	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/**
+	 * Assigns a message to an existing exception
+	 * @param message - String
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}

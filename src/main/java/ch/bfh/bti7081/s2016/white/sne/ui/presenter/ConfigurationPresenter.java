@@ -14,6 +14,7 @@ import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.ConfigurationViewImpl;
@@ -66,7 +67,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	}
 
 	@Override
-	public void saveClick() {
+	public void saveClick() throws SneException {
 		logger.debug("->");
 		
 		// DUMMY DATA
@@ -81,12 +82,12 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 		}
 		this.model.setConfig(new Configuration(configuration), user);		
 
-		UI ui = view.getNatigationManager().getUI();
+		UI ui = UI.getCurrent();
 		if(ui instanceof MyUI){
 			MyUI sneui = (MyUI) ui;
 			DashboardPresenter db = sneui.getDashboard();
 			db.refresh(this.model.getConfig());
-			view.getNavigationManager().navigateTo(db.getView());
+			sneui.getNavigationManager().navigateTo(db.getView());
 		}else{
 			Notification.show("We could not navigate corretly, please refresh the page manually");
 		}
@@ -97,7 +98,8 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	public void cancelClick() {
 		logger.debug("->");
 		
-		this.view.getNatigationManager().navigateBack();
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateBack();
 		logger.debug("<-");
 	}
 

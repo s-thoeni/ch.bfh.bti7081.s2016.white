@@ -13,8 +13,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
 
 public class AlarmConfigurationViewImpl extends NavigationView implements AlarmConfigurationView {
@@ -25,29 +27,29 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 	private static final Logger logger = LogManager.getLogger(AlarmConfigurationViewImpl.class);
 
 	private VerticalLayout grid;
-	
+
 	private List<AlarmSetImpl> alarmSets;
 	private List<AlarmConfigurationViewListener> listeners;
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public AlarmConfigurationViewImpl() {
 		this.alarmSets = new ArrayList<AlarmSetImpl>();
 		this.listeners = new ArrayList<AlarmConfigurationViewListener>();
-		
+
 		this.grid = new VerticalLayout();
-		
+
 		grid.setWidth("100%");
 		grid.setHeight("100%");
 
 		grid.setStyleName("dashboard");
-		
+
 		this.setWidth(null);
-		//grid.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
-		
+		// grid.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
+
 		Button addBtn = new Button("+");
 		Button saveBtn = new Button("Speichern");
 		Button cancelBtn = new Button("Abbrechen");
@@ -57,11 +59,11 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		saveBtn.setWidth("200px");
 		cancelBtn.setHeight("50px");
 		cancelBtn.setWidth("200px");
-		
+
 		addBtn.addClickListener(e -> handleAddClick());
 		saveBtn.addClickListener(e -> handleClickSave());
 		cancelBtn.addClickListener(e -> handleClickCancel());
-		
+
 		VerticalLayout vertical = new VerticalLayout();
 		HorizontalLayout h1 = new HorizontalLayout();
 		HorizontalLayout h2 = new HorizontalLayout();
@@ -73,14 +75,14 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		vertical.addComponent(grid);
 		vertical.addComponent(h1);
 		vertical.addComponent(h2);
-		
+
 		addTitle();
 		this.setContent(vertical);
 	}
-	
+
 	private void addTitle() {
 		logger.debug("->");
-		
+
 		HorizontalLayout horizontal = new HorizontalLayout();
 
 		horizontal.setWidth("100%");
@@ -91,21 +93,21 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		Label warn = new Label("Warning value");
 		Label alert = new Label("Alert value");
 		Label hidden = new Label(" ");
-		
+
 		horizontal.addComponent(type);
 		horizontal.addComponent(time);
 		horizontal.addComponent(comp);
 		horizontal.addComponent(warn);
 		horizontal.addComponent(alert);
 		horizontal.addComponent(hidden);
-		
+
 		horizontal.setComponentAlignment(type, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(time, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(comp, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(warn, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(alert, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(hidden, Alignment.MIDDLE_LEFT);
-		
+
 		grid.addComponent(horizontal);
 		logger.debug("<-");
 	}
@@ -113,31 +115,35 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 	@Override
 	public void addListener(AlarmConfigurationViewListener listener) {
 		logger.debug("->");
-		
+
 		listeners.add(listener);
 		logger.debug("<-");
 	}
 
 	public void handleAddClick() {
 		logger.debug("->");
-		
-		for(AlarmConfigurationViewListener listener : listeners)
+
+		for (AlarmConfigurationViewListener listener : listeners)
 			listener.addClick();
 		logger.debug("<-");
 	}
-	
+
 	public void handleClickSave() {
 		logger.debug("->");
-		
-		for(AlarmConfigurationViewListener listener : listeners)
-			listener.saveClick();
+
+		for (AlarmConfigurationViewListener listener : listeners)
+			try {
+				listener.saveClick();
+			} catch (SneException e) {
+				Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+			}
 		logger.debug("<-");
 	}
 
 	public void handleClickCancel() {
 		logger.debug("->");
-		
-		for(AlarmConfigurationViewListener listener : listeners)
+
+		for (AlarmConfigurationViewListener listener : listeners)
 			listener.cancelClick();
 		logger.debug("<-");
 	}
@@ -145,7 +151,7 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 	@Override
 	public void addAlarmSet(AlarmSetImpl configSet) {
 		logger.debug("->");
-		
+
 		alarmSets.add(configSet);
 		grid.addComponent(configSet);
 		logger.debug("<-");
@@ -154,30 +160,15 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 	@Override
 	public void deleteAlarmSet(AlarmSetImpl configSet) {
 		logger.debug("->");
-		
+
 		alarmSets.remove(configSet);
 		grid.removeComponent(configSet);
 		logger.debug("<-");
 	}
-	
+
 	public List<AlarmSetImpl> getAlarmSets() {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.alarmSets;
-	}
-
-	@Override
-	public void navigateTo(Component component) {
-		logger.debug("->");
-		
-		getNavigationManager().navigateTo(component);
-		logger.debug("<-");
-	}
-
-	public NavigationManager getNatigationManager() {
-		logger.debug("->");
-		logger.debug("<-");
-		return getNavigationManager();
-		
 	}
 }

@@ -31,7 +31,5 @@ public interface ReportSelectView {
 	public void deleteReportSelectSet(ReportSelectSetImpl rssi);
 		
 	public void addListener(ReportSelectViewListener listener);
-	
-	public void navigateTo(Component component);
 
 }

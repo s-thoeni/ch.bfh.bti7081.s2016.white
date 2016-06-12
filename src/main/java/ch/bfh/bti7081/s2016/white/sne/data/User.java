@@ -19,6 +19,11 @@ public class User {
 	 * user's name
 	 */
 	private String userName;
+	
+	/**
+	 * user's password
+	 */
+	private String password;
 
 	/**
 	 * Instantiates a user object with specified name
@@ -26,6 +31,17 @@ public class User {
 	 */
 	public User(String userName) {
 		this.userName = userName;
+		this.password = null;
+	}
+	
+	/**
+	 * Instantiates a user object with specified name
+	 * @param userName as string
+	 * @param password as string
+	 */
+	public User(String userName, String password) {
+		this.userName = userName;
+		this.password = password;
 	}
 
 	/**
@@ -47,5 +63,15 @@ public class User {
 		
 		this.userName = userName;
 		logger.debug("<-");
+	}
+	
+	/**
+	 * Returns user's password
+	 * @return password as string
+	 */
+	public String getPassword() {
+		logger.debug("->");
+		logger.debug("<-");
+		return this.password;
 	}
 }

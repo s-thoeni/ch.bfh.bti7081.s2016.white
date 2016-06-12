@@ -21,13 +21,45 @@ public class Alarm {
 	 */
 	private static final Logger logger = LogManager.getLogger(Alarm.class);
 
+	/**
+	 * Report configuration for corresponding Report
+	 */
 	private ReportConfig alarmReportConfig;
-	private Report alarmReport;
+	
+	/**
+	 * Report alarming is configured for
+	 */
+	private Report<?> alarmReport;
+	
+	/**
+	 * Operator used for comparison
+	 */
 	private Operator operator;
+	
+	/**
+	 * Threshold for generating an error
+	 */
 	private int errorValue;
+	
+	/**
+	 * Threshold for generating a warning
+	 */
 	private int warningValue;
+	
+	/**
+	 * Current alarm state
+	 */
 	private AlarmState alarmState;
 
+	/**
+	 * Constructs an Alarm object. An error and warn value have to be set.
+	 * As well as an Operator for comparison. 
+	 * 
+	 * @param alarmReportConfig - ReportConfig
+	 * @param errorValue - int
+	 * @param warningValue - int
+	 * @param operator - Operator
+	 */
 	public Alarm(ReportConfig alarmReportConfig, int errorValue, int warningValue, Operator operator) {
 		this.alarmReportConfig = alarmReportConfig;
 		this.errorValue = errorValue;
@@ -44,13 +76,13 @@ public class Alarm {
 		return this.alarmState.visualizeAlarm(this);
 	}
 
-	public Report getAlarmReport() {
+	public Report<?> getAlarmReport() {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.alarmReport;
 	}
 
-	public void setAlarmReport(Report alarmReport) {
+	public void setAlarmReport(Report<?> alarmReport) {
 		logger.debug("->");
 		this.alarmReport = alarmReport;
 		logger.debug("<-");

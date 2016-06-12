@@ -20,7 +20,7 @@ public class ReportProvider {
 	
 	private ReportFacade facade;
 	
-	public ReportProvider() {
+	public ReportProvider() throws SneException {
 		this.facade = new ReportFacadeImpl();
 	}
 	

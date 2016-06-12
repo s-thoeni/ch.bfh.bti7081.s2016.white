@@ -91,19 +91,7 @@ public class ReportSelectViewImpl extends NavigationView implements ReportSelect
 		logger.debug("<-");
 	}
 
-	@Override
-	public void navigateTo(Component component) {
-		logger.debug("->");
 
-		getNavigationManager().navigateTo(component);
-		logger.debug("<-");
-	}
-
-	public NavigationManager getNatigationManager() {
-		logger.debug("->");
-		logger.debug("<-");
-		return super.getNavigationManager();
-	}
 
 	@Override
 	public List<ReportSelectSetImpl> getReportSelectSetImpl() {

@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
 import com.vaadin.ui.Component;
 
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
 
 public interface AlarmConfigurationView {
@@ -9,7 +10,7 @@ public interface AlarmConfigurationView {
 	public interface AlarmConfigurationViewListener {
 		void addClick();
 		
-		void saveClick();
+		void saveClick() throws SneException;
 		
 		void cancelClick();
 		
@@ -22,7 +23,5 @@ public interface AlarmConfigurationView {
 	void addAlarmSet(AlarmSetImpl configSet);
 	
 	void deleteAlarmSet(AlarmSetImpl configSet);
-	
-	public void navigateTo(Component component);
 
 }

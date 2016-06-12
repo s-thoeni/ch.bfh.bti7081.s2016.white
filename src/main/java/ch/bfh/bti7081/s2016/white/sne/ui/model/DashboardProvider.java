@@ -44,8 +44,9 @@ public class DashboardProvider {
 	 * 
 	 * @param config
 	 *            - the userconfig
+	 * @throws SneException
 	 */
-	public DashboardProvider(Configuration config, User user) {
+	public DashboardProvider(Configuration config, User user) throws SneException {
 		this.setReportConfigurations(config.getReports());
 		this.repFac = new ReportFacadeImpl();
 	}

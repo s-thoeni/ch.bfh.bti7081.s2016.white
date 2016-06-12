@@ -11,9 +11,11 @@ import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Notification;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
 
@@ -119,8 +121,13 @@ public class DashboardViewImpl extends SneMenuViewImpl implements DashboardView 
 	private void handleTileClick(String id) {
 		logger.debug("->");
 
-		for (DashboardViewListener listener : listeners)
-			listener.tileClick(id);
+		for (DashboardViewListener listener : listeners) {
+			try {
+				listener.tileClick(id);
+			} catch (SneException e) {
+				Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+			}
+		}
 		logger.debug("<-");
 	}
 
@@ -130,23 +137,6 @@ public class DashboardViewImpl extends SneMenuViewImpl implements DashboardView 
 
 		listeners.add(listener);
 		logger.debug("<-");
-	}
-
-	@Override
-	public void navigateTo(Component component) {
-		logger.debug("->");
-
-		getNavigationManager().navigateTo(component);
-		logger.debug("<-");
-	}
-
-	/**
-	 * return dads navigation manager
-	 */
-	public NavigationManager getNavigationManager() {
-		logger.debug("->");
-		logger.debug("<-");
-		return super.getNavigationManager();
 	}
 
 	@Override

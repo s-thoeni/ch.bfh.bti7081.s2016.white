@@ -5,9 +5,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.MyUI;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.AlarmConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.ConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationViewImpl;
@@ -64,13 +67,16 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		logger.debug("->");
 		
 		menuClosed();
-		// currently the only menuview is the dashboard itself
+
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(this.getView());
+
 		
 		logger.debug("<-");
 	}
 
 	@Override
-	public void showConfiguration() {
+	public void showConfiguration() throws SneException {
 		logger.debug("->");
 		
 		menuClosed();
@@ -78,7 +84,9 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		ConfigurationViewImpl view = new ConfigurationViewImpl();
 		ConfigurationPresenter cv = new ConfigurationPresenter(prov, view);
 
-		this.view.getNavigationManager().navigateTo(cv.getView());
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(cv.getView());
+
 		logger.debug("<-");
 	}
 
@@ -88,12 +96,15 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		
 		menuClosed();
 		ReportSelectPresenter rsp = new ReportSelectPresenter(new ReportSelectViewImpl());
-		view.getNavigationManager().navigateTo(rsp.getView());
+
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(rsp.getView());
+
 		logger.debug("<-");
 	}
 
 	@Override
-	public void showAlarms() {
+	public void showAlarms() throws SneException {
 		logger.debug("->");
 		
 		menuClosed();
@@ -101,7 +112,9 @@ public class SneMenuPresenter implements SneMenuView.SneMenuListener {
 		AlarmConfigurationViewImpl view = new AlarmConfigurationViewImpl();
 		AlarmConfigurationPresenter cv = new AlarmConfigurationPresenter(prov, view);
 
-		this.view.getNavigationManager().navigateTo(cv.getView());
+		MyUI ui = (MyUI) UI.getCurrent();
+		ui.getNavigationManager().navigateTo(cv.getView());
+
 		logger.debug("<-");
 	}
 

@@ -21,30 +21,63 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.AbsenceReason;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 /**
- * Loads and saves the configuration of the user.
+ * Loads data used for reporting from database
+ * Implements connection to data backend (sqlite3)
  * 
  * @author mcdizzu
  *
  */
 public class ReportDaoImpl extends AbstractDAO implements ReportDao {
+	
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ReportDaoImpl.class);
 
+	/**
+	 * Database name as constant
+	 */
 	private static final String DB_NAME = "dwh.db";
+	
+	/**
+	 * Simple date formatter
+	 */
 	private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+	/**
+	 * SQL query for getting information about available employees from database
+	 */
 	private static final String SELECT_AVAILABLE_EMPLOYEES = "SELECT e.employeeFirstName, e.employeeSurName, t.treatmentDate FROM Treatment AS t INNER JOIN Employee AS e ON t.employeeID=e.employeeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
+	
+	/**
+	 * SQL query for getting information about sick leaves from database
+	 */
 	private static final String SELECT_ABSENCES = "SELECT e.employeeFirstName, e.employeeSurName, a.absenceDate, ar.reasonID FROM Absence AS a INNER JOIN Employee AS e ON a.employeeID=e.employeeID INNER JOIN AbsenceReason AS ar ON a.absenceReason=ar.reasonID WHERE a.absenceDate >= ? AND a.absenceDate <= ?";
+	
+	/**
+	 * SQL query for getting information about incidents from database
+	 */
 	private static final String SELECT_INCIDENTS = "SELECT i.incidentId, t.treatmentId, i.description, t.treatmentDate FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
+	
+	/**
+	 * SQL query for getting information about patients from database
+	 */
 	private static final String SELECT_PATIENT_COUNT = "";
+	
+	/**
+	 * SQL query for getting information about finance from database
+	 */
 	private static final String SELECT_FINANCE = "SELECT journalID, journalDate, effort, return, cashFlow FROM Journal WHERE journalDate >= ? AND journalDate <= ?";
 
-	public ReportDaoImpl() {
+	/**
+	 * Default constructor
+	 * 
+	 * @throws SneException
+	 */
+	public ReportDaoImpl() throws SneException {
 		super();
 	}
-
+	
 	@Override
 	public Report<PersonalRecord> getAvailableEmployee(Date from, Date to) throws SneException {
 		logger.debug("->");
@@ -83,7 +116,6 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 					logger.error("error while parsing date \n" + pe.getMessage(), pe);
 				}
 			}
-
 		} catch (SQLException e) {
 			// log error
 			logger.error("select on database " + DB_NAME + " failed \n" + e.getMessage(), e);
@@ -104,9 +136,9 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		logger.debug("<-");
 		return result;
 	}
-
+	
 	@Override
-	public Report<PersonalRecord> getAbsentEmployees(Date from, Date to) {
+	public Report<PersonalRecord> getAbsentEmployees(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<PersonalRecord> result = new Report<PersonalRecord>("Abwesendes Personal");
@@ -166,7 +198,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PatientRecord> getIncidents(Date from, Date to) {
+	public Report<PatientRecord> getIncidents(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<PatientRecord> result = new Report<PatientRecord>("Notfälle");
@@ -219,7 +251,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	}
 
 	@Override
-	public Report<PatientRecord> getPatientCount(Date from, Date to) {
+	public Report<PatientRecord> getPatientCount(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<PatientRecord> result = new Report<PatientRecord>("Aktuelle Patientanzahl");
@@ -264,14 +296,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		return result;
 	}
 
-	/**
-	 * reads data from database accounting into FinancialRecord, aggregates the
-	 * Records in a Report, report will only contain information about effort
-	 * 
-	 * @return Report without type, but containing FinancialRecords
-	 */
 	@Override
-	public Report<FinancialRecord> getEffort(Date from, Date to) {
+	public Report<FinancialRecord> getEffort(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Aufwand");
@@ -332,14 +358,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		return result;
 	}
 
-	/**
-	 * reads data from database accounting into FinancialRecord, aggregates the
-	 * Records in a Report, report will only contain information about return
-	 * 
-	 * @return Report without type, but containing FinancialRecords
-	 */
 	@Override
-	public Report<FinancialRecord> getReturn(Date from, Date to) {
+	public Report<FinancialRecord> getReturn(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Ertrag");
@@ -399,14 +419,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		return result;
 	}
 
-	/**
-	 * reads data from database accounting into FinancialRecord, aggregates the
-	 * Records in a Report, report will only contain information about cash-flow
-	 * 
-	 * @return Report without type, but containing FinancialRecords
-	 */
 	@Override
-	public Report<FinancialRecord> getCashFlow(Date from, Date to) {
+	public Report<FinancialRecord> getCashFlow(Date from, Date to) throws SneException {
 		logger.debug("->");
 
 		Report<FinancialRecord> result = new Report<FinancialRecord>("Cash Flow");

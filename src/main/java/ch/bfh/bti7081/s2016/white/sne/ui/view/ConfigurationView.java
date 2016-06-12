@@ -2,6 +2,7 @@ package ch.bfh.bti7081.s2016.white.sne.ui.view;
 
 import com.vaadin.ui.Component;
 
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
 public interface ConfigurationView {
@@ -9,7 +10,7 @@ public interface ConfigurationView {
 	public interface ConfigurationViewListener {
 		void addClick();
 		
-		void saveClick();
+		void saveClick() throws SneException;
 		
 		void cancelClick();
 		
@@ -23,5 +24,4 @@ public interface ConfigurationView {
 	
 	void deleteConfigSet(ConfigSetImpl configSet);
 	
-	public void navigateTo(Component component);   
 }

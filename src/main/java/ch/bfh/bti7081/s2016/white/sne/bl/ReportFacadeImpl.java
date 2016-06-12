@@ -36,8 +36,9 @@ public class ReportFacadeImpl implements ReportFacade {
 
 	/**
 	 * Constructor for RepportFaceImpl. Initializes ReportDao
+	 * @throws SneException 
 	 */
-	public ReportFacadeImpl() {
+	public ReportFacadeImpl() throws SneException {
 		dao = new ReportDaoImpl();
 	}
 

@@ -19,6 +19,7 @@ import com.vaadin.ui.Table;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.SlideMenuView;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.SneMenuPresenter;
@@ -31,25 +32,26 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 	 */
 	private static final Logger logger = LogManager.getLogger(SneMenuViewImpl.class);
 
-	private static final String USER = "T_Boy!";
 
 	// Get the user-config:
-	Configuration config;
-	List<Alarm> alarms;
-
+	private Configuration config;
+	private List<Alarm> alarms;
+	private User user;
 	private List<SneMenuListener> listeners;
 
-	public SneMenuViewImpl(Configuration config, List<Alarm> alarms) {
+	public SneMenuViewImpl(Configuration config, User user, List<Alarm> alarms) {
 		this.config = config;
 		this.alarms = alarms;
 		listeners = new ArrayList<SneMenuListener>();
+		this.user = user;
+		
 		// add menu items
 		buildMenu();
 
 		// add alarming popover
 		buildAlarming();
-
-		new SneMenuPresenter(this);
+		
+		new SneMenuPresenter(this, user);
 
 		// We can also set the width of the popup, default is 80%
 		getMenu().setWidth("70%");
@@ -69,7 +71,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 		getMenu().addComponent(close);
 
 		// User
-		Label user = new Label("Hi! " + USER);
+		Label user = new Label("Hi! " + this.user.getUserName());
 		user.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
 		getMenu().addComponent(user);
 
@@ -177,10 +179,10 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 		logger.debug("<-");
 	}
 
-	public static String getUser() {
+	public User getUser() {
 		logger.debug("->");
 		logger.debug("<-");
-		return USER;
+		return this.user;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import com.vaadin.ui.Notification;
 
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
+import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponent;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.TileComponentImpl;
@@ -71,16 +72,16 @@ public class DashboardViewImpl extends SneMenuViewImpl implements DashboardView 
 	 * @param config
 	 * @param alarms
 	 */
-	public DashboardViewImpl(Configuration config, List<Alarm> alarms) {
+	public DashboardViewImpl(Configuration config, User user, List<Alarm> alarms) {
 		// call super constructor
-		super(config, alarms);
+		super(config, user, alarms);
 		logger.debug("->");
 		logger.debug("Initializing new dashboard using: [config = " + config.toString() + ", alarms = "
 				+ alarms.toString() + "]");
 
 		// Set the caption
 		getNavigationBar().setCaption(DASHBOARD_TITLE);
-
+		
 		// initialize a list of new tiles
 		this.tiles = new ArrayList<TileComponent>();
 

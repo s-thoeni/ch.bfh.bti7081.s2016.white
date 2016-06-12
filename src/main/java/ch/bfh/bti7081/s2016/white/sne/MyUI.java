@@ -1,7 +1,5 @@
 package ch.bfh.bti7081.s2016.white.sne;
 
-import java.util.List;
-
 import javax.servlet.annotation.WebServlet;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,20 +11,12 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
-import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacade;
-import ch.bfh.bti7081.s2016.white.sne.bl.AlarmFacadeImpl;
-import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacade;
-import ch.bfh.bti7081.s2016.white.sne.bl.ConfigurationFacadeImpl;
-import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
-import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
-import ch.bfh.bti7081.s2016.white.sne.data.User;
-import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
-import ch.bfh.bti7081.s2016.white.sne.ui.model.DashboardProvider;
+import ch.bfh.bti7081.s2016.white.sne.ui.model.LoginProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
-import ch.bfh.bti7081.s2016.white.sne.ui.view.DashboardViewImpl;
+import ch.bfh.bti7081.s2016.white.sne.ui.presenter.LoginPresenter;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.LoginViewImpl;
 
 @SuppressWarnings("serial")
 @Theme("mytheme")
@@ -46,49 +36,29 @@ public class MyUI extends UI {
 	}
 
 	@Override
-	protected void init(VaadinRequest vaadinRequest) {
+    protected void init(VaadinRequest vaadinRequest) {
 		logger.debug("->");
-		logger.info("Initializing UI");
-
-		this.navigationManager = new NavigationManager();
-
-		setContent(getNavigationManager());
-		User user = new User("lucas.wirtz");
-		ConfigurationFacade configFac;
-		try {
-			configFac = new ConfigurationFacadeImpl();
-
-			Configuration config = configFac.getConfig(user);
-
-			AlarmFacade alarmFac = new AlarmFacadeImpl(user);
-			List<Alarm> alarms = alarmFac.getAlarms();
-
-			DashboardProvider provider = new DashboardProvider(config, user);
-			DashboardViewImpl view = new DashboardViewImpl(config, alarms);
-
-			db = new DashboardPresenter(provider, view);
-
-			logger.info("Navigating to dashbord");
+    	final NavigationManager layout = new NavigationManager();
+		setContent(layout);
+		this.navigationManager = layout;
+		
+		LoginProvider loginProvider = new LoginProvider();
+		LoginViewImpl loginView =  new LoginViewImpl();
+		LoginPresenter lp = new LoginPresenter(loginProvider, loginView);
 			
-			getNavigationManager().navigateTo(db.getView());
-		} catch (SneException e) {
-			logger.error(e.getMessage(), e);
-			Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
-		}
-
+		layout.navigateTo(lp.getView());
+		
 		logger.debug("<-");
-	}
+    }
 
 	public DashboardPresenter getDashboard() {
 		logger.debug("->");
 		logger.debug("<-");
-		return db;
+		return this.db;
 	}
 
 	public NavigationManager getNavigationManager() {
 		logger.debug("->");
-		
-		System.out.println(this.navigationManager.getCurrentComponent());
 		logger.debug("<-");
 		return this.navigationManager;
 	}
@@ -98,6 +68,10 @@ public class MyUI extends UI {
 		
 		this.navigationManager = navigationManager;
 		logger.debug("<-");
+	}
+
+	public void setDashboard(DashboardPresenter db) {
+		this.db = db;
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

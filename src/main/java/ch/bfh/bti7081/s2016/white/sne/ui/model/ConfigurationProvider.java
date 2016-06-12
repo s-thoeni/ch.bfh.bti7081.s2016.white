@@ -19,8 +19,10 @@ public class ConfigurationProvider {
 	
 	private ConfigurationFacade facade;
 	private Configuration config;
+	private User user;
 	
 	public ConfigurationProvider(User user) throws SneException {
+		this.setUser(user);
 		facade = new ConfigurationFacadeImpl();
 		this.config = facade.getConfig(user);
 	}
@@ -36,5 +38,13 @@ public class ConfigurationProvider {
 		this.config = config;
 		facade.setConfig(this.config.getReports(), user);
 		logger.debug("<-");
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

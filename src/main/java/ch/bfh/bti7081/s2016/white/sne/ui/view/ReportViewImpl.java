@@ -303,7 +303,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 						}
 
 						if (table != null) {
-							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getIncident()}, index++);
+							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getPatientName()}, index++);
 						}
 					}
 				}

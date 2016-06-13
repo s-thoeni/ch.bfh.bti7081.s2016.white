@@ -11,6 +11,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.AbsoluteLayout;
@@ -19,6 +20,7 @@ import com.vaadin.ui.Alignment;
 
 import ch.bfh.bti7081.s2016.white.sne.bl.LoginFacadeImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 
 public class LoginViewImpl extends NavigationView implements LoginView {
@@ -45,7 +47,11 @@ public class LoginViewImpl extends NavigationView implements LoginView {
 		
 		facade = new LoginFacadeImpl();
 		
-		userList = facade.getUsers();
+		try {
+			userList = facade.getUsers();
+		} catch (SneException e1) {
+			Notification.show(e1.getMessage(), Notification.Type.ERROR_MESSAGE);
+		}
 		
 		nameSelector.setStyleName("configselect");
 		nameSelector.setNullSelectionAllowed(false);
@@ -60,6 +66,7 @@ public class LoginViewImpl extends NavigationView implements LoginView {
 		passwordField.setWidth("250px");
 		loginButton.setWidth("150px");
 		loginButton.setHeight("50px");
+
 		
 		loginButton.addClickListener(e -> handleClickLogin());		
 		

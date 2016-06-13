@@ -63,7 +63,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	/**
 	 * SQL query for getting information about patients from database
 	 */
-	private static final String SELECT_PATIENT_COUNT = "";
+	private static final String SELECT_PATIENT_COUNT = "SELECT p.patientFirstName, p.patientSurName, t.treatmentDate FROM Treatment AS t INNER JOIN Patient AS p ON p.patientId = t.patientId WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
 	
 	/**
 	 * SQL query for getting information about finance from database
@@ -226,6 +226,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 				PatientRecord record = new PatientRecord();
 				record.setIncident(rs.getString("description"));
 				record.setIncidentType(IncidentType.values()[rs.getInt("typeID")-1]);
+//				record.setPatientName(rs.getString("patientSurName") + " " + rs.getString("patientFirstName"));
 				record.setSummary(1);
 				try {
 					record.setDate(sdf.parse(rs.getString("treatmentDate")));
@@ -266,10 +267,9 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		try {
 			con = getConnection();
 			// get data
-			// TODO sql statement
 			stm = con.prepareStatement(SELECT_PATIENT_COUNT);
-			// stm.setString(1, sdf.format(from));
-			// stm.setString(2, sdf.format(to));
+			stm.setString(1, sdf.format(from));
+			stm.setString(2, sdf.format(to));
 
 			// log query
 			logger.debug(SELECT_PATIENT_COUNT);
@@ -277,9 +277,15 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 
 			// parse results
 			while (rs.next()) {
-
-				// TODO
-
+				PatientRecord record = new PatientRecord();
+				record.setPatientName(rs.getString("patientSurName") + " " + rs.getString("patientFirstName"));
+				record.setSummary(1);
+				try {
+					record.setDate(sdf.parse(rs.getString("treatmentDate")));
+					records.add(record);
+				} catch (ParseException pe) {
+					System.out.println("Could not parse date: " + pe.getMessage());
+				}
 			}
 
 		} catch (SQLException e) {

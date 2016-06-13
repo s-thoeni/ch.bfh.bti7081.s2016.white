@@ -7,13 +7,40 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
+
+/**
+ * Loads and provides userlist and passwords
+ * Implements connection to data backend (sqlite3)
+ * 
+ * @author shepd1
+ *
+ */
 
 public class UserDAOImpl implements UserDAO {
+	
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(Alarm.class);
+	
+	/**
+	 * database name as constant
+	 */
+	private static final String DB_NAME = "conf.db";
 	
 	private Connection connection;
 	private Statement stm;
 
+	/**
+	 * Default constructor
+	 * 
+	 */
 	public UserDAOImpl() {
 		// Load JDBC Driver
 		try {
@@ -24,7 +51,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public ArrayList<User> getUserlist() {
+	public ArrayList<User> getUserlist() throws SneException {
+		
+		logger.debug("->");
 		
 		ArrayList<User> userList = new ArrayList<User>();
 
@@ -49,7 +78,8 @@ public class UserDAOImpl implements UserDAO {
 				userList.add(new User(username,password));
 			}
 		} catch (SQLException e) {
-			System.out.println("Could not execute getConfig query " + e.getMessage());
+			logger.error("select on database " + DB_NAME + " failed \n" + e.getMessage(), e);
+			throw new SneException("Was not able to store alarms! ", e);
 		} finally {
 			try {
 				if (this.stm != null)
@@ -60,11 +90,12 @@ public class UserDAOImpl implements UserDAO {
 				if (this.connection != null)
 					this.connection.close();
 			} catch (SQLException se) {
-				se.printStackTrace();
-			}
+				logger.error("failed to close sql-connection", se);
+				throw new SneException("Failed to close database connection! Your data might be in danger!", se);
+			}		
 		}
 		
+		logger.debug("<-");
 		return userList;
-		
 	}
 }

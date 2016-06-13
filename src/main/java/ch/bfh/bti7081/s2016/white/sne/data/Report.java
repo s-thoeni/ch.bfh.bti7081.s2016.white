@@ -3,9 +3,6 @@ package ch.bfh.bti7081.s2016.white.sne.data;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
 
 /**
@@ -17,11 +14,6 @@ import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportType;
  * @param <T> have to be a subclass of Record
  */
 public class Report<T extends Record> {
-
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = LogManager.getLogger(Report.class);
 	
 	/**
 	 * Set of records
@@ -58,88 +50,55 @@ public class Report<T extends Record> {
 	 * @param name
 	 */
 	public Report(String name) {
-		logger.debug("->");
-		
 		this.name = name;
-		logger.debug("<-");
 	}
 
 	public List<T> getRecords() {
-		logger.debug("->");
-		logger.debug("<-");
 		return this.records;
 	}
 
 	public void setRecords(List<T> reports) {
-		logger.debug("->");
-		
 		this.records = reports;
-		logger.debug("<-");
 	}
 
 	public int getSummary() {
-		logger.debug("->");
-		logger.debug("<-");
 		return this.summary;
 	}
 
 	public void setSummary(int summary) {
-		logger.debug("->");
-		
 		this.summary = summary;
-		logger.debug("<-");
 	}
 	
 	public String getName() {
-		logger.debug("->");
-		logger.debug("<-");
 		return name;
 	}
 
 	public void setName(String name) {
-		logger.debug("->");
-		
 		this.name = name;
-		logger.debug("<-");
 	}
 
 	public Date getFrom() {
-		logger.debug("->");
-		logger.debug("<-");
 		return this.from;
 	}
 
 	public void setFrom(Date from) {
-		logger.debug("->");
-		
 		this.from = from;
-		logger.debug("<-");
 	}
 
 	public Date getTo() {
-		logger.debug("->");
-		logger.debug("<-");
 		return this.to;
 	}
 
 	public void setTo(Date to) {
-		logger.debug("->");
-		
 		this.to = to;
-		logger.debug("<-");
 	}
 
 	public ReportType getType() {
-		logger.debug("->");
-		logger.debug("<-");
 		return type;
 	}
 
 	public void setType(ReportType type) {
-		logger.debug("->");
-		
 		this.type = type;
-		logger.debug("<-");
 	}
 }
 

@@ -35,7 +35,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 	/**
 	 * SQL query for getting alarms of specified user 
 	 */
-	private static final String SELECT_USERS = "SELECT u.userName, u.userPassword FROM User;";
+	private static final String SELECT_USERS = "SELECT userName, userPassword FROM User;";
 
 
 	/**
@@ -59,7 +59,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		try {
 			con = getConnection();
 			stm = con.prepareStatement(SELECT_USERS);
-
+			
 			// log query
 			logger.debug(SELECT_USERS);
 

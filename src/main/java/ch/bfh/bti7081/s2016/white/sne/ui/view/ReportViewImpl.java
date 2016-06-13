@@ -302,7 +302,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 						}
 
 						if (table != null) {
-							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getIncident()}, index++);
+							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getPatientName()}, index++);
 						}
 					}
 				}
@@ -351,6 +351,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		default:
 			logger.debug("default case");
 			if (table != null) {
+//				table.addContainerProperty("Patient", String.class, null);
 				table.addContainerProperty("Incident", String.class, null);
 			}
 
@@ -363,6 +364,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 						}
 
 						if (table != null) {
+//							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getPatientName(), ((PatientRecord) record).getIncident()}, index++);
 							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getIncident()}, index++);
 						}
 					}

@@ -1,5 +1,7 @@
 package ch.bfh.bti7081.s2016.white.sne.data;
 
+import ch.bfh.bti7081.s2016.white.sne.data.enums.IncidentType;
+
 /**
  * Class representing information from treatment data sources (e.g. patient management system) 
  * @author team white
@@ -16,6 +18,8 @@ public class PatientRecord extends Record {
 	 * Incident which happened during treatment on the specified date 
 	 */
 	private String incident;
+	
+	private IncidentType type;
 
 	/**
 	 * Returns patient's name
@@ -42,11 +46,19 @@ public class PatientRecord extends Record {
 	}
 
 	/**
-	 * Sets a indicent to record
+	 * Sets a incident to record
 	 * @param incident
 	 */
 	public void setIncident(String incident) {
 		this.incident = incident;
+	}
+	
+	public void setIncidentType(IncidentType type) {
+		this.type = type;
+	}
+	
+	public IncidentType getIncidentType() {
+		return this.type;
 	}
 
 	@Override

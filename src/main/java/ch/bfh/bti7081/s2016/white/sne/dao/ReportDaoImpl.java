@@ -18,6 +18,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.AbsenceReason;
+import ch.bfh.bti7081.s2016.white.sne.data.enums.IncidentType;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
 /**
@@ -57,7 +58,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	/**
 	 * SQL query for getting information about incidents from database
 	 */
-	private static final String SELECT_INCIDENTS = "SELECT i.incidentId, t.treatmentId, i.description, t.treatmentDate FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
+	private static final String SELECT_INCIDENTS = "SELECT i.incidentId, it.typeID, it.typeName, t.treatmentId, i.description, t.treatmentDate FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId INNER JOIN IncidentType AS it ON i.typeID=it.typeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
 	
 	/**
 	 * SQL query for getting information about patients from database
@@ -224,6 +225,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			while (rs.next()) {
 				PatientRecord record = new PatientRecord();
 				record.setIncident(rs.getString("description"));
+				record.setIncidentType(IncidentType.values()[rs.getInt("typeID")-1]);
 				record.setSummary(1);
 				try {
 					record.setDate(sdf.parse(rs.getString("treatmentDate")));

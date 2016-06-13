@@ -28,7 +28,6 @@ import ch.bfh.bti7081.s2016.white.sne.data.PatientRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.PersonalRecord;
 import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
-import ch.bfh.bti7081.s2016.white.sne.data.enums.AbsenceReason;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportStyle;
 
 public class ReportViewImpl extends NavigationView implements ReportView {
@@ -38,69 +37,76 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	 */
 	private static final Logger logger = LogManager.getLogger(ReportViewImpl.class);
 	
-	// TODO(jan): Verify that this serialVersionUID makes sense
 	private static final long serialVersionUID = 2L;
 
 	private List<ReportViewListener> listeners = new ArrayList<ReportViewListener>();
 	
 	private class RecordInRange {
 		public boolean isInRange;
-		int index;
+		public int index;
 	}
 	
 	public ReportViewImpl(List<Report<? extends Record>> reports) {
 		super();
-		this.getNavigationBar().setCaption("Report comparison");
-		
-		int globalDiffInDays = 0;
-		for (Report<? extends Record> report : reports) {
-			Calendar startDateCal = Calendar.getInstance();
-			Calendar endDateCal = Calendar.getInstance();
-			startDateCal.setTime(report.getFrom());
-			endDateCal.setTime(report.getTo());
-			this.setInsignificantCalendarFieldsToMin(startDateCal);
-			this.setInsignificantCalendarFieldsToMax(endDateCal);
-			long startDateInMillis = startDateCal.getTimeInMillis();
-			long endDateInMillis = endDateCal.getTimeInMillis();
-			int potentialDiffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
-			if (potentialDiffInDays > globalDiffInDays) {
-				globalDiffInDays = potentialDiffInDays;
+		if (reports.size() == 1) {
+			this.handleSingleReport(reports.get(0));
+		} else {
+			this.getNavigationBar().setCaption("Report comparison");
+			
+			int globalDiffInDays = 0;
+			for (Report<? extends Record> report : reports) {
+				Calendar startDateCal = Calendar.getInstance();
+				Calendar endDateCal = Calendar.getInstance();
+				startDateCal.setTime(report.getFrom());
+				endDateCal.setTime(report.getTo());
+				this.setInsignificantCalendarFieldsToMin(startDateCal);
+				this.setInsignificantCalendarFieldsToMax(endDateCal);
+				long startDateInMillis = startDateCal.getTimeInMillis();
+				long endDateInMillis = endDateCal.getTimeInMillis();
+				int potentialDiffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
+				if (potentialDiffInDays > globalDiffInDays) {
+					globalDiffInDays = potentialDiffInDays;
+				}
 			}
+	
+			TabBarView layout = new TabBarView();
+			XAxis xAxis = new XAxis();
+	
+			Chart lineChart = new Chart(ChartType.LINE);
+			lineChart.setHeight(50, Unit.PERCENTAGE);
+			Configuration lineChartConf = lineChart.getConfiguration();
+			lineChartConf.setTitle("Report comparison");
+			lineChartConf.addxAxis(xAxis);
+			
+			/*
+			 * Initializing the values and categories list. For every day in the reports
+			 * timespan an entry is added to the values list and a category with the
+			 * formated day is added to the categories list.
+			 */
+			for (int i = 0; i <= globalDiffInDays; ++i) {
+				xAxis.addCategory(String.valueOf(i));
+			}
+			
+			for (Report<? extends Record> report : reports) {
+				ListSeries lineChartSeries = new ListSeries(report.getName());
+				this.createChartsFromReport(report, lineChartSeries, null, null);	
+				lineChartConf.addSeries(lineChartSeries);
+			}
+			
+			VerticalLayout lineChartLayout = new VerticalLayout();
+			lineChartLayout.addComponent(lineChart);
+			layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
+			
+			super.setContent(layout);
 		}
-
-		TabBarView layout = new TabBarView();
-		XAxis xAxis = new XAxis();
-
-		Chart lineChart = new Chart(ChartType.LINE);
-		lineChart.setHeight(50, Unit.PERCENTAGE);
-		Configuration lineChartConf = lineChart.getConfiguration();
-		lineChartConf.setTitle("Report comparison");
-		lineChartConf.addxAxis(xAxis);
-		
-		/*
-		 * Initializing the values and categories list. For every day in the reports
-		 * timespan an entry is added to the values list and a category with the
-		 * formated day is added to the categories list.
-		 */
-		for (int i = 0; i <= globalDiffInDays; ++i) {
-			xAxis.addCategory(String.valueOf(i));
-		}
-		
-		for (Report<? extends Record> report : reports) {
-			ListSeries lineChartSeries = new ListSeries(report.getName());
-			this.createChartsFromReport(report, lineChartSeries, null, null);	
-			lineChartConf.addSeries(lineChartSeries);
-		}
-		
-		VerticalLayout lineChartLayout = new VerticalLayout();
-		lineChartLayout.addComponent(lineChart);
-		layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
-		
-		super.setContent(layout);
 	}
 	
 	public ReportViewImpl(Report<? extends Record> report) {
 		super();
+		this.handleSingleReport(report);
+	}
+	
+	private void handleSingleReport(Report<? extends Record> report) {
 		this.getNavigationBar().setCaption(report.getName());
 
 		Chart lineChart = null;
@@ -216,11 +222,6 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 		}
 		
-		List<Number> pieChartValues = null;
-		if (pieChartSeries != null) {
-			pieChartValues = new ArrayList<Number>();
-		}
-		
 		logger.debug("switch case report type");
 		int index = 1;
 		switch (report.getType()) {
@@ -315,12 +316,6 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 				table.addContainerProperty("Reason", String.class, null);
 			}
 			
-			if (pieChartValues != null) {
-				for (AbsenceReason reason : AbsenceReason.values()) {
-					pieChartValues.add(reason.getDbID());
-				}
-			}
-			
 			for (Record record : report.getRecords()) {
 				if (record instanceof PersonalRecord) {
 					RecordInRange rir = this.checkIfRecordIsInRange(record, startDateInMillis, diffInDays);
@@ -328,9 +323,15 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 						if (lineChartValues != null) {
 							this.updateValue(lineChartValues, rir.index);
 						}
-						
-						if (pieChartValues != null) {
-							this.updateValue(pieChartValues, ((PersonalRecord) record).getAbsenceReason().getDbID()-1);
+
+						if (pieChartSeries != null) {
+							String reason = ((PersonalRecord) record).getAbsenceReason().toString();
+							try {
+								DataSeriesItem incidentItem = pieChartSeries.get(reason);
+								incidentItem.setY(incidentItem.getY().intValue()+1);
+							} catch (NullPointerException e) {
+								pieChartSeries.add(new DataSeriesItem(reason, 1));
+							}
 						}
 						
 						if (table != null) {
@@ -339,18 +340,13 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 					}
 				}
 			}
-
-			if (pieChartValues != null) {
-				for (int i = 0; i < AbsenceReason.values().length; ++i) {
-					pieChartSeries.add(new DataSeriesItem(AbsenceReason.values()[i].toString(), pieChartValues.get(i)));
-				}
-			}
 			break;
 		case INCIDENTS:
 			logger.debug("type: INCIDENTS");
 		default:
 			logger.debug("default case");
 			if (table != null) {
+				table.addContainerProperty("Patient", String.class, null);
 				table.addContainerProperty("Incident", String.class, null);
 			}
 
@@ -362,8 +358,18 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 							this.updateValue(lineChartValues, rir.index);
 						}
 
+						String typeName = ((PatientRecord) record).getIncidentType().toString();
 						if (table != null) {
-							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getIncident()}, index++);
+							table.addItem(new Object[]{sdf.format(record.getDate()), ((PatientRecord) record).getPatientName(), typeName}, index++);
+						}
+						
+						if (pieChartSeries != null) {
+							try {
+								DataSeriesItem incidentItem = pieChartSeries.get(typeName);
+								incidentItem.setY(incidentItem.getY().intValue()+1);
+							} catch (NullPointerException e) {
+								pieChartSeries.add(new DataSeriesItem(typeName, 1));
+							}
 						}
 					}
 				}
@@ -371,6 +377,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		}
 		
 		if (lineChartSeries != null) {
+			lineChartSeries.setName(report.getName());
 			lineChartSeries.setData(lineChartValues);
 		}
 	}

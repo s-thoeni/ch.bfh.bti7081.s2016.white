@@ -30,6 +30,12 @@ import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportStyle;
 
+/**
+ * Takes reports and displays them as charts and tables.
+ * 
+ * @author jdellsperger
+ *
+ */
 public class ReportViewImpl extends NavigationView implements ReportView {
 	
 	/**
@@ -41,58 +47,48 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 
 	private List<ReportViewListener> listeners = new ArrayList<ReportViewListener>();
 	
+	/**
+	 * Small struct to save a boolean, which indicates wheter a given record is in range
+	 * or not, and the index of said record.
+	 * 
+	 * @author jdellsperger
+	 *
+	 */
 	private class RecordInRange {
 		public boolean isInRange;
 		public int index;
 	}
 	
+	/**
+	 * Takes multiple reports and displays them in a line-chart.
+	 * 
+	 * @param List<Report<? extends Record>> reports
+	 */
 	public ReportViewImpl(List<Report<? extends Record>> reports) {
 		super();
+		// If the list of reports contains a single item, we can handle it as single report.
 		if (reports.size() == 1) {
 			this.handleSingleReport(reports.get(0));
 		} else {
 			this.getNavigationBar().setCaption("Report comparison");
 			
-			int globalDiffInDays = 0;
-			for (Report<? extends Record> report : reports) {
-				Calendar startDateCal = Calendar.getInstance();
-				Calendar endDateCal = Calendar.getInstance();
-				startDateCal.setTime(report.getFrom());
-				endDateCal.setTime(report.getTo());
-				this.setInsignificantCalendarFieldsToMin(startDateCal);
-				this.setInsignificantCalendarFieldsToMax(endDateCal);
-				long startDateInMillis = startDateCal.getTimeInMillis();
-				long endDateInMillis = endDateCal.getTimeInMillis();
-				int potentialDiffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
-				if (potentialDiffInDays > globalDiffInDays) {
-					globalDiffInDays = potentialDiffInDays;
-				}
-			}
-	
-			TabBarView layout = new TabBarView();
+			// Setting up and styling the line-chart and adding an x-axis.
 			XAxis xAxis = new XAxis();
-	
 			Chart lineChart = new Chart(ChartType.LINE);
 			lineChart.setHeight(50, Unit.PERCENTAGE);
 			Configuration lineChartConf = lineChart.getConfiguration();
 			lineChartConf.setTitle("Report comparison");
 			lineChartConf.addxAxis(xAxis);
 			
-			/*
-			 * Initializing the values and categories list. For every day in the reports
-			 * timespan an entry is added to the values list and a category with the
-			 * formated day is added to the categories list.
-			 */
-			for (int i = 0; i <= globalDiffInDays; ++i) {
-				xAxis.addCategory(String.valueOf(i));
-			}
-			
+			// Looping over the reports and adding the data-series to the line-chart.
 			for (Report<? extends Record> report : reports) {
 				ListSeries lineChartSeries = new ListSeries(report.getName());
-				this.createChartsFromReport(report, lineChartSeries, null, null);	
+				this.createChartsFromReport(report, xAxis, lineChartSeries, null, null);	
 				lineChartConf.addSeries(lineChartSeries);
 			}
-			
+
+			// Creating a tab-bar-view and adding the line-chart to a tab.
+			TabBarView layout = new TabBarView();
 			VerticalLayout lineChartLayout = new VerticalLayout();
 			lineChartLayout.addComponent(lineChart);
 			layout.addTab(lineChartLayout, "Linechart", FontAwesome.LINE_CHART);
@@ -101,14 +97,24 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		}
 	}
 	
+	/**
+	 * Takes a single report and creates and displays different charts,
+	 * depending on the report type.
+	 * @param Report<? extends Record> report
+	 */
 	public ReportViewImpl(Report<? extends Record> report) {
 		super();
 		this.handleSingleReport(report);
 	}
 	
+	/**
+	 * Takes a single report and creates and displays charts from it.
+	 * @param report
+	 */
 	private void handleSingleReport(Report<? extends Record> report) {
 		this.getNavigationBar().setCaption(report.getName());
 
+		// Creating and styling a line-chart, if the report can be rendered thusly.
 		Chart lineChart = null;
 		Configuration lineChartConf = null;
 		ListSeries lineChartSeries = new ListSeries();
@@ -120,6 +126,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			lineChartConf.setTitle(report.getName());
 		}
 
+		// Creating and styling a pie-chart, if the report can be rendered thusly.
 		Chart pieChart = null;
 		Configuration pieChartConf = null;
 		DataSeries pieChartSeries = new DataSeries(report.getName());
@@ -130,6 +137,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			pieChartConf.setTitle(report.getName());
 		}
 
+		// Creating and styling a table, if the report can be rendered thusly.
 		Table table = null;
 		if(report.getType().getReportStyles().contains(ReportStyle.TABULAR)){
 			table = new Table();
@@ -137,31 +145,11 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			table.setWidth(100, Unit.PERCENTAGE);
 			table.addStyleName(Reindeer.TABLE_BORDERLESS);
 		}
-
-		Calendar startDayCal = Calendar.getInstance();
-		startDayCal.setTime(report.getFrom());
-		this.setInsignificantCalendarFieldsToMin(startDayCal);
-		long startDateInMillis = startDayCal.getTimeInMillis();
 		
-		Calendar endDayCal = Calendar.getInstance();
-		endDayCal.setTime(report.getTo());
-		this.setInsignificantCalendarFieldsToMax(endDayCal);
-		long endDateInMillis = endDayCal.getTimeInMillis();
+		// Creating the appropriate charts from the report.
+		this.createChartsFromReport(report, xAxis, lineChartSeries, pieChartSeries, table);
 		
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(report.getFrom());
-		this.setInsignificantCalendarFieldsToMin(calendar);
-		int diffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
-		
-		for (int i = 0; i <= diffInDays; ++i) {
-			xAxis.addCategory(sdf.format(calendar.getTime()));
-			calendar.add(1, Calendar.DAY_OF_YEAR);
-		}	
-		
-		this.createChartsFromReport(report, lineChartSeries, pieChartSeries, table);
-		
+		// Creating a tab-bar-view and adding the existing charts.
 		TabBarView layout = new TabBarView();
 		if (lineChart != null && lineChartConf != null) {
 			lineChartConf.addSeries(lineChartSeries);
@@ -190,38 +178,46 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		super.setContent(layout);
 	}
 	
-	private void createChartsFromReport(Report<? extends Record> report, ListSeries lineChartSeries, DataSeries pieChartSeries, Table table) {
-		/*
-		 * Initializing the values and categories list. For every day in the reports
-		 * timespan an entry is added to the values list and a category with the
-		 * formated day is added to the categories list.
-		 */
-		Calendar startDayCal = Calendar.getInstance();
-		startDayCal.setTime(report.getFrom());
-		this.setInsignificantCalendarFieldsToMin(startDayCal);
-		long startDateInMillis = startDayCal.getTimeInMillis();
+	private void createChartsFromReport(Report<? extends Record> report, XAxis xAxis, ListSeries lineChartSeries, DataSeries pieChartSeries, Table table) {
 		
-		Calendar endDayCal = Calendar.getInstance();
-		endDayCal.setTime(report.getTo());
-		this.setInsignificantCalendarFieldsToMax(endDayCal);
-		long endDateInMillis = endDayCal.getTimeInMillis();
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(report.getFrom());
-		this.setInsignificantCalendarFieldsToMin(calendar);
-		int diffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
-
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
 		
-		List<Number> lineChartValues = null;
-		if (lineChartSeries != null) {
-			lineChartValues = new ArrayList<Number>();
-			for (int i = 0; i <= diffInDays; ++i) {
-				lineChartValues.add(0);
-				calendar.add(Calendar.DAY_OF_YEAR, 1);
+		// Calculating the number of days between the start- and the end-date of the report.
+		Calendar startDateCal = Calendar.getInstance();
+		Calendar endDateCal = Calendar.getInstance();
+		startDateCal.setTime(report.getFrom());
+		endDateCal.setTime(report.getTo());
+		this.setInsignificantCalendarFieldsToMin(startDateCal);
+		this.setInsignificantCalendarFieldsToMax(endDateCal);
+		long startDateInMillis = startDateCal.getTimeInMillis();
+		long endDateInMillis = endDateCal.getTimeInMillis();
+		int diffInDays = this.getDiffInDays(endDateInMillis, startDateInMillis);
+		
+		/*
+		 * Initializing the values and categories list. For every day in the reports
+		 * time-span an entry is added to the values list and a category with the
+		 * formated day is added to the categories list.
+		 */
+		List<Number> lineChartValues = new ArrayList<Number>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(report.getFrom());
+		this.setInsignificantCalendarFieldsToMin(cal);
+		for (int i = 0; i <= diffInDays; ++i) {
+			lineChartValues.add(0);
+			String categoryString = sdf.format(cal.getTime());
+			try {
+				String[] categories = xAxis.getCategories();
+				categories[i] += (", " + categoryString);
+				xAxis.setCategories(categories);
+			} catch (NullPointerException e) {
+				xAxis.addCategory(categoryString);
+			} catch (IndexOutOfBoundsException e) {
+				xAxis.addCategory(categoryString);
 			}
+			cal.add(Calendar.DAY_OF_YEAR, 1);
 		}
 		
+		// Updating line-chart and pie-chart values and adding table-rows, depending on the reports type.
 		logger.debug("switch case report type");
 		int index = 1;
 		switch (report.getType()) {
@@ -376,12 +372,19 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 			}
 		}
 		
+		// If applicable, setting the data of the line-chart data-series.
 		if (lineChartSeries != null) {
-			lineChartSeries.setName(report.getName());
+			lineChartSeries.setName(report.getName() + ": " + sdf.format(report.getFrom()) + " - " + sdf.format(report.getTo()));
 			lineChartSeries.setData(lineChartValues);
 		}
 	}
 	
+	/**
+	 * Adds value to the position indicated by index in the values list.
+	 * @param List<Number> values The list of values in which the position index should be updated.
+	 * @param int index The position in the list of values that should be updated.
+	 * @param Number newValue The value to be added to the position indicated by index in the list of values.
+	 */
 	private void updateValue(List<Number> values, int index, Number newValue) {
 		logger.debug("->");
 		
@@ -391,6 +394,11 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		logger.debug("<-");
 	}
 	
+	/**
+	 * Adds one to the position indicated by index in the values list.
+	 * @param List<Number> values The list of values in which the position index should be updated.
+	 * @param int index The position in the list of values that should be updated.
+	 */
 	private void updateValue(List<Number> values, int index) {
 		logger.debug("->");
 		
@@ -398,6 +406,15 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		logger.debug("<-");
 	}
 	
+	/**
+	 * Checks if an index, calculated by getting the number of days in between the passed records date and
+	 * a passed start date, is lower than the passed maximum index and higher then zero.
+	 * @param record The record to be checked.
+	 * @param startDateInMillis The start date in milliseconds to calculate the index from.
+	 * @param maxIndex The maximum valid index.
+	 * @return RecordInRange A structure that holds a boolean, indicating whether the passed record is in range 
+	 * and the calculated index.
+	 */
 	private RecordInRange checkIfRecordIsInRange(Record record, long startDateInMillis, int maxIndex) {
 		logger.debug("->");
 		
@@ -418,10 +435,16 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		return result;
 	}
 	
-	private int getDiffInDays(long recordDateInMillis, long startDateInMillis) {
+	/**
+	 * Calculated the difference in days between two dates passed in milliseconds.
+	 * @param endDateInMillis The end date in milliseconds.
+	 * @param startDateInMillis The start date in milliseconds.
+	 * @return int The number of days between start- and end-date.
+	 */
+	private int getDiffInDays(long endDateInMillis, long startDateInMillis) {
 		logger.debug("->");
 		
-		long diffInMillis = recordDateInMillis-startDateInMillis;
+		long diffInMillis = endDateInMillis-startDateInMillis;
 		long longResult = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
 		int result = (int)longResult;
 		
@@ -429,6 +452,11 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		return result;
 	}
 	
+	/**
+	 * Sets hours, minutes, seconds and milliseconds of a passed calendar to
+	 * the minimum value.
+	 * @param cal The calendar whose values should be changed.
+	 */
 	private void setInsignificantCalendarFieldsToMax(Calendar cal) {
 		logger.debug("->");
 		
@@ -438,7 +466,12 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		cal.set(Calendar.MILLISECOND, cal.getActualMaximum(Calendar.MILLISECOND));
 		logger.debug("<-");
 	}
-	
+
+	/**
+	 * Sets hours, minutes, seconds and milliseconds of a passed calendar to
+	 * the maximum value.
+	 * @param cal The calendar whose values should be changed.
+	 */
 	private void setInsignificantCalendarFieldsToMin(Calendar cal) {
 		logger.debug("->");
 		
@@ -449,6 +482,9 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 		logger.debug("<-");
 	}
 
+	/**
+	 * Adds a passed listener to the listeners attribute.
+	 */
 	public void addListener(ReportViewListener listener) {
 		logger.debug("->");
 		

@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -28,6 +31,11 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.LoginViewImpl;
 
 public class LoginPresenter implements LoginView.LoginViewListener {
 
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LogManager.getLogger(LoginPresenter.class);
+
 	private LoginProvider model;
 	private LoginViewImpl view;
 	private static boolean securityEnabled = false;
@@ -41,6 +49,7 @@ public class LoginPresenter implements LoginView.LoginViewListener {
 
 	@Override
 	public void loginClick() throws NoSuchAlgorithmException {
+		logger.debug("->");
 		User loginUser = view.getLoginName();
 		String password = view.getPassword();
 
@@ -50,6 +59,8 @@ public class LoginPresenter implements LoginView.LoginViewListener {
 		String pwEntered = DatatypeConverter.printHexBinary(hash);
 
 		if (securityEnabled) {
+			logger.debug("Security enabled");
+
 			System.out.println("hasehd: " + pwEntered);
 			System.out.println(loginUser.getPassword());
 			if (pwEntered.equals(loginUser.getPassword().toUpperCase())) {
@@ -68,10 +79,7 @@ public class LoginPresenter implements LoginView.LoginViewListener {
 					DashboardPresenter db = new DashboardPresenter(provider, view);
 
 					MyUI ui = (MyUI) UI.getCurrent();
-					if (ui instanceof MyUI) {
-						MyUI sneui = (MyUI) ui;
-						sneui.setDashboard(db);
-					}
+					ui.setDashboard(db);
 
 					ui.getNavigationManager().navigateTo(db.getView());
 				} catch (SneException e) {
@@ -79,6 +87,7 @@ public class LoginPresenter implements LoginView.LoginViewListener {
 				}
 			}
 		} else {
+			logger.debug("Security disabled");
 
 			ConfigurationFacade configFac;
 			try {
@@ -95,19 +104,20 @@ public class LoginPresenter implements LoginView.LoginViewListener {
 				DashboardPresenter db = new DashboardPresenter(provider, view);
 
 				MyUI ui = (MyUI) UI.getCurrent();
-				if (ui instanceof MyUI) {
-					MyUI sneui = (MyUI) ui;
-					sneui.setDashboard(db);
-				}
+
+				ui.setDashboard(db);
 
 				ui.getNavigationManager().navigateTo(db.getView());
 			} catch (SneException e) {
 				Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
 			}
 		}
+		logger.debug("<-");
 	}
 
 	public Component getView() {
+		logger.debug("->");
+		logger.debug("<-");
 		return this.view;
 	}
 

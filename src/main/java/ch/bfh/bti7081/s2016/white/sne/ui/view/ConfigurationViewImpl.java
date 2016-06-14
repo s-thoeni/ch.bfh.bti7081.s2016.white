@@ -6,10 +6,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
@@ -33,11 +31,19 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 	private List<ConfigurationViewListener> listeners;
 
 	/**
+	 * The title to be displayed in the header of the menu
+	 */
+	private static final String CONFIGURATION_TITLE = "Dashboard Configuration";
+
+	/**
 	 * Class serial ID
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public ConfigurationViewImpl() {
+		// Set the caption
+		getNavigationBar().setCaption(CONFIGURATION_TITLE);
+
 		this.configSets = new ArrayList<ConfigSetImpl>();
 		this.listeners = new ArrayList<ConfigurationViewListener>();
 

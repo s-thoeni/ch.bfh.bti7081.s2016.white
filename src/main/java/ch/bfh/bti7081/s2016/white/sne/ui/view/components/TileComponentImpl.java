@@ -35,12 +35,12 @@ public class TileComponentImpl extends CustomComponent implements TileComponent 
 	/**
 	 * Logger for this class
 	 */
-	private transient static final Logger logger = LogManager.getLogger(TileComponentImpl.class);
+	private static final Logger logger = LogManager.getLogger(TileComponentImpl.class);
 
 	/**
 	 * simple date formatter Initialized in short swiss date format
 	 */
-	private transient final SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+	private final SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 
 	/**
 	 * Label for report name

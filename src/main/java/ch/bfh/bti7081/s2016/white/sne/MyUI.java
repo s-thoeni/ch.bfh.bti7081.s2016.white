@@ -11,8 +11,10 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
+import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.LoginProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.DashboardPresenter;
 import ch.bfh.bti7081.s2016.white.sne.ui.presenter.LoginPresenter;
@@ -42,11 +44,17 @@ public class MyUI extends UI {
 		setContent(layout);
 		this.navigationManager = layout;
 		
-		LoginProvider loginProvider = new LoginProvider();
-		LoginViewImpl loginView =  new LoginViewImpl();
-		LoginPresenter lp = new LoginPresenter(loginProvider, loginView);
-			
-		layout.navigateTo(lp.getView());
+		LoginProvider loginProvider;
+		try {
+			loginProvider = new LoginProvider();
+			LoginViewImpl loginView =  new LoginViewImpl();
+			LoginPresenter lp = new LoginPresenter(loginProvider, loginView);
+			layout.navigateTo(lp.getView());
+		} catch (SneException e) {
+			// log error
+			logger.error("Initialize login failed \n" + e.getMessage(), e);
+			Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+		}
 		
 		logger.debug("<-");
     }

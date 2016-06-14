@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.vaadin.thomas.slidemenu.SlideMenu;
 
-import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -32,7 +31,6 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 	 */
 	private static final Logger logger = LogManager.getLogger(SneMenuViewImpl.class);
 
-
 	// Get the user-config:
 	private Configuration config;
 	private List<Alarm> alarms;
@@ -44,13 +42,13 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 		this.alarms = alarms;
 		listeners = new ArrayList<SneMenuListener>();
 		this.user = user;
-		
+
 		// add menu items
 		buildMenu();
 
 		// add alarming popover
 		buildAlarming();
-		
+
 		new SneMenuPresenter(this, user);
 
 		// We can also set the width of the popup, default is 80%
@@ -106,7 +104,9 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 			for (SneMenuListener listener : listeners)
 				try {
 					listener.showConfiguration();
-				} catch (Exception e) {
+				} catch (SneException e) {
+					// log error
+					logger.error(e.getMessage(), e);
 					Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
 				}
 		});
@@ -120,6 +120,8 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 				try {
 					listener.showAlarms();
 				} catch (SneException e) {
+					// log error
+					logger.error(e.getMessage(), e);
 					Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
 				}
 		});
@@ -141,6 +143,8 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 			try {
 				alarmVisualization = alarm.visualizeAlarm();
 			} catch (SneException e) {
+				// log error
+				logger.error(e.getMessage(), e);
 				Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
 			}
 			if (alarmVisualization != null) {
@@ -148,10 +152,15 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 				switch (alarm.getAlarmStateString()) {
 				case "Error":
 					hasError = true;
+					hasWarning = false;
 					break;
 				case "Warning":
 					hasWarning = true;
+					hasError = false;
 					break;
+				default:
+					hasError = false;
+					hasWarning = false;
 				}
 				index++;
 			}

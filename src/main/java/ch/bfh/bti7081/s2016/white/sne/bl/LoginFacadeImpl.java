@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ch.bfh.bti7081.s2016.white.sne.dao.UserDAO;
 import ch.bfh.bti7081.s2016.white.sne.dao.UserDAOImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
@@ -19,41 +20,56 @@ import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 public class LoginFacadeImpl implements LoginFacade {
 
 	/**
-	 * Initialize new logger for this class
+	 * Logger for this class
 	 */
-	private static final Logger logger = LogManager.getLogger(ConfigurationFacadeImpl.class);
+	private static final Logger logger = LogManager.getLogger(LoginFacadeImpl.class);
 	
-	private UserDAOImpl dao;
+	/**
+	 * Data access object for Users
+	 */
+	private UserDAO dao;
 	
-	public LoginFacadeImpl() {
+	/**
+	 * Constructs a new LoginFacadeImpl. Initializes UserDAO
+	 * @throws SneException
+	 */
+	public LoginFacadeImpl() throws SneException {
 		dao = new UserDAOImpl();
 	}
 	
 	@Override
 	public User checkPassword(String username, String password) throws SneException {
+		logger.debug("->");
 		ArrayList<User> userList = getUsers();
 		for(User u: userList) {
-			if(u.getUserName() == username) {
-				if(u.getPassword() == password) {
+			if(u.getUserName().equals(username)) {
+				if(u.getPassword().equals(password)) {
+					logger.debug("<-");
 					return u;
 				}
 			}
 		}
+		logger.debug("<-");
 		return null;
 	}
 
 	@Override
 	public ArrayList<User> getUsers() throws SneException {
+		logger.debug("->");
+		logger.debug("<-");
 		return dao.getUserlist();
 	}
 	
 	public User getUser(String username) throws SneException {
+		logger.debug("->");
 		ArrayList<User> userList = getUsers();
 		for (User u: userList) {
-			if(u.getUserName() == username) {
+			if(u.getUserName().equals(username)) {
+				logger.debug("<-");
 				return u;
 			}
 		}
+		logger.debug("<-");
 		return null;
 	}
 }

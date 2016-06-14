@@ -37,7 +37,7 @@ public class AlarmWarningState implements AlarmState {
 		Label label = new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml(), ContentMode.HTML);
 		label.addStyleName("Warning");
 		logger.debug("<-");
-		return new Object[]{label, alarm.getAlarmReport().getName(), alarm.getAlarmReport().getSummary() +" "+ alarm.getOperator().toString() +" "+ alarm.getWarningValue()};
+		return new Object[]{label, alarm.getAlarmReport().getName(), alarm.getAlarmReportConfig().getReportTimeframe().toString(), alarm.getAlarmReport().getSummary() +" "+ alarm.getOperator().toString() +" "+ alarm.getWarningValue()};
 	}
 	
 	@Override

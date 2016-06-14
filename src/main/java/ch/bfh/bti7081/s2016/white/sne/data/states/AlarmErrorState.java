@@ -38,7 +38,7 @@ public class AlarmErrorState implements AlarmState {
 		Label label = new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml(), ContentMode.HTML);
 		label.addStyleName("Error");
 		logger.debug("<-");
-		return new Object[] { label, alarm.getAlarmReport().getName(), alarm.getAlarmReport().getSummary() + " "
+		return new Object[] { label, alarm.getAlarmReport().getName(), alarm.getAlarmReportConfig().getReportTimeframe().toString(), alarm.getAlarmReport().getSummary() + " "
 				+ alarm.getOperator().toString() + " " + alarm.getErrorValue() };
 	}
 

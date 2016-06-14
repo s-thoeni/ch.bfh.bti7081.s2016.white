@@ -36,7 +36,7 @@ public class AlarmSetImpl extends CustomComponent implements AlarmSet {
 	private NativeSelect reportSelector = new NativeSelect();
 	private NativeSelect timeSelector = new NativeSelect();
 	private NativeSelect compSelector = new NativeSelect();
-	private TextField alarmVal = new TextField();
+	private TextField errorVal = new TextField();
 	private TextField warningVal = new TextField();
 
 	public AlarmSetImpl(Alarm alarm) {
@@ -75,16 +75,19 @@ public class AlarmSetImpl extends CustomComponent implements AlarmSet {
 		if (alarm != null) {
 			reportSelector.select(alarm.getAlarmReportConfig().getReportType());
 			timeSelector.select(alarm.getAlarmReportConfig().getReportTimeframe());
-			alarmVal.setValue(String.valueOf(alarm.getErrorValue()));
+			errorVal.setValue(String.valueOf(alarm.getErrorValue()));
 			warningVal.setValue(String.valueOf(alarm.getWarningValue()));
 			compSelector.select(alarm.getOperator());
 		}else{
-			alarmVal.setValue("0");
+			errorVal.setValue("0");
 			warningVal.setValue("0");			
 		}
 
-		alarmVal.setConverter(Integer.class);
+		errorVal.setConverter(Integer.class);
 		warningVal.setConverter(Integer.class);
+		
+		errorVal.setWidth("50px");
+		warningVal.setWidth("50px");
 
 		removeBtn.setHeight("50px");
 		removeBtn.setWidth("50px");
@@ -99,14 +102,21 @@ public class AlarmSetImpl extends CustomComponent implements AlarmSet {
 		horizontal.addComponent(timeSelector);
 		horizontal.addComponent(compSelector);
 		horizontal.addComponent(warningVal);
-		horizontal.addComponent(alarmVal);
+		horizontal.addComponent(errorVal);
 		horizontal.addComponent(removeBtn);
 
 		horizontal.setComponentAlignment(reportSelector, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(timeSelector, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(compSelector, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(warningVal, Alignment.MIDDLE_LEFT);
-		horizontal.setComponentAlignment(alarmVal, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(errorVal, Alignment.MIDDLE_LEFT);
+		
+		horizontal.setExpandRatio(reportSelector, 1.2f);
+		horizontal.setExpandRatio(timeSelector, 1.0f);
+		horizontal.setExpandRatio(compSelector, 0.8f);
+		horizontal.setExpandRatio(warningVal, 0.5f);
+		horizontal.setExpandRatio(errorVal, 0.5f);
+		horizontal.setExpandRatio(removeBtn, 0.5f);
 
 		setCompositionRoot(horizontal);
 	}
@@ -188,9 +198,9 @@ public class AlarmSetImpl extends CustomComponent implements AlarmSet {
 	public int getErrorValue() {
 		logger.debug("->");
 		
-		String uiValue = alarmVal.getValue();
+		String uiValue = errorVal.getValue();
 		try {
-			Integer convertedValue = (Integer) alarmVal.getConvertedValue();
+			Integer convertedValue = (Integer) errorVal.getConvertedValue();
 			logger.debug("<-");
 			return convertedValue;
 		} catch (ConversionException e) {

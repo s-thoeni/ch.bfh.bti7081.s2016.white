@@ -51,6 +51,7 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 
 		grid.setWidth("100%");
 		grid.setHeight("100%");
+		grid.setSpacing(true);
 
 		grid.setStyleName("dashboard");
 
@@ -72,6 +73,7 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 		cancelBtn.addClickListener(e -> handleClickCancel());
 
 		VerticalLayout vertical = new VerticalLayout();
+		vertical.setSpacing(true);
 		HorizontalLayout h1 = new HorizontalLayout();
 		HorizontalLayout h2 = new HorizontalLayout();
 		h1.setWidth(100, Unit.PERCENTAGE);

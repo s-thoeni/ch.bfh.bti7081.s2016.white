@@ -58,7 +58,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 	/**
 	 * SQL query for getting information about incidents from database
 	 */
-	private static final String SELECT_INCIDENTS = "SELECT i.incidentId, it.typeID, it.typeName, t.treatmentId, i.description, t.treatmentDate FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId INNER JOIN IncidentType AS it ON i.typeID=it.typeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
+	private static final String SELECT_INCIDENTS = "SELECT p.patientFirstName, p.patientSurName, i.incidentId, it.typeID, it.typeName, t.treatmentId, i.description, t.treatmentDate FROM Incident AS i INNER JOIN Treatment AS t ON i.treatmentId=t.treatmentId INNER JOIN Patient AS p ON p.patientId = t.patientId INNER JOIN IncidentType AS it ON i.typeID=it.typeID WHERE t.treatmentDate >= ? AND t.treatmentDate <= ?";
 	
 	/**
 	 * SQL query for getting information about patients from database
@@ -233,7 +233,7 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 				PatientRecord record = new PatientRecord();
 				record.setIncident(rs.getString("description"));
 				record.setIncidentType(IncidentType.values()[rs.getInt("typeID")-1]);
-//				record.setPatientName(rs.getString("patientSurName") + " " + rs.getString("patientFirstName"));
+				record.setPatientName(rs.getString("patientSurName") + " " + rs.getString("patientFirstName"));
 				record.setSummary(1);
 				try {
 					record.setDate(sdf.parse(rs.getString("treatmentDate")));

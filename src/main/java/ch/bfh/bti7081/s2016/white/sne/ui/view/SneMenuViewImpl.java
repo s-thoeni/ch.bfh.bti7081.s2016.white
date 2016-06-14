@@ -136,6 +136,7 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 		Table table = new Table("Alarms");
 		table.addContainerProperty("State", Label.class, null);
 		table.addContainerProperty("Report", String.class, null);
+		table.addContainerProperty("Timeframe", String.class, null);
 		table.addContainerProperty("Check", String.class, null);
 		int index = 1;
 		for (Alarm alarm : alarms) {
@@ -200,6 +201,11 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 
 		this.listeners.add(listener);
 		logger.debug("<-");
+	}
+	
+	public void updateAlarms(List<Alarm> alarms){
+		this.alarms = alarms;
+		buildAlarming();
 	}
 
 }

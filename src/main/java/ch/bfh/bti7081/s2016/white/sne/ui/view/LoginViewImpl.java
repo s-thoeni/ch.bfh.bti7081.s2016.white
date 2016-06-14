@@ -49,6 +49,7 @@ public class LoginViewImpl extends NavigationView implements LoginView {
 		listeners = new ArrayList<LoginViewListener>();
 		grid = new VerticalLayout();
 		//grid.setSizeFull();
+		grid.setSpacing(true);
 		
 		nameSelector = new NativeSelect();
 		passwordField = new PasswordField();

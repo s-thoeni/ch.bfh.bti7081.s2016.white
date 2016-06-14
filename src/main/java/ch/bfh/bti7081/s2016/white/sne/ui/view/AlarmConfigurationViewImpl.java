@@ -50,6 +50,7 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 
 		grid.setWidth("100%");
 		grid.setHeight("100%");
+		grid.setSpacing(true);
 
 		grid.setStyleName("dashboard");
 
@@ -71,6 +72,7 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		cancelBtn.addClickListener(e -> handleClickCancel());
 
 		VerticalLayout vertical = new VerticalLayout();
+		vertical.setSpacing(true);
 		HorizontalLayout h1 = new HorizontalLayout();
 		HorizontalLayout h2 = new HorizontalLayout();
 		h1.setWidth(100, Unit.PERCENTAGE);
@@ -97,22 +99,29 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 		Label time = new Label("Timeframe");
 		Label comp = new Label("Comparator");
 		Label warn = new Label("Warning value");
-		Label alert = new Label("Alert value");
+		Label error = new Label("Error value");
 		Label hidden = new Label(" ");
 
 		horizontal.addComponent(type);
 		horizontal.addComponent(time);
 		horizontal.addComponent(comp);
 		horizontal.addComponent(warn);
-		horizontal.addComponent(alert);
+		horizontal.addComponent(error);
 		horizontal.addComponent(hidden);
 
 		horizontal.setComponentAlignment(type, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(time, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(comp, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(warn, Alignment.MIDDLE_LEFT);
-		horizontal.setComponentAlignment(alert, Alignment.MIDDLE_LEFT);
+		horizontal.setComponentAlignment(error, Alignment.MIDDLE_LEFT);
 		horizontal.setComponentAlignment(hidden, Alignment.MIDDLE_LEFT);
+		
+		horizontal.setExpandRatio(type, 1.2f);
+		horizontal.setExpandRatio(time, 1.0f);
+		horizontal.setExpandRatio(comp, 0.8f);
+		horizontal.setExpandRatio(warn, 0.5f);
+		horizontal.setExpandRatio(error, 0.5f);
+		horizontal.setExpandRatio(hidden, 0.5f);
 
 		grid.addComponent(horizontal);
 		logger.debug("<-");

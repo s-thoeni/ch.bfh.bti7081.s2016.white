@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 import ch.bfh.bti7081.s2016.white.sne.MyUI;
@@ -20,6 +21,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.model.AlarmConfigurationProvider;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationView;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.AlarmConfigurationViewImpl;
+import ch.bfh.bti7081.s2016.white.sne.ui.view.SneMenuViewImpl;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.AlarmSetImpl;
 
@@ -89,7 +91,13 @@ public class AlarmConfigurationPresenter implements AlarmConfigurationView.Alarm
 		}
 		this.model.setAlarms(configuration, user);
 		MyUI ui = (MyUI) UI.getCurrent();
-		ui.getNavigationManager().navigateBack();
+		if(ui instanceof MyUI){
+			DashboardPresenter db = ui.getDashboard();
+			((SneMenuViewImpl) db.getView()).updateAlarms(this.model.getAlarms());
+			ui.getNavigationManager().navigateTo(db.getView());
+		}else{
+			Notification.show("We could not navigate corretly, please refresh the page manually");
+		}
 		
 		logger.debug("<-");
 	}

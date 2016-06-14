@@ -10,7 +10,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
 import ch.bfh.bti7081.s2016.white.sne.MyUI;
-import ch.bfh.bti7081.s2016.white.sne.dao.AlarmDaoImpl;
 import ch.bfh.bti7081.s2016.white.sne.data.Alarm;
 import ch.bfh.bti7081.s2016.white.sne.data.ReportConfig;
 import ch.bfh.bti7081.s2016.white.sne.data.User;

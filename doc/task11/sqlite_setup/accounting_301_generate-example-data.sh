@@ -3,13 +3,15 @@
 # filename:		accounting_301_generate-example-data.sh					#
 # author:		team white												#
 # required:		sqlite3													#
-# description:	inserts given data into database "accounting"			#
+# description:	inserts given data into database "dwh"					#
 #########################################################################
 
 
 ### fill table treatment
+# create temporary files for the insert query
 tmpfile=`mktemp`
 
+# prepare insert querie. it's faster to have one query for all inserts
 echo "INSERT INTO Journal (journalDate, effort, return, cashflow) VALUES (\"2012-12-31\", 104340, 112080, -4880)" >> $tmpfile
 
 
@@ -54,19 +56,22 @@ do
 				else
 					day=$j
 				fi
-		
+
+				# add line to query
 				echo ",(\"$y-$mon-$day\", $effort, $return, $cashflow)" >> $tmpfile
 	
 			fi
 		done
-		#echo "generate data until $y-$mon-$day"
 	done
 done
 
+# finnish each insert query with a semicolon.
 echo ";" >> $tmpfile
+
+# insert data in db. we love input redirection
 sqlite3 ~/.sne/databases/dwh.db < $tmpfile
 
-
-#rm $tmpfile
+# remove temp files
+rm $tmpfile
 
 

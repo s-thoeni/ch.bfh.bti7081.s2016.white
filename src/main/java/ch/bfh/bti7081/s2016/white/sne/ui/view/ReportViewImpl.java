@@ -48,7 +48,7 @@ public class ReportViewImpl extends NavigationView implements ReportView {
 	private List<ReportViewListener> listeners = new ArrayList<ReportViewListener>();
 	
 	/**
-	 * Small struct to save a boolean, which indicates wheter a given record is in range
+	 * Small structure to save a boolean, which indicates whether a given record is in range
 	 * or not, and the index of said record.
 	 * 
 	 * @author jdellsperger

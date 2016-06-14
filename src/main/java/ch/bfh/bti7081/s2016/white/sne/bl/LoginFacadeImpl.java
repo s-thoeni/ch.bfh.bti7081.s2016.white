@@ -42,8 +42,8 @@ public class LoginFacadeImpl implements LoginFacade {
 		logger.debug("->");
 		ArrayList<User> userList = getUsers();
 		for(User u: userList) {
-			if(u.getUserName() == username) {
-				if(u.getPassword() == password) {
+			if(u.getUserName().equals(username)) {
+				if(u.getPassword().equals(password)) {
 					logger.debug("<-");
 					return u;
 				}
@@ -64,7 +64,7 @@ public class LoginFacadeImpl implements LoginFacade {
 		logger.debug("->");
 		ArrayList<User> userList = getUsers();
 		for (User u: userList) {
-			if(u.getUserName() == username) {
+			if(u.getUserName().equals(username)) {
 				logger.debug("<-");
 				return u;
 			}

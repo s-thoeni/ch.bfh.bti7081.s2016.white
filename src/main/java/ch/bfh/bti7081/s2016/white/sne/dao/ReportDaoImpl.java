@@ -94,8 +94,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_AVAILABLE_EMPLOYEES);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 
@@ -156,8 +156,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			
 			// get data
 			stm = con.prepareStatement(SELECT_ABSENCES);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 
@@ -218,8 +218,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			
 			// get data
 			stm = con.prepareStatement(SELECT_INCIDENTS);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 			
@@ -275,8 +275,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_PATIENT_COUNT);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 			
@@ -329,8 +329,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_FINANCE);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 			
@@ -393,8 +393,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_FINANCE);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 			
@@ -456,8 +456,8 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_FINANCE);
-			String f = sdf.format(from).toString();
-			String t = sdf.format(to).toString();
+			String f = sdf.format(from);
+			String t = sdf.format(to);
 			stm.setString(1, f);
 			stm.setString(2, t);
 			

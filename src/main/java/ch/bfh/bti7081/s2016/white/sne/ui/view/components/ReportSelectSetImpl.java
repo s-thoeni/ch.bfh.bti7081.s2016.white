@@ -33,7 +33,7 @@ public class ReportSelectSetImpl extends CustomComponent implements ReportSelect
 	/**
 	 * Logger for this class
 	 */
-	private transient static final Logger logger = LogManager.getLogger(TileComponentImpl.class);
+	private static final Logger logger = LogManager.getLogger(TileComponentImpl.class);
 
 	/**
 	 * These listeners will be informed when a tile has been clicked.

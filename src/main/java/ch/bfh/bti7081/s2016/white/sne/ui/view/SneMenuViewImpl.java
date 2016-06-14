@@ -31,7 +31,6 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 	 */
 	private static final Logger logger = LogManager.getLogger(SneMenuViewImpl.class);
 
-
 	// Get the user-config:
 	private Configuration config;
 	private List<Alarm> alarms;
@@ -43,13 +42,13 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 		this.alarms = alarms;
 		listeners = new ArrayList<SneMenuListener>();
 		this.user = user;
-		
+
 		// add menu items
 		buildMenu();
 
 		// add alarming popover
 		buildAlarming();
-		
+
 		new SneMenuPresenter(this, user);
 
 		// We can also set the width of the popup, default is 80%
@@ -153,10 +152,15 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 				switch (alarm.getAlarmStateString()) {
 				case "Error":
 					hasError = true;
+					hasWarning = false;
 					break;
 				case "Warning":
 					hasWarning = true;
+					hasError = false;
 					break;
+				default:
+					hasError = false;
+					hasWarning = false;
 				}
 				index++;
 			}

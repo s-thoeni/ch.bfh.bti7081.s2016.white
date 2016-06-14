@@ -60,7 +60,7 @@ public class DashboardViewImpl extends SneMenuViewImpl implements DashboardView 
 	 * 
 	 * @see DashboardViewListener
 	 */
-	private transient List<DashboardViewListener> listeners;
+	private List<DashboardViewListener> listeners;
 
 	/**
 	 * Initialize the dashboard with a config and alarms. The config will be

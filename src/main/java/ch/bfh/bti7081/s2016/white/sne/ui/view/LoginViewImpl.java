@@ -103,7 +103,7 @@ public class LoginViewImpl extends NavigationView implements LoginView {
 			} catch (NoSuchAlgorithmException e) {
 				SneException se = new SneException("A problem has occured while checking your password! ", e);
 				// log error
-				logger.error("Error with the encryption of the password" + se.getStackTrace(), se);
+				logger.error("Error with the encryption of the password" + se.getMessage(), se);
 				Notification.show(se.getMessage(), Notification.Type.ERROR_MESSAGE);
 			}
 	}

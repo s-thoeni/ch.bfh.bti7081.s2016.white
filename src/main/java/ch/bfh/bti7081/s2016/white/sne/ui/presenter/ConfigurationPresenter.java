@@ -54,10 +54,7 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	public void addClick() {
 		logger.debug("->");
 		
-		int i = 0;
-		for (ConfigSetImpl c : view.getConfigSets()) {
-			i++;
-		}
+		int i = view.getConfigSets().size();
 		ConfigSetImpl configSet = new ConfigSetImpl();
 		configSet.setId(String.valueOf(i));
 		view.addConfigSet(configSet);

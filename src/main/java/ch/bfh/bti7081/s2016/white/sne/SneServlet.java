@@ -28,7 +28,7 @@ public class SneServlet extends TouchKitServlet {
 			super.servletInitialized();
 		} catch (ServletException e) {
 			// log error
-			logger.error("Servlet initlalization failed \n" + e.getStackTrace(), e);
+			logger.error("Servlet initlalization failed \n" + e.getMessage(), e);
 			Notification.show("Error occured during initializing process! Sorry.", Notification.Type.ERROR_MESSAGE);
 			throw e;
 		}

@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -32,11 +30,19 @@ public class AlarmConfigurationViewImpl extends NavigationView implements AlarmC
 	private List<AlarmConfigurationViewListener> listeners;
 
 	/**
+	 * The title to be displayed in the header of the menu
+	 */
+	private static final String ALARM_TITLE = "Alarm Configuration";
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public AlarmConfigurationViewImpl() {
+		// Set the caption
+		getNavigationBar().setCaption(ALARM_TITLE);
+
 		this.alarmSets = new ArrayList<AlarmSetImpl>();
 		this.listeners = new ArrayList<AlarmConfigurationViewListener>();
 

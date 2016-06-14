@@ -70,7 +70,7 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			// get alarms
 			stm = con.prepareStatement(SELECT_ALARMS);
 			stm.setString(1, user.getUserName());
@@ -128,7 +128,7 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 
 		// delete old alarms
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			stm = con.prepareStatement(DELETE_ALARMS);
 			stm.setInt(1, userId);
 
@@ -159,7 +159,7 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 		Connection con = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
-		int id = getUserId(user);
+		int id = getUserId(DB_NAME, user);
 
 		// delete old alarms
 		deleteAlarms(id);
@@ -167,7 +167,7 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 		// insert alarms
 		for (Alarm alarm : alarms) {
 			try {
-				con = getConnection();
+				con = getConnection(DB_NAME);
 				stm = con.prepareStatement(INSERT_ALARMS);
 				stm.setString(1, alarm.getAlarmReportConfig().getReportType().toString());
 				stm.setString(2, alarm.getAlarmReportConfig().getReportTimeframe().toString());
@@ -195,12 +195,5 @@ public class AlarmDaoImpl extends AbstractDAO implements AlarmDao {
 			}
 		}
 		logger.debug("<-");
-	}
-
-	@Override
-	public String getDbName() {
-		logger.debug("->");
-		logger.debug("<-");
-		return this.DB_NAME;
 	}
 }

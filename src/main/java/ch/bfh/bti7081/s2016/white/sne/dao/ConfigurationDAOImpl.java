@@ -33,7 +33,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 	/**
 	 * database name as constant
 	 */
-	private static final String DB_NAME = "conf.db";
+	private String DB_NAME = "conf.db";
 	
 	/**
 	 * SQL query for getting configuration of specified user from database
@@ -77,7 +77,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			
 			// get config
 			stm = con.prepareStatement(SELECT_CONFIG);
@@ -130,7 +130,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 
 		// delete old alarms
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			stm = con.prepareStatement(DELETE_CONFIG);
 			stm.setInt(1, userId);
 			
@@ -161,7 +161,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		Connection con = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
-		int id = getUserId(user);
+		int id = getUserId(DB_NAME, user);
 
 		// delete old config
 		deleteConfig(id);
@@ -170,7 +170,7 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		
 		for (ReportConfig rc : reports) {
 			try {
-				con = getConnection();
+				con = getConnection(DB_NAME);
 				stm = con.prepareStatement(INSERT_CONFIG);
 				
 				stm.setString(1, rc.getReportType().toString());
@@ -196,12 +196,4 @@ public class ConfigurationDAOImpl extends AbstractDAO implements ConfigurationDA
 		}
 		logger.debug("<-");
 	}
-
-	@Override
-	public String getDbName() {
-		logger.debug("->");
-		logger.debug("<-");
-		return this.DB_NAME;
-	}
-
 }

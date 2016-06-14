@@ -91,14 +91,16 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_AVAILABLE_EMPLOYEES);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
 
 			// log query
-			logger.debug(SELECT_AVAILABLE_EMPLOYEES);
+			logger.debug(SELECT_AVAILABLE_EMPLOYEES + " 1=" + f +  " 2=" + t);
 
 			rs = stm.executeQuery();
 
@@ -150,15 +152,17 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			
 			// get data
 			stm = con.prepareStatement(SELECT_ABSENCES);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
-			
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
+
 			// log query
-			logger.debug(SELECT_ABSENCES);
+			logger.debug(SELECT_ABSENCES + " 1=" + f +  " 2=" + t);
 			
 			rs = stm.executeQuery();
 
@@ -210,14 +214,17 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
+			
 			// get data
 			stm = con.prepareStatement(SELECT_INCIDENTS);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
-
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
+			
 			// log query
-			logger.debug(SELECT_INCIDENTS);
+			logger.debug(SELECT_INCIDENTS + " 1=" + f +  " 2=" + t);
 
 			rs = stm.executeQuery();
 
@@ -265,14 +272,17 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_PATIENT_COUNT);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
-
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
+			
 			// log query
-			logger.debug(SELECT_PATIENT_COUNT);
+			logger.debug(SELECT_PATIENT_COUNT + " 1=" + f +  " 2=" + t);
+
 			rs = stm.executeQuery();
 
 			// parse results
@@ -316,14 +326,16 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_FINANCE);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
-
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
+			
 			// log query
-			logger.debug(SELECT_FINANCE);
+			logger.debug(SELECT_FINANCE + " 1=" + f +  " 2=" + t);
 
 			rs = stm.executeQuery();
 
@@ -378,14 +390,16 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_FINANCE);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
-
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
+			
 			// log query
-			logger.debug(SELECT_FINANCE);
+			logger.debug(SELECT_FINANCE + " 1=" + f +  " 2=" + t);
 
 			rs = stm.executeQuery();
 
@@ -439,14 +453,16 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		ResultSet rs = null;
 
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			// get data
 			stm = con.prepareStatement(SELECT_FINANCE);
-			stm.setString(1, sdf.format(from));
-			stm.setString(2, sdf.format(to));
-
+			String f = sdf.format(from).toString();
+			String t = sdf.format(to).toString();
+			stm.setString(1, f);
+			stm.setString(2, t);
+			
 			// log query
-			logger.debug(SELECT_FINANCE);
+			logger.debug(SELECT_FINANCE + " 1=" + f +  " 2=" + t);
 
 			rs = stm.executeQuery();
 
@@ -488,13 +504,6 @@ public class ReportDaoImpl extends AbstractDAO implements ReportDao {
 		result.setRecords(records);
 		logger.debug("<-");
 		return result;
-	}
-
-	@Override
-	public String getDbName() {
-		logger.debug("->");
-		logger.debug("<-");
-		return ReportDaoImpl.DB_NAME;
 	}
 
 }

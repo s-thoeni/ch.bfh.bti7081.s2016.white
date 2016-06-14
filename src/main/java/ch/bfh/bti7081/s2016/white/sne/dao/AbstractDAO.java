@@ -47,25 +47,18 @@ abstract class AbstractDAO {
 	}
 
 	/**
-	 * Returns the Database used in the correspondent DAO.
-	 * 
-	 * @return database name
-	 */
-	abstract public String getDbName();
-
-	/**
 	 * Establishes connection to SQL database.
 	 * 
 	 * @return Connection to database
 	 * @throws SQLException
 	 * @throws SneException
 	 */
-	protected Connection getConnection() throws SQLException, SneException {
+	protected Connection getConnection(String dbName) throws SQLException, SneException {
 		logger.debug("->");
 
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:db/" + getDbName());
+			connection = DriverManager.getConnection("jdbc:sqlite:db/" + dbName);
 		} catch (SQLException up) {
 			// log error
 			logger.error("Was not able to open connection \n" + up.getMessage(), up);
@@ -111,7 +104,7 @@ abstract class AbstractDAO {
 	 * @return Integer with user ID
 	 * @throws SneException
 	 */
-	protected int getUserId(User user) throws SneException {
+	protected int getUserId(String dbName, User user) throws SneException {
 		logger.debug("->");
 
 		Connection con = null;
@@ -121,7 +114,7 @@ abstract class AbstractDAO {
 
 		// get userName id
 		try {
-			con = getConnection();
+			con = getConnection(dbName);
 			stm = con.prepareStatement(SELECT_USER_ID);
 			stm.setString(1, user.getUserName());
 

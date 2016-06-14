@@ -57,7 +57,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		ResultSet rs = null;
 		
 		try {
-			con = getConnection();
+			con = getConnection(DB_NAME);
 			stm = con.prepareStatement(SELECT_USERS);
 			
 			// log query
@@ -87,12 +87,5 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		}
 		logger.debug("<-");
 		return userList;
-	}
-
-	@Override
-	public String getDbName() {
-		logger.debug("->");
-		logger.debug("<-");
-		return UserDAOImpl.DB_NAME;
 	}
 }

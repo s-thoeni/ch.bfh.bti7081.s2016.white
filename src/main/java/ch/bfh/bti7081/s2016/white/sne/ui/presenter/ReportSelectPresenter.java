@@ -24,20 +24,31 @@ import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSet;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ReportSelectSetImpl;
 
 /**
+ * Presents the report select. Contains all ui logic from the report select such
+ * as handle the go click, add or delete report select sets
  * 
+ * @see ReportSelectView *
  * @author mcdizzu
  *
  */
-public class ReportSelectPresenter
-		implements ReportSelectView.ReportSelectViewListener, ReportSelectSet.ReportSelectSetListener {
+public class ReportSelectPresenter implements ReportSelectView.ReportSelectViewListener, ReportSelectSet.ReportSelectSetListener {
 
 	/**
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ReportSelectPresenter.class);
 
+	/**
+	 * The view used in this presenter.
+	 */
 	private ReportSelectViewImpl view;
 
+	/**
+	 * Initialize the presenter with a view.
+	 * 
+	 * @param view
+	 *            view instance
+	 */
 	public ReportSelectPresenter(ReportSelectViewImpl view) {
 		this.view = view;
 
@@ -54,15 +65,18 @@ public class ReportSelectPresenter
 	public void handleGoClick(ReportType reportType, Date from, Date to) throws SneException {
 		logger.debug("->");
 
+		// date pair
 		DatePair datePair = new DatePair(from, to);
 
+		// set up report presenter
 		ReportProvider reportModel = new ReportProvider();
 		ReportViewImpl reportView = new ReportViewImpl(reportModel.getReportByTypeAndDatePair(reportType, datePair));
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
+		// navigate to the report
 		MyUI ui = (MyUI) UI.getCurrent();
 		ui.getNavigationManager().navigateTo(reportPresenter.getView());
-		
+
 		logger.debug("<-");
 	}
 
@@ -70,10 +84,11 @@ public class ReportSelectPresenter
 	public void handleGoClick(List<ReportSelectSetImpl> reportSelectSets) throws SneException {
 		logger.debug("->");
 
+		// set up reports list
 		List<Report<? extends Record>> reports = new ArrayList<Report<? extends Record>>();
 
+		// set up report presenter
 		ReportProvider reportModel = new ReportProvider();
-
 		for (ReportSelectSetImpl rssi : reportSelectSets) {
 			DatePair datePair = new DatePair(rssi.getFromDate(), rssi.getToDate());
 			reports.add(reportModel.getReportByTypeAndDatePair(rssi.getReportType(), datePair));
@@ -81,9 +96,10 @@ public class ReportSelectPresenter
 		ReportViewImpl reportView = new ReportViewImpl(reports);
 		ReportPresenter reportPresenter = new ReportPresenter(reportModel, reportView);
 
+		// navigate to the report
 		MyUI ui = (MyUI) UI.getCurrent();
 		ui.getNavigationManager().navigateTo(reportPresenter.getView());
-		
+
 		logger.debug("<-");
 	}
 

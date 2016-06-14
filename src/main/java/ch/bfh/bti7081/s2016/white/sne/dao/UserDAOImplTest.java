@@ -14,18 +14,12 @@ public class UserDAOImplTest {
 
 	private UserDAOImpl dao, dao2;
 	private User user1, user2;
+	private String dbName = "conf.db";
 
 	@Before
 	public void setUp() throws Exception {
 		this.dao = new UserDAOImpl();
 		this.user1 = new User("kevin.meier");
-	}
-
-	@Test
-	public void testGetDbName() {
-		if (dao.getDbName() != "conf.db") {
-			fail("wrong DB name");
-		}
 	}
 
 	@Test
@@ -69,7 +63,7 @@ public class UserDAOImplTest {
 	@Test
 	public void testGetUserId() {
 		try {
-			if (dao.getUserId(user1) != 7) {
+			if (dao.getUserId(dbName, user1) != 7) {
 				fail("user 'kevin.meier' not found");
 			}
 		} catch (SneException e) {

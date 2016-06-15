@@ -153,15 +153,12 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 				switch (alarm.getAlarmStateString()) {
 				case "Error":
 					hasError = true;
-					hasWarning = false;
 					break;
 				case "Warning":
 					hasWarning = true;
-					hasError = false;
 					break;
 				default:
-					hasError = false;
-					hasWarning = false;
+					break;
 				}
 				index++;
 			}
@@ -185,6 +182,8 @@ public class SneMenuViewImpl extends SlideMenuView implements SneMenuView {
 			});
 
 			getNavigationBar().setRightComponent(alarmButton);
+		}else{
+			getNavigationBar().setRightComponent(null);
 		}
 		logger.debug("<-");
 	}

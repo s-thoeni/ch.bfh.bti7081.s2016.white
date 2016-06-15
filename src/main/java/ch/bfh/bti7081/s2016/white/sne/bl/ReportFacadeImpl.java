@@ -75,6 +75,7 @@ public class ReportFacadeImpl implements ReportFacade {
 			throws SneException {
 		logger.debug("->");
 		logger.debug("<-");
+		if(timeframe == null) throw new SneException("Ivalid report timeframe");
 		return getReport(type, timeframe.getConcreteDate().getFrom(), timeframe.getConcreteDate().getTo(),
 				calculateSummary);
 	}
@@ -83,6 +84,10 @@ public class ReportFacadeImpl implements ReportFacade {
 	public Report<? extends Record> getReport(ReportType type, Date from, Date to, boolean calculateSummary)
 			throws SneException {
 		logger.debug("->");
+		if(type == null) throw new SneException("Invalid report type! ");
+		if(from == null) throw new SneException("Invalid from date! ");
+		if(to == null) throw new SneException("Invalid to date! ");
+		
 		Report<? extends Record> result = null;
 		try {
 			logger.debug("Switch case report type");
@@ -119,7 +124,6 @@ public class ReportFacadeImpl implements ReportFacade {
 				result.setType(ReportType.ABSENT_EMPLOYEES);
 				break;
 			}
-			// FIXME: Add exception handling
 			if (result == null)
 				throw new SneException("Report not found in database! ", null);
 			result.setFrom(from);

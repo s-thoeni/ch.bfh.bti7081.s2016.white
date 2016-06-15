@@ -34,6 +34,10 @@ public class SneException extends Exception {
 		this.message = message;
 	}
 
+	public SneException(String message) {
+		this.message = message;
+	}
+
 	/**
 	 * Returns the error message
 	 */

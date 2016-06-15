@@ -1,5 +1,6 @@
 package ch.bfh.bti7081.s2016.white.sne.bl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -66,8 +67,12 @@ public class AlarmFacadeImpl implements AlarmFacade {
 	 * @throws SneException
 	 */
 	@Override
-	public void storeAlarms(List<Alarm> alarms) throws SneException {
+	public void storeAlarms(List<Alarm> alarms) throws SneException {		
 		logger.debug("->");
+		if(alarms == null){
+			// equivalent to removing all alarms
+			alarms = new ArrayList<Alarm>();
+		};
 		logger.debug("<-");
 		dao.storeAlarms(alarms, this.user);
 	}

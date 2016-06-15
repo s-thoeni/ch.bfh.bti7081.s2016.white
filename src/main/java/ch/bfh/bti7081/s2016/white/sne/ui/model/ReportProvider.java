@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacade;
 import ch.bfh.bti7081.s2016.white.sne.bl.ReportFacadeImpl;
+import ch.bfh.bti7081.s2016.white.sne.data.Record;
 import ch.bfh.bti7081.s2016.white.sne.data.Report;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.DatePair;
 import ch.bfh.bti7081.s2016.white.sne.data.enums.ReportTimeframe;
@@ -24,13 +25,13 @@ public class ReportProvider {
 		this.facade = new ReportFacadeImpl();
 	}
 	
-	public Report getReportByTypeAndTimeFrame(ReportType reportType, ReportTimeframe timeFrame) throws SneException {
+	public Report<? extends Record> getReportByTypeAndTimeFrame(ReportType reportType, ReportTimeframe timeFrame) throws SneException {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.facade.getReport(reportType, timeFrame);
 	}
 	
-	public Report getReportByTypeAndDatePair(ReportType reportType, DatePair datePair) throws SneException {
+	public Report<? extends Record> getReportByTypeAndDatePair(ReportType reportType, DatePair datePair) throws SneException {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.facade.getReport(reportType, datePair.getFrom(), datePair.getTo());

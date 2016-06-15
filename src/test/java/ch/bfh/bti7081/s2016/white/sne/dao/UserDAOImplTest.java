@@ -10,18 +10,42 @@ import org.junit.Test;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
+/**
+ * 
+ * @author eller1
+ *
+ */
+@SuppressWarnings("unused")
 public class UserDAOImplTest {
 
+	/**
+	 * DAOs used for testing
+	 */
 	private UserDAOImpl dao, dao2;
+	
+	/**
+	 * Users used for testing
+	 */
 	private User user1, user2;
+	
+	/**
+	 * expected database name
+	 */
 	private String dbName = "conf.db";
 
+	/**
+	 * Prepare Test
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		this.dao = new UserDAOImpl();
 		this.user1 = new User("kevin.meier");
 	}
 
+	/**
+	 * test constructor
+	 */
 	@Test
 	public void testUserDAOImpl() {
 		try {
@@ -29,8 +53,12 @@ public class UserDAOImplTest {
 		} catch (SneException e) {
 			fail(e.getMessage());
 		}
+		assert(true);
 	}
 
+	/**
+	 * test method getUserlist()
+	 */
 	@Test
 	public void testGetUserlist() {
 		ArrayList<User> l = null;
@@ -57,9 +85,12 @@ public class UserDAOImplTest {
 		} catch (NullPointerException e) {
 			fail("no users received");
 		}
-
+		assert(true);
 	}
 
+	/**
+	 * test method getUserID()
+	 */
 	@Test
 	public void testGetUserId() {
 		try {
@@ -69,6 +100,7 @@ public class UserDAOImplTest {
 		} catch (SneException e) {
 			fail("an unexcpected exception occured");
 		}
+		assert(true);
 	}
 
 }

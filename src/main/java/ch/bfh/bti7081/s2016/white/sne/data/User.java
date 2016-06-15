@@ -73,5 +73,5 @@ public class User {
 		logger.debug("->");
 		logger.debug("<-");
 		return this.password;
-	}
+	}	
 }

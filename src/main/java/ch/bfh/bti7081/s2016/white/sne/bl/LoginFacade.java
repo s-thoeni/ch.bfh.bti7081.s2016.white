@@ -14,7 +14,7 @@ public interface LoginFacade {
 	/**
 	 * @param username the username as string for which the password should be checked
 	 * @param Password the password as Strint to be checked
-	 * @return The User object witch matches with the entered one, of passwords match
+	 * @return The User object which matches with the entered one, of passwords match
 	 * @throws SneException
 	 */
 	public User checkPassword(String username, String Password) throws SneException;

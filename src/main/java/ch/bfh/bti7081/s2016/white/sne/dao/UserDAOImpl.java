@@ -17,6 +17,7 @@ import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
  * Implements connection to data backend (sqlite3)
  * 
  * @author shepd1
+ * @author eller1
  *
  */
 

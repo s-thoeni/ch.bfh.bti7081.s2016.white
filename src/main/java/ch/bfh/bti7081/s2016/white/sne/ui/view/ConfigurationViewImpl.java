@@ -15,6 +15,14 @@ import com.vaadin.ui.VerticalLayout;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 import ch.bfh.bti7081.s2016.white.sne.ui.view.components.ConfigSetImpl;
 
+/**
+ * Implemntation of the configuration view. Shows configuration sets 
+ * through which the dashboard tiles could be configured.
+ * Shows 
+ * 
+ * @author shepd1
+ *
+ */
 public class ConfigurationViewImpl extends NavigationView implements ConfigurationView {
 
 	/**
@@ -26,8 +34,15 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 	 * UI Grid Layout
 	 */
 	private VerticalLayout grid;
-
+	
+	/**
+	 * List of Configsets displayed
+	 */
 	private List<ConfigSetImpl> configSets;
+	
+	/**
+	 * List of Listeners for the configurationview.
+	 */
 	private List<ConfigurationViewListener> listeners;
 
 	/**
@@ -56,7 +71,6 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 		grid.setStyleName("dashboard");
 
 		this.setWidth(null);
-		// grid.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
 
 		Button addBtn = new Button("+");
 		Button saveBtn = new Button("Speichern");
@@ -95,7 +109,10 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 		listeners.add(listener);
 		logger.debug("<-");
 	}
-
+	
+	/**
+	 * Notifier for click on the "+" Button to add a configset. 
+	 */
 	public void handleAddClick() {
 		logger.debug("->");
 
@@ -104,6 +121,9 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 		logger.debug("<-");
 	}
 
+	/**
+	 * Notifier for click on the "-" Button to delete a configset.
+	 */
 	public void handleClickSave() {
 		logger.debug("->");
 
@@ -117,6 +137,9 @@ public class ConfigurationViewImpl extends NavigationView implements Configurati
 		logger.debug("<-");
 	}
 
+	/**
+	 * Notifier for click on the "Cancle" button to abort editing of configuration.
+	 */
 	public void handleClickCancel() {
 		logger.debug("->");
 

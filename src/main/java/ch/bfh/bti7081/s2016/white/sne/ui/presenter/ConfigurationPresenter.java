@@ -27,9 +27,20 @@ public class ConfigurationPresenter implements ConfigurationView.ConfigurationVi
 	 * Logger for this class
 	 */
 	private static final Logger logger = LogManager.getLogger(ConfigurationPresenter.class);
-
+	
+	/**
+	 * instance of model object for the configuration view
+	 */
 	private ConfigurationProvider model;
+	
+	/**
+	 * instance of view object for the configuration view
+	 */
 	private ConfigurationViewImpl view;
+	
+	/**
+	 * instance of data object of configuration. Holds the configuration data for the dashboard.
+	 */
 	private Configuration config;
 
 	public ConfigurationPresenter(ConfigurationProvider model, ConfigurationViewImpl view) {

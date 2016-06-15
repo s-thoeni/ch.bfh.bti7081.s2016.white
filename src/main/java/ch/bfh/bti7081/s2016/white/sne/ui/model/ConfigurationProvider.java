@@ -9,7 +9,12 @@ import ch.bfh.bti7081.s2016.white.sne.data.Configuration;
 import ch.bfh.bti7081.s2016.white.sne.data.User;
 import ch.bfh.bti7081.s2016.white.sne.data.exceptions.SneException;
 
-
+/**
+ * Provider for configuration view. Needs to be initialized with a user object. Reads and writes configuration of user.
+ * 
+ * @author shepd1
+ *
+ */
 public class ConfigurationProvider {
 	
 	/**
@@ -17,10 +22,26 @@ public class ConfigurationProvider {
 	 */
 	private static final Logger logger = LogManager.getLogger(ConfigurationProvider.class);
 	
+	/**
+	 * Business layer of configuration
+	 */
 	private ConfigurationFacade facade;
+	
+	/**
+	 * Data object configuration
+	 */
 	private Configuration config;
+
+	/**
+	 * Data object user
+	 */
 	private User user;
 	
+	/**
+	 * 
+	 * @param user user for which the configuration should be initialized
+	 * @throws SneException
+	 */
 	public ConfigurationProvider(User user) throws SneException {
 		this.setUser(user);
 		facade = new ConfigurationFacadeImpl();

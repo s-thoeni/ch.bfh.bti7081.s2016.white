@@ -59,7 +59,11 @@ public class LoginFacadeImpl implements LoginFacade {
 		logger.debug("<-");
 		return dao.getUserlist();
 	}
-	
+	/**
+	 * @param username the username as String
+	 * @return a User object which maches with the given username
+	 * 
+	 */
 	public User getUser(String username) throws SneException {
 		logger.debug("->");
 		ArrayList<User> userList = getUsers();

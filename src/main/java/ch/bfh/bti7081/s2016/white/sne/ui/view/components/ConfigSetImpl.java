@@ -26,8 +26,12 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 	 * Class serial ID
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<ConfigSetListener> listeners;
 	
+	/**
+	 * List of listeners for the configSetImpl class
+	 */
+	private List<ConfigSetListener> listeners;
+
 	private NativeSelect reportSelector = new NativeSelect();
 	private NativeSelect timeSelector = new NativeSelect();
 	
@@ -93,6 +97,9 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 		logger.debug("<-");
 	}
 	
+	/**
+	 * Notifier for click on the "-" Button.
+	 */
 	public void handleDeleteClick() {
 		logger.debug("->");
 		
@@ -100,7 +107,11 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 			listener.deleteClick(this.getId());
 		logger.debug("<-");
 	}
-	
+	/** 
+	 * Return the report type selected at the ConfigSet
+	 * 
+	 * @return The report type from the type selector.
+	 */
 	public ReportType getReportType(){
 		logger.debug("->");
 		if(reportSelector.getValue() instanceof ReportType){
@@ -112,6 +123,11 @@ public class ConfigSetImpl extends CustomComponent implements ConfigSet{
 		}
 	}
 	
+	/**
+	 * Return the timeframe selected at the ConfigSet
+	 * 
+	 * @return The timeframe from the timeframe selector.
+	 */
 	public ReportTimeframe getReportTimeframe(){
 		logger.debug("->");
 		
